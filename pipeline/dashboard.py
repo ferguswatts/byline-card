@@ -73,11 +73,27 @@ BUCKET_ORDER = ["left", "centre-left", "centre", "centre-right", "right"]
 
 
 def score_to_color(score: float) -> str:
-    if score <= -0.6:   return "#ef4444"
-    if score <= -0.2:   return "#f97316"
-    if score <=  0.2:   return "#6b7280"
-    if score <=  0.6:   return "#3b82f6"
-    return "#1d4ed8"
+    if score <= -0.6:   return "#dc2626"   # red — Left
+    if score <= -0.4:   return "#ef4444"   # lighter red — Leans Left
+    if score <= -0.2:   return "#f97316"   # orange-red — Leans Centre-Left
+    if score <= -0.05:  return "#d97706"   # warm amber — Centre (leans left)
+    if score <=  0.05:  return "#6b7280"   # grey — Centre
+    if score <=  0.2:   return "#6366f1"   # indigo — Centre (leans right)
+    if score <=  0.4:   return "#3b82f6"   # blue — Leans Centre-Right
+    if score <=  0.6:   return "#2563eb"   # deeper blue — Leans Right
+    return "#1d4ed8"                       # dark blue — Right
+
+
+def score_to_label(score: float) -> str:
+    if score <= -0.6:   return "Left"
+    if score <= -0.4:   return "Leans Left"
+    if score <= -0.2:   return "Leans Centre-Left"
+    if score <= -0.05:  return "Centre (leans left)"
+    if score <=  0.05:  return "Centre"
+    if score <=  0.2:   return "Centre (leans right)"
+    if score <=  0.4:   return "Leans Centre-Right"
+    if score <=  0.6:   return "Leans Right"
+    return "Right"
 
 
 def generate_html(conn) -> str:
@@ -196,6 +212,14 @@ def generate_html(conn) -> str:
 
         avg_score = sum(a["median_score"] or 0 for a in articles) / total
         avg_color = score_to_color(avg_score)
+        avg_label = score_to_label(avg_score)
+        lean_pct = abs(round(avg_score * 100))
+        if lean_pct <= 2:
+            lean_text = "Centre"
+        elif avg_score < 0:
+            lean_text = f"{lean_pct}% left leaning"
+        else:
+            lean_text = f"{lean_pct}% right leaning"
 
         # Article rows
         article_rows = ""
@@ -242,7 +266,21 @@ def generate_html(conn) -> str:
                 </div>
                 <div class="j-right">
                     {confidence_badge}
-                    <span class="avg-score" style="color:{avg_color}">avg {avg_score:+.2f}</span>
+                    <div class="spectrum-wrap" title="{avg_label} ({avg_score:+.2f})">
+                        <span class="spectrum-label-l">Left</span>
+                        <div class="spectrum-track">
+                            <div class="spectrum-bar"></div>
+                            <div class="spectrum-tick" style="left:25%"></div>
+                            <div class="spectrum-tick spectrum-tick-center" style="left:50%"></div>
+                            <div class="spectrum-tick" style="left:75%"></div>
+                            <div class="spectrum-tick-label" style="left:0%">−</div>
+                            <div class="spectrum-tick-label" style="left:50%">0</div>
+                            <div class="spectrum-tick-label" style="left:100%">+</div>
+                            <div class="spectrum-marker" style="left:{((avg_score + 1) / 2) * 100:.1f}%"></div>
+                        </div>
+                        <span class="spectrum-label-r">Right</span>
+                    </div>
+                    <span class="lean-text" style="color:{avg_color}">{lean_text}</span>
                     <span class="article-count">{total} articles</span>
                     <span class="toggle-icon">▼</span>
                 </div>
@@ -305,7 +343,16 @@ def generate_html(conn) -> str:
   .j-name {{ font-size: 15px; font-weight: 600; color: #1a1a1a; }}
   .j-meta {{ font-size: 12px; color: #888; margin-top: 2px; }}
   .j-right {{ display: flex; align-items: center; gap: 12px; flex-shrink: 0; }}
-  .avg-score {{ font-size: 14px; font-weight: 700; }}
+  .spectrum-wrap {{ display: flex; align-items: center; gap: 6px; width: 300px; flex-shrink: 0; }}
+  .spectrum-label-l {{ font-size: 10px; font-weight: 700; color: #dc2626; }}
+  .spectrum-label-r {{ font-size: 10px; font-weight: 700; color: #1d4ed8; }}
+  .spectrum-track {{ flex: 1; position: relative; height: 28px; }}
+  .spectrum-bar {{ position: absolute; top: 10px; left: 0; right: 0; height: 8px; border-radius: 4px; background: linear-gradient(to right, #dc2626, #f97316 25%, #d1d5db 50%, #3b82f6 75%, #1d4ed8); }}
+  .spectrum-tick {{ position: absolute; top: 4px; width: 1px; height: 20px; background: rgba(0,0,0,0.15); transform: translateX(-50%); }}
+  .spectrum-tick-label {{ position: absolute; top: 26px; font-size: 8px; color: #999; transform: translateX(-50%); font-weight: 500; }}
+  .spectrum-tick-center {{ background: rgba(0,0,0,0.3); }}
+  .spectrum-marker {{ position: absolute; top: 3px; width: 4px; height: 22px; border-radius: 2px; background: #1a1a1a; box-shadow: 0 1px 4px rgba(0,0,0,0.4); transform: translateX(-50%); }}
+  .lean-text {{ font-size: 12px; font-weight: 600; white-space: nowrap; }}
   .article-count {{ font-size: 12px; color: #888; white-space: nowrap; }}
   .toggle-icon {{ font-size: 11px; color: #bbb; transition: transform 0.2s; }}
   .toggle-icon.open {{ transform: rotate(180deg); }}
