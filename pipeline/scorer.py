@@ -7,6 +7,9 @@ from dataclasses import dataclass
 
 log = logging.getLogger(__name__)
 
+# Bump this when the scoring prompt changes — triggers re-scoring of articles
+PROMPT_VERSION = "v2-cuibono"
+
 SCORING_PROMPT = """You are a political bias analyst for New Zealand media. Score the following
 news article on a scale from -1.0 (hard left) to +1.0 (hard right).
 
