@@ -1,5 +1,10 @@
-"""NZ Herald adapter — requires Playwright (React SPA).
-Scrapes author archive pages instead of RSS (NZ Herald killed public RSS feeds).
+"""NZ Herald adapter — sitemap-based discovery + Playwright extraction (React SPA).
+
+Sitemap index (Arc Publishing):
+  https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-index/?outputType=xml&_website=nzh
+  - Daily sitemaps from Feb 2024 onward (~100-130K article URLs)
+  - ~228 articles per daily sitemap
+
 Paywalled articles are retried via archive.is.
 """
 
@@ -17,7 +22,17 @@ import trafilatura
 
 log = logging.getLogger(__name__)
 
+SITEMAP_INDEX_URL = "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-index/?outputType=xml&_website=nzh"
 ARCHIVE_IS_URL = "https://archive.is/newest/{url}"
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+}
+TIMEOUT = aiohttp.ClientTimeout(total=30)
+
+# NZ Herald article URL pattern
+ARTICLE_RE = re.compile(r'https://www\.nzherald\.co\.nz/[a-z-]+/[a-z0-9-]+/[A-Z0-9]+/')
 
 
 class NZHeraldAdapter(SiteAdapter):
@@ -25,23 +40,71 @@ class NZHeraldAdapter(SiteAdapter):
     domain = "nzherald.co.nz"
     needs_playwright = True
 
-    # Map journalist slugs to their NZ Herald author page URLs
-    AUTHOR_URLS = {
-        "thomas-coughlan": "https://www.nzherald.co.nz/author/thomas-coughlan/",
-        "claire-trevett": "https://www.nzherald.co.nz/author/claire-trevett/",
-        "audrey-young": "https://www.nzherald.co.nz/author/audrey-young/",
-        "derek-cheng": "https://www.nzherald.co.nz/author/derek-cheng/",
-        "jason-walls": "https://www.nzherald.co.nz/author/jason-walls/",
-        "michael-neilson": "https://www.nzherald.co.nz/author/michael-neilson/",
-        "david-farrar": "https://www.nzherald.co.nz/author/david-farrar/",
-    }
+    _all_article_urls: list[str] | None = None
 
     async def get_article_urls(self, since_date: str | None = None, author_slug: str | None = None, backfill: bool = False) -> list[str]:
-        """Scrape article URLs from an author's archive page using Playwright."""
-        if not async_playwright or not author_slug:
-            return []
+        """Get article URLs from sitemaps. Falls back to Playwright author page scraping."""
+        # Try sitemaps first (cached)
+        if self._all_article_urls is None:
+            self._all_article_urls = await self._load_sitemap_urls()
 
-        author_url = self.AUTHOR_URLS.get(author_slug) or f"https://www.nzherald.co.nz/author/{author_slug}/"
+        urls = list(self._all_article_urls) if self._all_article_urls else []
+
+        # Supplement with Playwright author page if available
+        if author_slug and async_playwright:
+            author_urls = await self._get_author_page_urls_playwright(author_slug)
+            urls.extend(author_urls)
+
+        # Deduplicate
+        seen: set[str] = set()
+        deduped: list[str] = []
+        for u in urls:
+            clean = u.split("?")[0].split("#")[0]
+            if clean not in seen and "nzherald.co.nz" in clean:
+                seen.add(clean)
+                deduped.append(clean)
+
+        return deduped
+
+    async def _load_sitemap_urls(self) -> list[str]:
+        """Fetch Arc Publishing sitemap index and all daily sub-sitemaps."""
+        async with aiohttp.ClientSession() as session:
+            try:
+                async with session.get(SITEMAP_INDEX_URL, headers=HEADERS, timeout=TIMEOUT) as resp:
+                    if resp.status != 200:
+                        log.warning(f"NZHerald sitemap index returned {resp.status}")
+                        return []
+                    xml = await resp.text()
+            except Exception as e:
+                log.warning(f"NZHerald sitemap index fetch failed: {e}")
+                return []
+
+            # Extract sub-sitemap URLs
+            sub_sitemaps = re.findall(r'<loc>([^<]+)</loc>', xml)
+            # Filter to only daily article sitemaps (skip video, google-news, etc.)
+            daily_sitemaps = [u for u in sub_sitemaps if '/sitemap/' in u or '/sitemap2/' in u or '/sitemap3/' in u]
+            log.info(f"NZHerald: found {len(daily_sitemaps)} daily sitemaps")
+
+            all_urls: list[str] = []
+            for sitemap_url in daily_sitemaps:
+                try:
+                    async with session.get(sitemap_url, headers=HEADERS, timeout=TIMEOUT) as resp:
+                        if resp.status != 200:
+                            continue
+                        sub_xml = await resp.text()
+                except Exception:
+                    continue
+
+                urls = re.findall(r'<loc>([^<]+)</loc>', sub_xml)
+                article_urls = [u for u in urls if ARTICLE_RE.match(u)]
+                all_urls.extend(article_urls)
+
+            log.info(f"NZHerald: {len(all_urls)} total article URLs from sitemaps")
+            return all_urls
+
+    async def _get_author_page_urls_playwright(self, author_slug: str) -> list[str]:
+        """Scrape author page using Playwright (JS rendering required)."""
+        author_url = f"https://www.nzherald.co.nz/author/{author_slug}/"
 
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
@@ -51,36 +114,20 @@ class NZHeraldAdapter(SiteAdapter):
                 await page.wait_for_timeout(3000)
 
                 links = await page.eval_on_selector_all(
-                    'a[href*="/nz/"]',
-                    "els => els.map(e => e.href).filter(h => h.includes('/nz/') && h.split('/').length > 5)"
-                )
-
-                more_links = await page.eval_on_selector_all(
                     'a[href*="nzherald.co.nz"]',
                     """els => els.map(e => e.href).filter(h =>
-                        h.includes('nzherald.co.nz/nz/') &&
                         !h.includes('/author/') &&
                         !h.includes('/section/') &&
                         h.split('/').length > 5
                     )"""
                 )
-
-                all_links = list(set(links + more_links))
             except Exception as e:
                 log.error(f"[NZHerald] Failed to scrape author page {author_url}: {e}")
-                all_links = []
+                links = []
             finally:
                 await browser.close()
 
-        urls = []
-        seen = set()
-        for url in all_links:
-            clean = url.split("?")[0].split("#")[0]
-            if clean not in seen and "nzherald.co.nz" in clean:
-                seen.add(clean)
-                urls.append(clean)
-
-        return urls
+        return [u.split("?")[0].split("#")[0] for u in links]
 
     async def _fetch_from_archive(self, url: str) -> str | None:
         """Try to fetch a paywalled article from archive.is."""
