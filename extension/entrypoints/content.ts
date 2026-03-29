@@ -13,6 +13,7 @@ const NZ_NEWS_DOMAINS = [
   "stuff.co.nz",
   "rnz.co.nz",
   "1news.co.nz",
+  "tvnz.co.nz",
   "newsroom.co.nz",
   "thespinoff.co.nz",
   "interest.co.nz",
@@ -24,6 +25,7 @@ export default defineContentScript({
     "*://*.stuff.co.nz/*",
     "*://*.rnz.co.nz/*",
     "*://*.1news.co.nz/*",
+    "*://*.tvnz.co.nz/*",
     "*://*.newsroom.co.nz/*",
     "*://*.thespinoff.co.nz/*",
     "*://*.interest.co.nz/*",
@@ -47,10 +49,14 @@ export default defineContentScript({
       return;
     }
 
-    const byline = detectByline(document, data.sites || {});
+    let byline = detectByline(document, data.sites || {});
     if (!byline) {
-      console.log("[Byline Card] No byline detected on this page.");
-      return;
+      // Some sites (e.g. Stuff) render bylines via JS after page load — wait for it
+      byline = await waitForByline(data.sites || {}, 5000);
+      if (!byline) {
+        console.log("[Byline Card] No byline detected on this page.");
+        return;
+      }
     }
 
     console.log(`[Byline Card] Byline detected: ${byline.name} @ ${byline.outlet}`);
@@ -150,6 +156,26 @@ export default defineContentScript({
     });
   },
 });
+
+function waitForByline(
+  siteConfig: Record<string, { selectors: { byline: string } }>,
+  timeout: number,
+): Promise<import("../src/lib/detect").BylineResult | null> {
+  return new Promise((resolve) => {
+    const check = () => detectByline(document, siteConfig);
+    const interval = setInterval(() => {
+      const result = check();
+      if (result) {
+        clearInterval(interval);
+        resolve(result);
+      }
+    }, 300);
+    setTimeout(() => {
+      clearInterval(interval);
+      resolve(null);
+    }, timeout);
+  });
+}
 
 function buildCardHTML(j: JournalistData, version: string): string {
   const dist = j.distribution;
@@ -274,7 +300,7 @@ function buildCardHTML(j: JournalistData, version: string): string {
 function findBylineElement(name: string): HTMLElement | null {
   const nameLower = name.toLowerCase();
 
-  const authorLinks = document.querySelectorAll('a[rel="author"], .author-name, .byline a');
+  const authorLinks = document.querySelectorAll('a[rel="author"], .author-name, .byline a, a[href*="/authors/"], a[href*="/reporter/"]');
   for (const el of authorLinks) {
     if (el.textContent?.toLowerCase().includes(nameLower)) {
       return el as HTMLElement;
