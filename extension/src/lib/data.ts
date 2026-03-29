@@ -1,65 +1,48 @@
 /**
  * Data fetching + caching for the extension.
- * Strategy: GitHub raw URL → chrome.storage.local cache → bundled fallback.
+ * Content scripts have limited Chrome API access, so we use
+ * a simple approach: fetch bundled JSON via extension URL.
  */
 
 import type { DataFile } from "./match";
 
 const GITHUB_RAW_URL =
   "https://raw.githubusercontent.com/ferguswatts/byline-card/main/extension/public/data.json";
-const CACHE_KEY = "bylinecard_data";
-const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-interface CacheEntry {
-  data: DataFile;
-  fetchedAt: number;
-}
-
-/** Fetch latest data from GitHub, cache locally, fallback gracefully. */
+/** Fetch journalist data. Tries GitHub first, falls back to bundled. */
 export async function loadData(): Promise<DataFile> {
-  // 1. Try cache first (if fresh enough)
-  try {
-    const cached = await chrome.storage.local.get(CACHE_KEY);
-    const entry = cached[CACHE_KEY] as CacheEntry | undefined;
-    if (entry && Date.now() - entry.fetchedAt < CACHE_TTL_MS) {
-      return entry.data;
-    }
-  } catch {
-    // Cache miss or error — continue
-  }
-
-  // 2. Try fetching from GitHub raw URL
+  // 1. Try fetching latest from GitHub (works from content scripts — it's just a fetch)
   try {
     const response = await fetch(GITHUB_RAW_URL, {
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(3000),
     });
     if (response.ok) {
       const data: DataFile = await response.json();
-      // Save to cache
-      const entry: CacheEntry = { data, fetchedAt: Date.now() };
-      await chrome.storage.local.set({ [CACHE_KEY]: entry });
+      if (data.journalists && Object.keys(data.journalists).length > 0) {
+        console.log(`[Byline Card] Loaded ${Object.keys(data.journalists).length} journalists from GitHub`);
+        return data;
+      }
+    }
+  } catch {
+    // Network error or timeout — fall through to bundled
+  }
+
+  // 2. Fall back to bundled data via extension URL
+  try {
+    // In content scripts, we need to get the extension's URL for bundled resources
+    const bundledUrl = (typeof browser !== "undefined" ? browser : chrome).runtime.getURL("data.json");
+    console.log(`[Byline Card] Fetching bundled data from: ${bundledUrl}`);
+    const response = await fetch(bundledUrl);
+    if (response.ok) {
+      const data: DataFile = await response.json();
+      console.log(`[Byline Card] Loaded ${Object.keys(data.journalists).length} journalists from bundle`);
       return data;
     }
-  } catch {
-    // Network error — fall through
+  } catch (e) {
+    console.error("[Byline Card] Failed to load bundled data:", e);
   }
 
-  // 3. Try stale cache (better than nothing)
-  try {
-    const cached = await chrome.storage.local.get(CACHE_KEY);
-    const entry = cached[CACHE_KEY] as CacheEntry | undefined;
-    if (entry) {
-      console.log(
-        `[Byline Card] Using stale cache from ${new Date(entry.fetchedAt).toISOString()}`,
-      );
-      return entry.data;
-    }
-  } catch {
-    // No cache at all
-  }
-
-  // 4. Fall back to bundled data
-  const bundledUrl = chrome.runtime.getURL("data.json");
-  const response = await fetch(bundledUrl);
-  return response.json();
+  // 3. Return empty data as last resort
+  console.warn("[Byline Card] All data sources failed — returning empty data");
+  return { version: "unknown", journalists: {}, sites: {} };
 }
