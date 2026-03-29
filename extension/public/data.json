@@ -1,5 +1,171 @@
 {
   "version": "2026-03-29",
-  "journalists": {},
-  "sites": {}
+  "journalists": {
+    "audrey-young-nzherald": {
+      "name": "Audrey Young",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "beat": "Political editor",
+      "article_count": 36,
+      "confidence": "medium",
+      "distribution": {
+        "left": 0,
+        "centre_left": 28,
+        "centre": 61,
+        "centre_right": 11,
+        "right": 0
+      },
+      "connections": [],
+      "facts": [],
+      "methodology": "Based on 36 articles scored by AI"
+    },
+    "claire-trevett-nzherald": {
+      "name": "Claire Trevett",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "beat": "Political editor",
+      "article_count": 36,
+      "confidence": "medium",
+      "distribution": {
+        "left": 0,
+        "centre_left": 36,
+        "centre": 58,
+        "centre_right": 6,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Parent company of NZ Herald",
+          "source": "https://www.nzme.co.nz/"
+        },
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Parent company of NZ Herald",
+          "source": "https://www.nzme.co.nz/"
+        }
+      ],
+      "facts": [],
+      "methodology": "Based on 36 articles scored by AI"
+    },
+    "derek-cheng-nzherald": {
+      "name": "Derek Cheng",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "beat": "Political journalism",
+      "article_count": 35,
+      "confidence": "medium",
+      "distribution": {
+        "left": 0,
+        "centre_left": 40,
+        "centre": 57,
+        "centre_right": 3,
+        "right": 0
+      },
+      "connections": [],
+      "facts": [],
+      "methodology": "Based on 35 articles scored by AI"
+    },
+    "jason-walls-nzherald": {
+      "name": "Jason Walls",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "beat": "Parliamentary politics",
+      "article_count": 34,
+      "confidence": "medium",
+      "distribution": {
+        "left": 0,
+        "centre_left": 6,
+        "centre": 91,
+        "centre_right": 3,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Parent company of NZ Herald",
+          "source": "https://www.nzme.co.nz/"
+        },
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Parent company of NZ Herald",
+          "source": "https://www.nzme.co.nz/"
+        }
+      ],
+      "facts": [],
+      "methodology": "Based on 34 articles scored by AI"
+    },
+    "thomas-coughlan-nzherald": {
+      "name": "Thomas Coughlan",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "beat": "Political editor",
+      "article_count": 36,
+      "confidence": "medium",
+      "distribution": {
+        "left": 0,
+        "centre_left": 8,
+        "centre": 89,
+        "centre_right": 3,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Parent company of NZ Herald",
+          "source": "https://www.nzme.co.nz/"
+        },
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Parent company of NZ Herald",
+          "source": "https://www.nzme.co.nz/"
+        }
+      ],
+      "facts": [],
+      "methodology": "Based on 36 articles scored by AI"
+    }
+  },
+  "sites": {
+    "nzherald.co.nz": {
+      "selectors": {
+        "byline": ".author-name, .article__author-name, [class*='author'] a"
+      }
+    },
+    "stuff.co.nz": {
+      "selectors": {
+        "byline": ".author-name, .sics-component__byline a, [class*='author']"
+      }
+    },
+    "rnz.co.nz": {
+      "selectors": {
+        "byline": ".author, .article__author, [class*='author']"
+      }
+    },
+    "1news.co.nz": {
+      "selectors": {
+        "byline": ".author-name, [class*='author'], [class*='byline']"
+      }
+    },
+    "newsroom.co.nz": {
+      "selectors": {
+        "byline": ".author-name, [class*='author']"
+      }
+    },
+    "thespinoff.co.nz": {
+      "selectors": {
+        "byline": ".author-name, .byline a, [class*='author']"
+      }
+    },
+    "interest.co.nz": {
+      "selectors": {
+        "byline": ".author, [class*='author']"
+      }
+    }
+  }
 }
