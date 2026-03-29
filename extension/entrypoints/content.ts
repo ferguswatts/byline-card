@@ -153,44 +153,65 @@ export default defineContentScript({
 
 function buildCardHTML(j: JournalistData, version: string): string {
   const dist = j.distribution;
-  const maxPct = Math.max(dist.left, dist.centre_left, dist.centre, dist.centre_right, dist.right, 1);
+  const score = j.bias_score || 0;
 
-  const confColors: Record<string, { bg: string; text: string }> = {
-    low: { bg: "rgba(245,158,11,0.1)", text: "#b45309" },
-    medium: { bg: "rgba(107,114,128,0.1)", text: "#4b5563" },
-    high: { bg: "rgba(16,185,129,0.1)", text: "#047857" },
+  const bucketColors: Record<string, string> = {
+    left: "#ef4444", centre_left: "#f97316", centre: "#6b7280",
+    centre_right: "#3b82f6", right: "#1d4ed8",
   };
-  const conf = confColors[j.confidence] || confColors.low;
 
-  const barRow = (label: string, pct: number) =>
-    `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-      <span style="width:80px;font-size:12px;font-weight:500;color:#444;text-align:right;flex-shrink:0">${label}</span>
-      <div style="flex:1;height:8px;background:#f3f4f6;border-radius:4px;overflow:hidden">
-        <div style="width:${(pct / maxPct) * 100}%;height:100%;background:#3b82f6;border-radius:4px"></div>
+  const barRow = (label: string, pct: number, key: string) =>
+    `<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+      <span style="width:80px;font-size:11px;font-weight:500;color:#555;text-align:right;flex-shrink:0">${label}</span>
+      <div style="flex:1;height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${bucketColors[key]};border-radius:3px;min-width:2px"></div>
       </div>
-      <span style="width:32px;font-size:13px;font-weight:600;color:#1a1a1a;text-align:right;flex-shrink:0">${pct}%</span>
+      <span style="width:52px;font-size:11px;color:#555;flex-shrink:0">${pct}%</span>
     </div>`;
 
-  const connectionsHTML = j.connections.length > 0
-    ? `<div style="padding:12px 16px;border-bottom:1px solid #f0f0f0">
-        <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Documented connections</div>
-        ${j.connections.map((c) =>
-          `<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;font-size:13px;line-height:1.4">
-            <span style="color:#1a1a1a"><span style="color:#888;font-size:12px">${c.type}:</span> ${c.target}${c.role ? `<span style="color:#666">, ${c.role}</span>` : ""}</span>
-            <a href="${c.source}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none;font-size:11px;margin-left:8px;flex-shrink:0">source</a>
-          </div>`
-        ).join("")}
-        ${j.facts.map((f) =>
-          `<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;font-size:12px;color:#444;margin-top:6px">
-            <span>${f.text}</span>
-            <a href="${f.source}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none;font-size:11px;margin-left:8px;flex-shrink:0">source</a>
-          </div>`
-        ).join("")}
-      </div>`
-    : "";
+  // Spectrum position & lean text
+  const spectrumPos = ((score + 1) / 2) * 100;
+  const leanPct = Math.abs(Math.round(score * 100));
+  let leanText: string;
+  let leanColor: string;
+  if (leanPct <= 2) {
+    leanText = "Centre";
+    leanColor = "#6b7280";
+  } else if (score < 0) {
+    leanText = `${leanPct}% left leaning`;
+    leanColor = "#d97706";
+  } else {
+    leanText = `${leanPct}% right leaning`;
+    leanColor = "#3b82f6";
+  }
 
-  const lowConfWarning = j.confidence === "low"
-    ? `<div style="font-size:11px;color:#b45309;margin-top:4px;padding:4px 8px;background:rgba(245,158,11,0.06);border-radius:4px">Limited data (${j.article_count} articles) — scores may shift</div>`
+  // Avatar
+  const initials = j.name.split(" ").map(p => p[0]).join("").slice(0, 2).toUpperCase();
+  const hue = j.name.split("").reduce((s, c) => s + c.charCodeAt(0), 0) % 360;
+  const avatarHTML = j.photo_url
+    ? `<img src="${j.photo_url}" alt="${j.name}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0">`
+    : `<div style="width:42px;height:42px;border-radius:50%;background:hsl(${hue},45%,62%);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:600;font-size:15px">${initials}</div>`;
+
+  const connectionsHTML = (j.connections.length > 0 || j.facts.length > 0)
+    ? `<div style="padding:10px 16px;border-top:1px solid #f3f4f6">
+        <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px">Connections</div>
+        ${j.connections.map((c) =>
+          `<div style="font-size:12px;color:#444;margin-bottom:4px;line-height:1.4">
+            <span style="color:#888;font-size:11px;font-weight:500;text-transform:capitalize">${c.type}</span>
+            <span style="font-weight:600;color:#1a1a1a">${c.target}</span>${c.role ? ` — ${c.role}` : ""}
+            ${c.source ? `<a href="${c.source}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none;font-size:11px;margin-left:6px">source</a>` : ""}
+          </div>`
+        ).join("")}
+        ${j.facts.length > 0 ? `
+          <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin:8px 0 6px">Key facts</div>
+          ${j.facts.map((f) =>
+            `<div style="font-size:12px;color:#444;margin-bottom:4px;line-height:1.4">
+              ${f.text}
+              ${f.source ? `<a href="${f.source}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none;font-size:11px;margin-left:6px">source</a>` : ""}
+            </div>`
+          ).join("")}
+        ` : ""}
+      </div>`
     : "";
 
   return `
@@ -201,44 +222,48 @@ function buildCardHTML(j: JournalistData, version: string): string {
       a:hover { text-decoration: underline !important; }
     </style>
     <div role="dialog" aria-label="Journalist profile: ${j.name}" style="
-      width:340px;max-height:480px;overflow-y:auto;background:#fff;border:1px solid #e5e5e5;
+      width:380px;max-height:520px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;
       border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.04);
       animation:fadein 150ms ease-out;
     ">
       <!-- Header -->
-      <div style="padding:12px 16px;border-bottom:1px solid #f0f0f0">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#1a1a1a">${j.name}</div>
-            <div style="font-size:13px;color:#666;margin-top:2px">${j.beat ? j.beat + " · " : ""}${j.outlet}</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
-            <span style="font-size:10px;color:#6b7280;font-weight:500;white-space:nowrap">Byline Card</span>
-            ${j.methodology?.includes("demo") ? `<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;background:#fff3cd;color:#92400e;border:1px solid #fcd34d;letter-spacing:0.3px">DEMO DATA</span>` : ""}
-          </div>
+      <div style="padding:14px 16px;display:flex;align-items:center;gap:12px">
+        ${avatarHTML}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:15px;font-weight:600;color:#1a1a1a">${j.name}</div>
+          <div style="font-size:12px;color:#888;margin-top:2px">${j.outlet} · ${j.beat || "Politics"}</div>
         </div>
-        <div style="display:flex;gap:8px;margin-top:6px;align-items:center">
-          <span style="font-size:12px;color:#666">${j.article_count} articles</span>
-          <span style="font-size:11px;font-weight:500;padding:2px 6px;border-radius:4px;background:${conf.bg};color:${conf.text}">${j.confidence} confidence</span>
-        </div>
-        ${lowConfWarning}
+        <span style="font-size:10px;color:#6b7280;font-weight:500;white-space:nowrap">Byline Card</span>
       </div>
 
+      <!-- Spectrum bar -->
+      <div style="padding:4px 16px 10px;display:flex;align-items:center;gap:8px">
+        <span style="font-size:10px;font-weight:700;color:#dc2626">Left</span>
+        <div style="flex:1;position:relative;height:24px">
+          <div style="position:absolute;top:8px;left:0;right:0;height:8px;border-radius:4px;background:linear-gradient(to right,#dc2626,#f97316 25%,#d1d5db 50%,#3b82f6 75%,#1d4ed8)"></div>
+          <div style="position:absolute;top:1px;width:4px;height:22px;border-radius:2px;background:#1a1a1a;box-shadow:0 1px 4px rgba(0,0,0,0.4);left:${spectrumPos.toFixed(1)}%;transform:translateX(-50%)"></div>
+        </div>
+        <span style="font-size:10px;font-weight:700;color:#1d4ed8">Right</span>
+        <span style="font-size:12px;font-weight:600;color:${leanColor};white-space:nowrap;margin-left:4px">${leanText}</span>
+      </div>
+
+      <!-- Article count -->
+      <div style="padding:0 16px 10px;font-size:12px;color:#888">${j.article_count} articles</div>
+
       <!-- Distribution chart -->
-      <div style="padding:12px 16px;border-bottom:1px solid #f0f0f0">
-        <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Coverage distribution</div>
-        ${barRow("Left", dist.left)}
-        ${barRow("Centre-Left", dist.centre_left)}
-        ${barRow("Centre", dist.centre)}
-        ${barRow("Centre-Right", dist.centre_right)}
-        ${barRow("Right", dist.right)}
+      <div style="padding:10px 16px;border-top:1px solid #f3f4f6">
+        ${barRow("Left", dist.left, "left")}
+        ${barRow("Centre-Left", dist.centre_left, "centre_left")}
+        ${barRow("Centre", dist.centre, "centre")}
+        ${barRow("Centre-Right", dist.centre_right, "centre_right")}
+        ${barRow("Right", dist.right, "right")}
       </div>
 
       <!-- Connections -->
       ${connectionsHTML}
 
       <!-- Footer -->
-      <div style="padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#999">
+      <div style="padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#999;border-top:1px solid #f3f4f6">
         <span>AI-scored · Updated ${version}</span>
         <a href="https://github.com/ferguswatts/byline-card" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none">About</a>
       </div>
