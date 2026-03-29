@@ -38,6 +38,11 @@ SLUG_TO_NAME = {
     "barry-soper": "Barry Soper",
     "heather-du-plessis-allan": "Heather du Plessis-Allan",
     "mike-hosking": "Mike Hosking",
+    "kerre-woodham": "Kerre Woodham",
+    "ryan-bridge": "Ryan Bridge",
+    "kate-hawkesby": "Kate Hawkesby",
+    "chris-trotter": "Chris Trotter",
+    "bruce-cotterill": "Bruce Cotterill",
 }
 
 # Show-name to author-slug mapping for on-air content
@@ -49,6 +54,7 @@ SHOW_TO_SLUG = {
     "early-edition-with-ryan-bridge": "ryan-bridge",
     "saturday-morning-with-jack-tame": "jack-tame",
     "kerre-woodham-mornings": "kerre-woodham",
+    "kate-hawkesby": "kate-hawkesby",
 }
 
 
