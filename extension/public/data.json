@@ -229,7 +229,7 @@
       ],
       "methodology": "Based on 34 articles scored by AI"
     },
-    "jo-moir-rnz": {
+    "jo-moir": {
       "name": "Jo Moir",
       "aliases": [],
       "outlet": "RNZ",
@@ -247,11 +247,11 @@
       "facts": [],
       "methodology": "Based on 25 articles scored by AI"
     },
-    "john-campbell-1news": {
+    "john-campbell": {
       "name": "John Campbell",
       "aliases": [],
-      "outlet": "1News",
-      "beat": "Senior correspondent",
+      "outlet": "RNZ",
+      "beat": "Morning Report",
       "article_count": 17,
       "confidence": "low",
       "distribution": {
