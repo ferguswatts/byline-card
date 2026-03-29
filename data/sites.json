@@ -6,7 +6,7 @@
   },
   "stuff.co.nz": {
     "selectors": {
-      "byline": ".author-name, .sics-component__byline a, [class*='author']"
+      "byline": ".author-name, .sics-component__byline a, a[href*='/authors/'], [class*='author']"
     }
   },
   "thepost.co.nz": {
@@ -21,7 +21,12 @@
   },
   "1news.co.nz": {
     "selectors": {
-      "byline": ".author-name, [class*='author'], [class*='byline']"
+      "byline": ".author-name, a[href*='/reporter/'], [class*='author'], [class*='byline']"
+    }
+  },
+  "tvnz.co.nz": {
+    "selectors": {
+      "byline": "a[href*='/reporter/'], .author-name, [class*='author'], [class*='byline']"
     }
   },
   "newsroom.co.nz": {
