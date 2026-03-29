@@ -70,9 +70,20 @@ def init_db(conn: sqlite3.Connection) -> None:
             added_at TEXT
         );
 
+        CREATE TABLE IF NOT EXISTS discovered_urls (
+            id INTEGER PRIMARY KEY,
+            url TEXT UNIQUE NOT NULL,
+            journalist_id INTEGER REFERENCES journalists(id),
+            outlet TEXT NOT NULL,
+            source TEXT NOT NULL,
+            discovered_at TEXT
+        );
+
         CREATE INDEX IF NOT EXISTS idx_articles_journalist ON articles(journalist_id);
         CREATE INDEX IF NOT EXISTS idx_articles_url ON articles(url);
         CREATE INDEX IF NOT EXISTS idx_connections_journalist ON connections(journalist_id);
+        CREATE INDEX IF NOT EXISTS idx_discovered_journalist ON discovered_urls(journalist_id);
+        CREATE INDEX IF NOT EXISTS idx_discovered_outlet ON discovered_urls(outlet);
     """)
 
 

@@ -9,3 +9,6 @@ venv/
 .DS_Store
 extension/.output/
 dashboard.html
+pipeline/bylinecard.db
+pipeline/bylinecard.db-shm
+pipeline/bylinecard.db-wal
