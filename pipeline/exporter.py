@@ -31,13 +31,29 @@ def export_to_json(conn: sqlite3.Connection, output_path: Path) -> int:
 
         aliases = json.loads(j["aliases"]) if j["aliases"] else []
 
+        # Compute bias score from distribution (-1.0 to +1.0)
+        total = dist["article_count"]
+        if total > 0:
+            weighted = (
+                dist["left"] * -1.0
+                + dist["centre_left"] * -0.5
+                + dist["centre"] * 0.0
+                + dist["centre_right"] * 0.5
+                + dist["right"] * 1.0
+            )
+            bias_score = round(weighted / 100, 3)
+        else:
+            bias_score = 0.0
+
         data["journalists"][j["slug"]] = {
             "name": j["name"],
             "aliases": aliases,
             "outlet": j["outlet"],
             "beat": j["beat"] or "",
+            "photo_url": j["photo_url"] or "",
             "article_count": dist["article_count"],
             "confidence": dist["confidence"],
+            "bias_score": bias_score,
             "distribution": {
                 "left": dist["left"],
                 "centre_left": dist["centre_left"],

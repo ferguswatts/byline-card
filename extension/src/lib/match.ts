@@ -7,8 +7,10 @@ export interface JournalistData {
   aliases?: string[];
   outlet: string;
   beat: string;
+  photo_url?: string;
   article_count: number;
   confidence: string;
+  bias_score: number;
   distribution: {
     left: number;
     centre_left: number;

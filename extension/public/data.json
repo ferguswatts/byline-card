@@ -6,8 +6,10 @@
       "aliases": [],
       "outlet": "Stuff",
       "beat": "Political journalism",
+      "photo_url": "https://images.thespinoff.co.nz/1/2022/07/Screen-Shot-2022-07-18-at-8.15.16-PM.png",
       "article_count": 20,
       "confidence": "medium",
+      "bias_score": -0.2,
       "distribution": {
         "left": 5,
         "centre_left": 40,
@@ -42,8 +44,10 @@
       "aliases": [],
       "outlet": "NZ Herald",
       "beat": "Political editor",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/45f16500-c683-4ac8-aa9d-fa12beb73171.png",
       "article_count": 36,
       "confidence": "medium",
+      "bias_score": -0.085,
       "distribution": {
         "left": 0,
         "centre_left": 28,
@@ -60,8 +64,10 @@
       "aliases": [],
       "outlet": "NZ Herald",
       "beat": "Political editor",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/af148945-53ce-495b-af6d-1ba521ce7e99.png",
       "article_count": 36,
       "confidence": "medium",
+      "bias_score": -0.15,
       "distribution": {
         "left": 0,
         "centre_left": 36,
@@ -96,8 +102,10 @@
       "aliases": [],
       "outlet": "NZ Herald",
       "beat": "Political journalism",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/170d6f3c-093e-4a92-8203-b91546a98a4d.png",
       "article_count": 35,
       "confidence": "medium",
+      "bias_score": -0.185,
       "distribution": {
         "left": 0,
         "centre_left": 40,
@@ -114,8 +122,10 @@
       "aliases": [],
       "outlet": "RNZ",
       "beat": "Investigative",
+      "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--rNdz9vFZ--/c_scale,f_auto,q_auto,w_576/v1765844621/4JXDTR0_Guyon_Espiner_headshot_square_Nov25_jpg",
       "article_count": 25,
       "confidence": "medium",
+      "bias_score": -0.4,
       "distribution": {
         "left": 0,
         "centre_left": 80,
@@ -156,8 +166,10 @@
       "aliases": [],
       "outlet": "Stuff",
       "beat": "Political journalism",
+      "photo_url": "https://static3.stuff.co.nz/henry-cooke-stuff-seniorpolitica-619e29ee.jpg",
       "article_count": 12,
       "confidence": "low",
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 0,
@@ -179,8 +191,10 @@
       "aliases": [],
       "outlet": "RNZ",
       "beat": "Political editor",
+      "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--8UzLNBnU--/f_auto,q_auto/v1720740623/4KN5TF5_Jane_Patterson_portrait_png",
       "article_count": 2,
       "confidence": "low",
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 0,
@@ -204,8 +218,10 @@
       "aliases": [],
       "outlet": "NZ Herald",
       "beat": "Parliamentary politics",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/dcd224b9-bb20-4e63-b514-9c1ee8c5f78f.png",
       "article_count": 34,
       "confidence": "medium",
+      "bias_score": -0.015,
       "distribution": {
         "left": 0,
         "centre_left": 6,
@@ -229,13 +245,15 @@
       ],
       "methodology": "Based on 34 articles scored by AI"
     },
-    "jo-moir-rnz": {
+    "jo-moir": {
       "name": "Jo Moir",
       "aliases": [],
       "outlet": "RNZ",
       "beat": "Political journalism",
+      "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--MjeXcnJ9--/f_auto,q_auto/v1739233026/4KC5GJK_Jo_Moir_portrait_WK_crop_jpg",
       "article_count": 25,
       "confidence": "medium",
+      "bias_score": -0.2,
       "distribution": {
         "left": 0,
         "centre_left": 40,
@@ -247,13 +265,15 @@
       "facts": [],
       "methodology": "Based on 25 articles scored by AI"
     },
-    "john-campbell-1news": {
+    "john-campbell": {
       "name": "John Campbell",
       "aliases": [],
-      "outlet": "1News",
-      "beat": "Senior correspondent",
+      "outlet": "RNZ",
+      "beat": "Morning Report",
+      "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/John_Campbell_in_2019_%28cropped%29.jpg/330px-John_Campbell_in_2019_%28cropped%29.jpg",
       "article_count": 17,
       "confidence": "low",
+      "bias_score": -0.415,
       "distribution": {
         "left": 18,
         "centre_left": 47,
@@ -294,8 +314,10 @@
       "aliases": [],
       "outlet": "1News",
       "beat": "Parliamentary politics",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/tvnz/9942a886-eba2-4da2-b455-8c1ae017fdde.jpg",
       "article_count": 11,
       "confidence": "low",
+      "bias_score": -0.09,
       "distribution": {
         "left": 0,
         "centre_left": 18,
@@ -336,8 +358,10 @@
       "aliases": [],
       "outlet": "NZ Herald",
       "beat": "Political editor",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/f87e20f7-9a5c-4fdd-a0ca-90ad59252111.png",
       "article_count": 36,
       "confidence": "medium",
+      "bias_score": -0.025,
       "distribution": {
         "left": 0,
         "centre_left": 8,
