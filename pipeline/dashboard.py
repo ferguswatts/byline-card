@@ -134,6 +134,8 @@ def generate_html(conn) -> str:
             social_links.append(f'<a href="{j["linkedin_url"]}" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a>')
         if j['facebook_url']:
             social_links.append(f'<a href="{j["facebook_url"]}" target="_blank" rel="noopener" class="social-link social-fb">Facebook</a>')
+        if j['substack_url']:
+            social_links.append(f'<a href="{j["substack_url"]}" target="_blank" rel="noopener" class="social-link social-sub">Substack</a>')
         social_html = f'<div class="social-row">{"".join(social_links)}</div>' if social_links else ""
 
         # Connections section (shared by both empty and scored cards)
@@ -149,6 +151,11 @@ def generate_html(conn) -> str:
                 conn_rows += f'<div class="conn-row"><span class="conn-type">{c_type}</span> <span class="conn-target">{c_target}</span>{f" — {c_role}" if c_role else ""} {source_link}</div>'
             connections_html = f'<div class="card-connections"><div class="card-section-label">Connections</div>{social_html}{conn_rows}</div>'
 
+        bio_html = ""
+        bio = j['bio'] if 'bio' in j.keys() else None
+        if bio:
+            bio_html = f'<div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">{bio}</p></div>'
+
         if not articles:
             journalist_sections.append(f"""
             <div class="journalist-card empty">
@@ -160,6 +167,7 @@ def generate_html(conn) -> str:
                     </div>
                 </div>
                 {connections_html}
+                {bio_html}
                 <div class="no-data">No articles scored yet</div>
             </div>""")
             continue
@@ -244,6 +252,7 @@ def generate_html(conn) -> str:
             </div>
             {connections_html}
             {facts_html}
+            {bio_html}
             <div class="articles-section" id="articles-{j['slug']}" style="display:none">
                 <table class="art-table">
                     <thead>
@@ -327,8 +336,12 @@ def generate_html(conn) -> str:
   .social-bsky {{ background: #0085ff; color: #fff; }}
   .social-li {{ background: #0a66c2; color: #fff; }}
   .social-fb {{ background: #1877f2; color: #fff; }}
+  .social-sub {{ background: #ff6719; color: #fff; }}
 
   .card-methodology {{ padding: 6px 18px 10px; font-size: 11px; color: #aaa; border-top: 1px solid #f3f4f6; }}
+
+  .card-bio {{ padding: 10px 18px; border-top: 1px solid #f3f4f6; }}
+  .bio-text {{ font-size: 12px; color: #555; line-height: 1.6; margin: 0; }}
 
   .articles-section {{ border-top: 1px solid #f3f4f6; }}
   .art-table {{ width: 100%; border-collapse: collapse; font-size: 13px; }}
