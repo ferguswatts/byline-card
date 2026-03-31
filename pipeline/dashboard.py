@@ -531,22 +531,6 @@ def generate_html(conn) -> str:
 </head>
 <body>
 
-<header>
-  <div>
-    <h1>Byline Card</h1>
-    <div class="subtitle">NZ Journalist Transparency · Updated {generated_at}</div>
-  </div>
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-value">{total_articles}</div>
-      <div class="stat-label">Articles Scored</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">{scored_journalists} / {len(journalists)}</div>
-      <div class="stat-label">Journalists Active</div>
-    </div>
-  </div>
-</header>
 
 <div class="container">
   <div class="filter-bar">
