@@ -103,7 +103,7 @@ export default defineContentScript({
       }
 
       const shadow = cardEl.attachShadow({ mode: "open" });
-      shadow.innerHTML = buildCardHTML(match!.journalist, data.version);
+      shadow.innerHTML = buildCardHTML(match!.slug, match!.journalist, data.version);
 
       document.body.appendChild(cardEl);
 
@@ -177,7 +177,7 @@ function waitForByline(
   });
 }
 
-function buildCardHTML(j: JournalistData, version: string): string {
+function buildCardHTML(slug: string, j: JournalistData, version: string): string {
   const dist = j.distribution;
   const score = j.bias_score || 0;
 
@@ -299,7 +299,10 @@ function buildCardHTML(j: JournalistData, version: string): string {
       <!-- Footer -->
       <div style="padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#999;border-top:1px solid #f3f4f6">
         <span>AI-scored · Updated ${version}</span>
-        <a href="https://ferguswatts.github.io/byline-card/" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none">View all journalists</a>
+        <div style="display:flex;gap:12px">
+          <a href="https://ferguswatts.github.io/byline-card/#${slug}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none">View articles</a>
+          <a href="https://ferguswatts.github.io/byline-card/" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none">All journalists</a>
+        </div>
       </div>
     </div>
   `;

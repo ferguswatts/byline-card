@@ -4221,6 +4221,26 @@ function sortCards(mode, btn) {
   columns.forEach(col => { while (col.firstChild) col.removeChild(col.firstChild); });
   cards.forEach((c, i) => columns[i % columns.length].appendChild(c));
 }
+
+// Deep linking: open a journalist's card via URL hash (e.g. #thomas-coughlan-nzherald)
+function openFromHash() {
+  const slug = window.location.hash.replace('#', '');
+  if (!slug) return;
+  const details = document.getElementById('details-' + slug);
+  if (!details) return;
+  const card = details.closest('.journalist-card');
+  // Expand details + articles
+  details.style.display = 'block';
+  const articles = document.getElementById('articles-' + slug);
+  if (articles) articles.style.display = 'block';
+  const artContent = document.getElementById('articles-content-' + slug);
+  if (artContent) artContent.style.display = 'block';
+  card.querySelectorAll('.toggle-icon').forEach(el => el.classList.add('open'));
+  // Scroll into view
+  setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+window.addEventListener('DOMContentLoaded', openFromHash);
+window.addEventListener('hashchange', openFromHash);
 </script>
 </body>
 </html>
