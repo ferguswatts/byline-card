@@ -49,111 +49,131 @@ export default defineContentScript({
       return;
     }
 
-    let byline = detectByline(document, data.sites || {});
-    if (!byline) {
-      // Some sites (e.g. Stuff) render bylines via JS after page load — wait for it
-      byline = await waitForByline(data.sites || {}, 5000);
+    // Track what we've already set up to avoid duplicates
+    let currentBylineEl: HTMLElement | null = null;
+
+    async function scanForByline() {
+      let byline = detectByline(document, data.sites || {});
       if (!byline) {
-        console.log("[Byline Card] No byline detected on this page.");
+        byline = await waitForByline(data.sites || {}, 5000);
+        if (!byline) return;
+      }
+
+      console.log(`[Byline Card] Byline detected: ${byline.name} @ ${byline.outlet}`);
+
+      const match = matchJournalist(byline.name, byline.outlet, data);
+      if (!match) {
+        console.log(`[Byline Card] No match for: ${byline.name}`);
         return;
       }
-    }
 
-    console.log(`[Byline Card] Byline detected: ${byline.name} @ ${byline.outlet}`);
+      console.log(`[Byline Card] Matched: ${match.journalist.name}`);
 
-    const match = matchJournalist(byline.name, byline.outlet, data);
-    if (!match) {
-      console.log(`[Byline Card] No match for: ${byline.name}`);
-      return;
-    }
-
-    console.log(`[Byline Card] Matched: ${match.journalist.name}`);
-
-    const bylineEl = findBylineElement(byline.name);
-    if (!bylineEl) {
-      console.log("[Byline Card] Could not find byline DOM element.");
-      return;
-    }
-
-    // Add visual indicator
-    bylineEl.style.borderBottom = "2px dotted #3b82f6";
-    bylineEl.style.cursor = "pointer";
-    bylineEl.title = "Byline Card available — hover to see journalist profile";
-
-    let cardEl: HTMLDivElement | null = null;
-    let isCardHovered = false;
-    let isPinned = false;
-    let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
-
-    function showCard() {
-      if (cardEl) return;
-
-      cardEl = document.createElement("div");
-      cardEl.style.position = "absolute";
-      cardEl.style.zIndex = "2147483647";
-
-      const rect = bylineEl!.getBoundingClientRect();
-      cardEl.style.left = `${rect.left + window.scrollX}px`;
-
-      if (window.innerHeight - rect.bottom < 400) {
-        cardEl.style.top = `${rect.top + window.scrollY - 8}px`;
-        cardEl.style.transform = "translateY(-100%)";
-      } else {
-        cardEl.style.top = `${rect.bottom + window.scrollY + 8}px`;
+      const bylineEl = findBylineElement(byline.name);
+      if (!bylineEl) {
+        console.log("[Byline Card] Could not find byline DOM element.");
+        return;
       }
 
-      const shadow = cardEl.attachShadow({ mode: "open" });
-      shadow.innerHTML = buildCardHTML(match!.slug, match!.journalist, data.version);
+      // Skip if we already set up this exact element
+      if (bylineEl === currentBylineEl) return;
+      currentBylineEl = bylineEl;
 
-      document.body.appendChild(cardEl);
+      // Add visual indicator
+      bylineEl.style.borderBottom = "2px dotted #3b82f6";
+      bylineEl.style.cursor = "pointer";
+      bylineEl.title = "Byline Card available — hover to see journalist profile";
 
-      cardEl.addEventListener("mouseenter", () => {
-        isCardHovered = true;
-        if (hoverTimeout) { clearTimeout(hoverTimeout); hoverTimeout = null; }
-      });
-      cardEl.addEventListener("mouseleave", () => {
+      let cardEl: HTMLDivElement | null = null;
+      let isCardHovered = false;
+      let isPinned = false;
+      let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
+
+      function showCard() {
+        if (cardEl) return;
+
+        cardEl = document.createElement("div");
+        cardEl.style.position = "absolute";
+        cardEl.style.zIndex = "2147483647";
+
+        const rect = bylineEl!.getBoundingClientRect();
+        cardEl.style.left = `${rect.left + window.scrollX}px`;
+
+        if (window.innerHeight - rect.bottom < 400) {
+          cardEl.style.top = `${rect.top + window.scrollY - 8}px`;
+          cardEl.style.transform = "translateY(-100%)";
+        } else {
+          cardEl.style.top = `${rect.bottom + window.scrollY + 8}px`;
+        }
+
+        const shadow = cardEl.attachShadow({ mode: "open" });
+        shadow.innerHTML = buildCardHTML(match!.slug, match!.journalist, data.version);
+
+        document.body.appendChild(cardEl);
+
+        cardEl.addEventListener("mouseenter", () => {
+          isCardHovered = true;
+          if (hoverTimeout) { clearTimeout(hoverTimeout); hoverTimeout = null; }
+        });
+        cardEl.addEventListener("mouseleave", () => {
+          isCardHovered = false;
+          if (!isPinned) scheduleHide();
+        });
+        cardEl.addEventListener("click", () => { isPinned = true; });
+      }
+
+      function hideCard() {
+        if (isPinned) return;
+        if (cardEl) { cardEl.remove(); cardEl = null; }
         isCardHovered = false;
-        if (!isPinned) scheduleHide();
+      }
+
+      function scheduleHide() {
+        if (hoverTimeout) clearTimeout(hoverTimeout);
+        hoverTimeout = setTimeout(() => {
+          if (!isCardHovered && !isPinned) hideCard();
+        }, 200);
+      }
+
+      let showTimeout: ReturnType<typeof setTimeout> | null = null;
+      bylineEl.addEventListener("mouseenter", () => {
+        showTimeout = setTimeout(showCard, 300);
       });
-      cardEl.addEventListener("click", () => { isPinned = true; });
+      bylineEl.addEventListener("mouseleave", () => {
+        if (showTimeout) { clearTimeout(showTimeout); showTimeout = null; }
+        scheduleHide();
+      });
+
+      bylineEl.setAttribute("tabindex", "0");
+      bylineEl.addEventListener("focus", showCard);
+      bylineEl.addEventListener("blur", () => {
+        setTimeout(() => { if (!isCardHovered && !isPinned) hideCard(); }, 200);
+      });
+
+      document.addEventListener("click", (e) => {
+        if (isPinned && cardEl && !cardEl.contains(e.target as Node)) {
+          isPinned = false; hideCard();
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && cardEl) { isPinned = false; hideCard(); }
+      });
     }
 
-    function hideCard() {
-      if (isPinned) return;
-      if (cardEl) { cardEl.remove(); cardEl = null; }
-      isCardHovered = false;
-    }
+    // Initial scan
+    await scanForByline();
 
-    function scheduleHide() {
-      if (hoverTimeout) clearTimeout(hoverTimeout);
-      hoverTimeout = setTimeout(() => {
-        if (!isCardHovered && !isPinned) hideCard();
-      }, 200);
-    }
-
-    let showTimeout: ReturnType<typeof setTimeout> | null = null;
-    bylineEl.addEventListener("mouseenter", () => {
-      showTimeout = setTimeout(showCard, 300);
-    });
-    bylineEl.addEventListener("mouseleave", () => {
-      if (showTimeout) { clearTimeout(showTimeout); showTimeout = null; }
-      scheduleHide();
-    });
-
-    bylineEl.setAttribute("tabindex", "0");
-    bylineEl.addEventListener("focus", showCard);
-    bylineEl.addEventListener("blur", () => {
-      setTimeout(() => { if (!isCardHovered && !isPinned) hideCard(); }, 200);
-    });
-
-    document.addEventListener("click", (e) => {
-      if (isPinned && cardEl && !cardEl.contains(e.target as Node)) {
-        isPinned = false; hideCard();
+    // Re-scan on soft navigation (SPA sites like Stuff)
+    let lastUrl = location.href;
+    const observer = new MutationObserver(() => {
+      if (location.href !== lastUrl) {
+        lastUrl = location.href;
+        currentBylineEl = null;
+        console.log("[Byline Card] URL changed (soft navigation), re-scanning...");
+        scanForByline();
       }
     });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && cardEl) { isPinned = false; hideCard(); }
-    });
+    observer.observe(document.body, { childList: true, subtree: true });
   },
 });
 
