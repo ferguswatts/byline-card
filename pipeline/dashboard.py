@@ -518,7 +518,7 @@ def generate_html(conn) -> str:
   </div>
 </div>
 
-<footer>Byline Card pipeline · SQLite data · Refresh by running <code>python -m pipeline.dashboard --open</code></footer>
+<footer>Byline Card · Open source at <a href="https://github.com/ferguswatts/byline-card" style="color:#999">GitHub</a></footer>
 
 <script>
 function toggleDetails(slug) {{
