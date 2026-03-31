@@ -3,29 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Byline Card — Dev Dashboard</title>
+<title>Byline Card — NZ Journalist Transparency</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: #f8f9fa; color: #1a1a1a; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: #f8f9fa; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
 
+  /* ── Header ── */
   header { background: #1a1a1a; color: #fff; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
-  header h1 { font-size: 18px; font-weight: 600; }
+  header h1 { font-size: clamp(16px, 2vw, 18px); font-weight: 600; }
   header .subtitle { font-size: 12px; color: #999; margin-top: 2px; }
   .stats { display: flex; gap: 24px; }
   .stat { text-align: right; }
-  .stat-value { font-size: 22px; font-weight: 700; color: #fff; }
+  .stat-value { font-size: clamp(18px, 2.5vw, 22px); font-weight: 700; color: #fff; }
   .stat-label { font-size: 11px; color: #888; }
 
+  /* ── Layout ── */
   .container { max-width: 1600px; margin: 0 auto; padding: 24px 16px; }
   .card-grid { display: flex; gap: 8px; align-items: flex-start; }
   .card-column { flex: 1; min-width: 0; }
-  @media (max-width: 1200px) { .card-grid { flex-wrap: wrap; } .card-column { flex: 0 0 calc(50% - 4px); } }
-  @media (max-width: 768px) { .card-column { flex: 0 0 100%; } }
 
-  .journalist-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
-  .journalist-card.empty { }
+  /* ── Cards ── */
+  .journalist-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.2s; }
+  .journalist-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 
-  .j-header { padding: 10px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+  .j-header { padding: 10px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; min-height: 44px; flex-wrap: wrap; transition: background 0.15s; }
   .j-header:hover { background: #f9fafb; }
   .j-avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; overflow: hidden; }
   .j-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -34,6 +35,8 @@
   .j-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
   .j-meta { font-size: 12px; color: #888; margin-top: 2px; }
   .j-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+  /* ── Spectrum widget ── */
   .spectrum-wrap { display: flex; align-items: center; gap: 4px; width: 140px; flex-shrink: 0; }
   .spectrum-label-l { font-size: 10px; font-weight: 700; color: #dc2626; }
   .spectrum-label-r { font-size: 10px; font-weight: 700; color: #1d4ed8; }
@@ -48,6 +51,11 @@
   .toggle-icon { font-size: 11px; color: #bbb; transition: transform 0.2s; }
   .toggle-icon.open { transform: rotate(180deg); }
 
+  /* ── Accordion sections (Pretext-animated) ── */
+  .accordion-body { height: 0; overflow: clip; transition: height 250ms ease; }
+  .accordion-body.open { /* height set by JS */ }
+
+  /* ── Distribution ── */
   .dist-section { padding: 10px 18px 12px; border-top: 1px solid #f3f4f6; }
   .dist-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
   .dist-label { width: 88px; font-size: 11px; font-weight: 500; color: #555; text-align: right; flex-shrink: 0; }
@@ -57,9 +65,9 @@
   .dist-pct { color: #aaa; }
 
   .no-data { padding: 10px 18px; font-size: 12px; color: #aaa; }
-
   .conf-badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
 
+  /* ── Connections & bio ── */
   .card-connections { padding: 10px 18px; border-top: 1px solid #f3f4f6; }
   .card-section-label { font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 6px; }
   .conn-row { font-size: 12px; color: #444; margin-bottom: 4px; line-height: 1.4; }
@@ -68,7 +76,7 @@
   .conn-source { color: #2563eb; text-decoration: none; font-size: 11px; margin-left: 6px; }
   .conn-source:hover { text-decoration: underline; }
   .social-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
-  .social-link { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 4px; text-decoration: none; }
+  .social-link { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 4px; text-decoration: none; transition: opacity 0.15s; }
   .social-link:hover { opacity: 0.8; }
   .social-x { background: #0f1419; color: #fff; }
   .social-bsky { background: #0085ff; color: #fff; }
@@ -77,12 +85,12 @@
   .social-sub { background: #ff6719; color: #fff; }
 
   .card-methodology { padding: 6px 18px 10px; font-size: 11px; color: #aaa; border-top: 1px solid #f3f4f6; }
-
   .card-bio { padding: 10px 18px; border-top: 1px solid #f3f4f6; }
   .bio-text { font-size: 12px; color: #555; line-height: 1.6; margin: 0; }
 
+  /* ── Articles ── */
   .details-section { }
-  .articles-toggle { padding: 10px 18px; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; font-size: 12px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.4px; }
+  .articles-toggle { padding: 10px 18px; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; font-size: 12px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.4px; min-height: 44px; transition: background 0.15s; }
   .articles-toggle:hover { background: #f9fafb; }
   .articles-section { border-top: 1px solid #f3f4f6; }
   .art-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -100,22 +108,66 @@
   .month-arrow.open { transform: rotate(0deg); }
   .month-arrow:not(.open) { transform: rotate(-90deg); }
 
-  .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
-  .filter-btn { padding: 5px 12px; border-radius: 20px; border: 1px solid #e5e7eb; background: #fff; font-size: 12px; cursor: pointer; color: #555; }
+  /* ── Filter bar ── */
+  .filter-bar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; position: sticky; top: 0; z-index: 10; background: #f8f9fa; padding: 8px 0; }
+  .filter-btn { padding: 8px 14px; border-radius: 20px; border: 1px solid #e5e7eb; background: #fff; font-size: 12px; cursor: pointer; color: #555; min-height: 36px; transition: all 0.15s; }
   .filter-btn:hover, .filter-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
   .filter-label { font-size: 12px; color: #888; margin-right: 4px; }
-  .search-input { padding: 5px 12px; border-radius: 20px; border: 1px solid #e5e7eb; font-size: 12px; outline: none; width: 180px; margin-left: auto; }
+  .search-input { padding: 8px 14px; border-radius: 20px; border: 1px solid #e5e7eb; font-size: 12px; outline: none; width: 180px; margin-left: auto; min-height: 36px; transition: border-color 0.15s; }
   .search-input:focus { border-color: #1a1a1a; }
 
   footer { text-align: center; font-size: 11px; color: #bbb; padding: 24px; }
+  footer a { transition: color 0.15s; }
+
+  /* ── Responsive: 3-col → 2-col ── */
+  @media (max-width: 1200px) {
+    .card-grid { flex-wrap: wrap; }
+    .card-column { flex: 0 0 calc(50% - 4px); }
+  }
+
+  /* ── Responsive: 2-col → 1-col ── */
+  @media (max-width: 1024px) {
+    .card-column { flex: 0 0 100%; }
+  }
+
+  /* ── Responsive: tablet ── */
+  @media (max-width: 768px) {
+    header { padding: 16px; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .stats { width: 100%; }
+    .search-input { width: 100%; margin-left: 0; }
+    .filter-bar { gap: 6px; }
+    .filter-btn { padding: 8px 12px; font-size: 11px; }
+    .art-table thead th:nth-child(4),
+    .art-table tbody td:nth-child(4) { display: none; }
+  }
+
+  /* ── Responsive: phone ── */
+  @media (max-width: 480px) {
+    .container { padding: 12px 8px; }
+    .j-header { flex-wrap: wrap; padding: 10px 12px; }
+    .j-right { width: 100%; margin-top: 6px; padding-left: 52px; }
+    .spectrum-wrap { width: 100%; }
+    .art-table thead th:nth-child(2),
+    .art-table tbody td:nth-child(2) { display: none; }
+    .art-table tbody td { padding: 8px 10px; }
+    .dist-section { padding: 10px 12px; }
+    .card-connections { padding: 10px 12px; }
+    .card-bio { padding: 10px 12px; }
+    .articles-toggle { padding: 10px 12px; }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .accordion-body, .toggle-icon, .month-arrow, .dist-bar, .journalist-card, .filter-btn, .social-link { transition: none !important; }
+  }
 </style>
 </head>
 <body>
 
 <header>
   <div>
-    <h1>Byline Card · Dev Dashboard</h1>
-    <div class="subtitle">Generated 2026-03-31 15:29:24</div>
+    <h1>Byline Card</h1>
+    <div class="subtitle">NZ Journalist Transparency · Updated 2026-03-31 17:56:59</div>
   </div>
   <div class="stats">
     <div class="stat">
@@ -177,7 +229,7 @@
                     <span class="lean-text" style="color:#d97706">8% left leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-andrea-vance-stuff" style="display:none">
+            <div class="accordion-body" id="details-andrea-vance-stuff">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -219,24 +271,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/avancenz" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/andrea-vance-474b6bb9" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">Stuff Limited</span> — Formerly Fairfax NZ <a href="https://www.stuff.co.nz/about-stuff" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Peter Dunne</span> — United Future leader and Revenue Minister — Textgate 2013 (86 emails in 13 days; Dunne resigned; Vance's phone records and parliamentary swipe card data were improperly accessed) <a href="https://en.wikipedia.org/wiki/Textgate_(New_Zealand)" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-connections"><div class="card-section-label">Key facts</div><div class="conn-row">'Textgate' (2013): exchanged 86 emails over 13 days with Revenue Minister Peter Dunne about GCSB leak inquiry; Dunne resigned; a subsequent inquiry improperly accessed Vance's phone records AND parliamentary swipe card movement data — a major NZ privacy scandal <a href="https://en.wikipedia.org/wiki/Textgate_(New_Zealand)" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Andrea Vance is a Northern Irish political journalist currently serving as a senior journalist at Stuff in Wellington. She grew up near Belfast, where her father edited three local newspapers. She worked for seven years as an investigative reporter at the British tabloid News of the World. When the phone hacking scandal broke, Vance was in the Glasgow newsroom and has denied any personal involvement, stating "no one had any idea it was going on." She subsequently worked as night news editor at The Scotsman before emigrating to New Zealand with her Kiwi husband. She became a prominent press gallery journalist, working for Fairfax/Stuff and later 1News. In 2013, she was at the centre of the Peter Dunne email scandal, in which minister Dunne resigned after refusing to release 86 email exchanges with Vance regarding a leaked GCSB report. Her phone records and parliamentary swipe-card data were improperly provided to the inquiry without her knowledge, prompting a major privacy breach complaint. She was named Political Journalist of the Year in 2025.</p></div>
-            </div>
-            <div class="articles-section" id="articles-andrea-vance-stuff" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('andrea-vance-stuff')">
-                    <span>Articles (20)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-andrea-vance-stuff" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('andrea-vance-stuff')">
+                        <span>Articles (20)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-andrea-vance-stuff">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-andrea-vance-stuff-2026-03').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> March 2026 <span style="font-weight:400;color:#9ca3af">(1 articles)</span>
@@ -402,8 +453,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">+0.15</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -416,7 +468,7 @@
                         <div class="j-meta">Newstalk ZB · Parliamentary politics</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-barry-soper-newstalkzb" style="display:none">
+                <div class="accordion-body" id="details-barry-soper-newstalkzb">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/barrysoper" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/barry-soper-18998b21" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">spouse</span> <span class="conn-target">Heather du Plessis-Allan</span> — Broadcaster Newstalk ZB <a href="https://en.wikipedia.org/wiki/Barry_Soper" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of Newstalk ZB and NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">John Key</span> — Former NZ Prime Minister (2008-2016) — personal friend <a href="https://en.wikipedia.org/wiki/Barry_Soper" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Barry Soper (born c. 1951, Gore) is the longest-serving member of New Zealand's Parliamentary Press Gallery, having joined in 1980. After briefly attending the Royal New Zealand Police College in 1969, he entered journalism at The Southland Times, progressing through the Mataura Ensign, Otago Daily Times, New Zealand Truth, and Waikato Times. He joined the press gallery working for APN before moving to Newstalk ZB, where he has served as political editor and senior political correspondent. He has covered eleven prime ministers, both Fijian coups (1987 and 2000), and Nelson Mandela's inauguration. He was named Individual Radio Journalist of the Year in 2001. In 1992, he was approached to stand as a Labour Party candidate in the Wellington Central by-election but declined. He married journalist and broadcaster Heather du Plessis-Allan in 2009. He was named unfavourably in Jacinda Ardern's 2025 memoir.</p></div>
                 </div>
@@ -430,7 +482,7 @@
                         <div class="j-meta">Stuff · Political analysis</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-bryce-edwards-stuff" style="display:none">
+                <div class="accordion-body" id="details-bryce-edwards-stuff">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/bryce_edwards" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/bryce-edwards-3939513" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a><a href="https://www.facebook.com/edwards.bryce/" target="_blank" rel="noopener" class="social-link social-fb">Facebook</a><a href="https://theintegrityinstitute.substack.com/" target="_blank" rel="noopener" class="social-link social-sub">Substack</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Alliance Party</span> — Former executive assistant in electoral liaison unit (2001) <a href="https://keywiki.org/Bryce_Edwards" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Workers Party</span> — Listed as member (2007); spoke at Marxism 2007 <a href="https://keywiki.org/Bryce_Edwards" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Bryce Edwards is a political commentator and academic based at Victoria University of Wellington, where he is a Research Associate in the Institute of Governance and Policy Studies and Director of the Democracy Project. He holds a PhD in political sociology (2004) and previously lectured in Political Studies at Otago University. Edwards has a well-documented history on the political left. He helped found the Canterbury University Progressive Left Club in 1993 and was a contact for the Canterbury University Marxist Society in 1995. He worked in the Alliance Party's electoral liaison unit in 2001 as an executive assistant. In 2007, he was identified as a member of the Workers Party and spoke at the Marxism 2007 conference. Despite this left-wing background, he has built a mainstream media career as a political analyst, writing regular columns for the NZ Herald, The Guardian, and other outlets.</p></div>
                 </div>
@@ -444,7 +496,7 @@
                         <div class="j-meta">NZ Herald · Political commentary</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-david-farrar-nzherald" style="display:none">
+                <div class="accordion-body" id="details-david-farrar-nzherald">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/dpfdpf" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/dpfdpf" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a><a href="https://www.facebook.com/davidpfarrar/" target="_blank" rel="noopener" class="social-link social-fb">Facebook</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — NZ Herald columnist <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">NZ National Party</span> — Former staffer for four National leaders (1996-2004); Curia is National internal pollster <a href="https://www.kiwiblog.co.nz/disclosure_statement" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">NZ Taxpayers Union</span> — Co-founded in 2013 with Jordan Williams <a href="https://en.wikipedia.org/wiki/David_Farrar_(blogger)" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">David Farrar (born 1967) is a New Zealand political blogger, pollster, and activist with deep ties to the National Party. He worked in Parliament for four National leaders, including in the Prime Minister's Office under Jim Bolger (1996-97) and Jenny Shipley (1997-99). He was national secretary of the Young Nationals. In 2003 he founded Kiwiblog, which became New Zealand's most widely read political blog. In 2004 he founded Curia Market Research, which serves as the National Party's internal pollster. In 2013 he co-founded the New Zealand Taxpayers' Union with Jordan Williams. He writes a regular column for the NZ Herald. The 2009 NZ Listener Power List ranked him the fourth most powerful person in New Zealand media.</p></div>
                 </div>
@@ -458,7 +510,7 @@
                         <div class="j-meta">The Spinoff · Media and business</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-duncan-greive-thespinoff" style="display:none">
+                <div class="accordion-body" id="details-duncan-greive-thespinoff">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/duncangreive" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/duncan-greive" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a><a href="https://thespinoffrecroom.substack.com/" target="_blank" rel="noopener" class="social-link social-sub">Substack</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">The Spinoff</span> — Founder <a href="https://thespinoff.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Duncan Greive (born 1979, Auckland) is the founder of The Spinoff, New Zealand's leading independent online media outlet, which he launched in 2014. He studied history at the University of Auckland and worked in marketing before establishing himself as a freelance journalist. In 2015 he co-wrote Dan Carter's bestselling autobiography. He was named Editor of the Year and Media Visionary at the 2017 NZ Marketing Awards. He stepped down as CEO in 2023 but remains founder and chair. He hosts The Fold, a media-focused podcast. His wife Nicola is a lawyer at the Serious Fraud Office.</p></div>
                 </div>
@@ -489,7 +541,7 @@
                     <span class="lean-text" style="color:#6366f1">7% right leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-henry-cooke-stuff" style="display:none">
+            <div class="accordion-body" id="details-henry-cooke-stuff">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -531,24 +583,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/henrycooke" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://bsky.app/profile/henrycooke.bsky.social" target="_blank" rel="noopener" class="social-link social-bsky">Bluesky</a><a href="https://linkedin.com/in/henry-cooke-3ab1ba46" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a><a href="https://henrycooke.substack.com/" target="_blank" rel="noopener" class="social-link social-sub">Substack</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">Stuff Limited</span> — Formerly Fairfax NZ <a href="https://www.stuff.co.nz/about-stuff" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-connections"><div class="card-section-label">Key facts</div><div class="conn-row">Left journalism to work in public relations in London for several years before returning as deputy political reporter at The Post in September 2025; runs the 'Museum Street' politics newsletter <a href="https://www.stuff.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Henry Cooke is a political journalist at Stuff/The Post. He studied international relations, political science, and media studies at Victoria University of Wellington. He joined Stuff through a summer internship, moving to the press gallery in 2017. He rose to chief political reporter and deputy political editor. He left journalism to work in public relations in London before returning as deputy political reporter at The Post in September 2025. He runs the 'Museum Street' politics newsletter on Substack.</p></div>
-            </div>
-            <div class="articles-section" id="articles-henry-cooke-stuff" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('henry-cooke-stuff')">
-                    <span>Articles (12)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-henry-cooke-stuff" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('henry-cooke-stuff')">
+                        <span>Articles (12)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-henry-cooke-stuff">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-henry-cooke-stuff-2025-10').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> October 2025 <span style="font-weight:400;color:#9ca3af">(12 articles)</span>
@@ -626,8 +677,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">+0.15</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -657,7 +709,7 @@
                     <span class="lean-text" style="color:#6b7280">Centre</span>
                 </div>
             </div>
-            <div class="details-section" id="details-jane-patterson-rnz" style="display:none">
+            <div class="accordion-body" id="details-jane-patterson-rnz">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -699,24 +751,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/janepatterson" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/jane-patterson-01868a39" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">RNZ</span> — Public broadcaster funded by NZ Government <a href="https://www.rnz.co.nz/about" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Jane Patterson is a senior journalist at Radio New Zealand who joined in May 2000. She spent most of her career in the Parliamentary Press Gallery, where she is a life member, including eight years as RNZ's political editor. She was appointed Director of Editorial Quality and Training at RNZ. Her awards include Best Coverage of a News Event for Election 2017 at the 2018 Voyager Awards.</p></div>
-            </div>
-            <div class="articles-section" id="articles-jane-patterson-rnz" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('jane-patterson-rnz')">
-                    <span>Articles (24)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-jane-patterson-rnz" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('jane-patterson-rnz')">
+                        <span>Articles (24)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-jane-patterson-rnz">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-jane-patterson-rnz-2025-09').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> September 2025 <span style="font-weight:400;color:#9ca3af">(2 articles)</span>
@@ -876,8 +927,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">+0.15</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -890,7 +942,7 @@
                         <div class="j-meta">RNZ · Current affairs</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-jesse-mulligan-rnz" style="display:none">
+                <div class="accordion-body" id="details-jesse-mulligan-rnz">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/JesseMulligan" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://jessemulligan.substack.com/" target="_blank" rel="noopener" class="social-link social-sub">Substack</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">RNZ</span> — Public broadcaster funded by NZ Government <a href="https://www.rnz.co.nz/about" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Jacinda Ardern</span> — Former NZ Prime Minister — personal friend; named in Ardern's 2025 memoir; interviewed Ardern on RNZ on memoir release <a href="https://en.wikipedia.org/wiki/Jesse_Mulligan_(broadcaster)" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Jesse Mulligan is a New Zealand broadcaster, food critic, and former comedian. He hosts RNZ National's Afternoons since 2015. His television career includes co-hosting TVNZ's Seven Sharp (2013-2014) and co-hosting The Project on Three (2017-2023). He is the dining-out editor for Viva magazine and writes the I Ate Auckland newsletter on Substack.</p></div>
                 </div>
@@ -921,7 +973,7 @@
                     <span class="lean-text" style="color:#f97316">38% left leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-john-campbell" style="display:none">
+            <div class="accordion-body" id="details-john-campbell">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -963,24 +1015,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/JohnJCampbell" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">RNZ</span> — Public broadcaster funded by NZ Government <a href="https://www.rnz.co.nz/about" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">spouse</span> <span class="conn-target">Emma Patterson</span> — Documentary editor <a href="https://en.wikipedia.org/wiki/John_Campbell_(journalist)" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">TVNZ</span> — Chief Correspondent at TVNZ/1News <a href="https://www.tvnz.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-connections"><div class="card-section-label">Key facts</div><div class="conn-row">Chief Correspondent at TVNZ/1News; announced in late 2025 to join RNZ Morning Report in 2026 <a href="https://www.rnz.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">John Campbell (born 10 February 1964) is one of New Zealand's most recognised broadcast journalists. He began at Radio New Zealand as a business reporter in 1989. He moved to TV3 in 1991, co-anchoring 3 News (1998-2005). He fronted Campbell Live (2005-2015), whose cancellation prompted public outcry. He returned to RNZ in 2016 to host Checkpoint, then joined TVNZ in 2018. In December 2025 he was announced as co-host of RNZ's Morning Report from April 2026. He is married to documentary editor Emma Patterson.</p></div>
-            </div>
-            <div class="articles-section" id="articles-john-campbell" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('john-campbell')">
-                    <span>Articles (37)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-john-campbell" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('john-campbell')">
+                        <span>Articles (37)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-john-campbell">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-john-campbell-2026-02').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> February 2026 <span style="font-weight:400;color:#9ca3af">(1 articles)</span>
@@ -1338,8 +1389,9 @@
                     <td><span class="bucket-badge" style="background:#f9731620;color:#f97316;border:1px solid #f9731640">centre-left</span></td>
                     <td class="art-score" style="color:#f97316">-0.45</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1352,7 +1404,7 @@
                         <div class="j-meta">Newstalk ZB · Current affairs</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-kerre-woodham-newstalkzb" style="display:none">
+                <div class="accordion-body" id="details-kerre-woodham-newstalkzb">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/kerremcivor" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of Newstalk ZB and NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Kerre Woodham (born c. 1964) is a veteran New Zealand journalist, radio host, author and columnist. She studied journalism at Wellington Polytechnic and began her career at Radio New Zealand before moving into television as a reporter on Fair Go (1986-1990). She hosted Ready Steady Cook (1998-2005) and presented Heartland (1994-1997). An author of several books including Short Fat Chick to Marathon Runner, she is one of New Zealand's most recognisable broadcasters with over 35 years in media. She hosts Kerre Woodham Mornings (9am-12pm weekdays) on Newstalk ZB.</p></div>
                 </div>
@@ -1366,7 +1418,7 @@
                         <div class="j-meta">NZ Herald · Political commentary</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-matthew-hooton-nzherald" style="display:none">
+                <div class="accordion-body" id="details-matthew-hooton-nzherald">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/MatthewHootonNZ" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — NZ Herald columnist and Newstalk ZB panellist <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">RNZ</span> — Regular political panellist on RNZ Nine to Noon and Morning Report <a href="https://www.rnz.co.nz/about" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">National Party</span> — Paid political consultant for National Party while simultaneously serving as NZ Herald columnist and RNZ panellist <a href="https://en.wikipedia.org/wiki/Matthew_Hooton" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">ACT Party</span> — Paid political consultant for ACT Party while simultaneously serving as public commentator <a href="https://en.wikipedia.org/wiki/Matthew_Hooton" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">NZ National Party</span> — Hired as consultant after engineering Todd Muller leadership coup (2020); resigned within months <a href="https://en.wikipedia.org/wiki/Matthew_Hooton" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">Exceltium</span> — Founder; PR/government relations firm <a href="https://www.exceltium.com/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Matthew Hooton is a New Zealand PR consultant, lobbyist, and centre-right political commentator. He founded Exceltium in 2005, providing government relations and PR to major clients. He is known for his NZ Herald column and as a panellist on RNZ's political discussions. His dual role as commentator and lobbyist has drawn persistent conflict-of-interest criticism. In 2020, he was hired as a National Party consultant after helping engineer Todd Muller's leadership coup but resigned within months. He later settled a defamation claim brought by former National MP Steven Joyce.</p></div>
                 </div>
@@ -1380,7 +1432,7 @@
                         <div class="j-meta">Newstalk ZB · Current affairs</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-mike-hosking-newstalkzb" style="display:none">
+                <div class="accordion-body" id="details-mike-hosking-newstalkzb">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/hoskingonzb" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">spouse</span> <span class="conn-target">Kate Hawkesby</span> — Newstalk ZB broadcaster and NZ Herald columnist <a href="https://en.wikipedia.org/wiki/Kate_Hawkesby" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">NZ National Party</span> — Open supporter; publicly stated "keep them in Government" <a href="https://en.wikipedia.org/wiki/Mike_Hosking" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of Newstalk ZB and NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Mike Hosking (born 1965, Dunedin) is New Zealand's most prominent radio broadcaster. He left school at 16, starting as an advertising copywriter before getting his break on Wellington's Radio Windy. He hosted Radio New Zealand's Tonight Show and Morning Report, then joined Newstalk ZB in 2008 as weekday Breakfast host — a role he still holds. On television, he co-presented TVNZ's Breakfast (1997-2005) and Seven Sharp (2014-2017). He writes a regular opinion column for the NZ Herald. Hosking is an open supporter of the centre-right National Party and is frequently critical of Labour-led governments. His career has drawn multiple successful Broadcasting Standards Authority complaints. He is married to fellow Newstalk ZB broadcaster Kate Hawkesby. A landmark 2003 privacy case involving Hosking established "the Hosking principles" in NZ common law.</p></div>
                 </div>
@@ -1394,7 +1446,7 @@
                         <div class="j-meta">The Spinoff · Political commentary</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-toby-manhire-thespinoff" style="display:none">
+                <div class="accordion-body" id="details-toby-manhire-thespinoff">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/toby_etc" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://bsky.app/profile/tobymanhire.bsky.social" target="_blank" rel="noopener" class="social-link social-bsky">Bluesky</a><a href="https://linkedin.com/in/toby-j-manhire-b5080120a" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a><a href="https://www.facebook.com/manhiretoby/" target="_blank" rel="noopener" class="social-link social-fb">Facebook</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">The Spinoff</span> — Editor-at-large <a href="https://thespinoff.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Ben Thomas (podcast co-host)</span> — Gone By Lunchtime co-host; former National press secretary and ACT campaign adviser <a href="https://en.wikipedia.org/wiki/Toby_Manhire" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Toby Manhire is a New Zealand journalist, editor, and the son of Bill Manhire, New Zealand's inaugural Poet Laureate. He edited student magazine Salient in 1997 before spending over a decade in London, where he worked at The Guardian, including as editor of its comment pages. He is editor-at-large at The Spinoff and host of Gone By Lunchtime, a popular politics podcast alongside Annabelle Lee-Mather and Ben Thomas.</p></div>
                 </div>
@@ -1407,7 +1459,7 @@
                         <div class="j-meta">Stuff · Editor-at-large</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-anna-fifield-stuff" style="display:none">
+                <div class="accordion-body" id="details-anna-fifield-stuff">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/annafifield" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://bsky.app/profile/annafifield.bsky.social" target="_blank" rel="noopener" class="social-link social-bsky">Bluesky</a><a href="https://linkedin.com/in/anna-fifield-baa4a047" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">Stuff Limited</span> — Formerly Fairfax NZ <a href="https://www.stuff.co.nz/about-stuff" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Anna Fifield (born 1976, Hastings) is a New Zealand journalist with an extensive international career. She studied English at Victoria University of Wellington and completed a postgraduate journalism diploma at the University of Canterbury. At 25, she moved to London and joined the Financial Times, where she spent 13 years as a foreign correspondent covering the Middle East, Korea, and US politics. She joined The Washington Post in 2014 as Tokyo bureau chief, later becoming Beijing bureau chief. She won the 2018 Shorenstein Journalism Award from Stanford and authored "The Great Successor" (2019), a book on Kim Jong Un translated into 24 languages. She was also a Nieman Fellow at Harvard. Returning to New Zealand in 2020, she edited The Dominion Post/Stuff's Wellington newsroom until December 2022. She returned to the Washington Post as Asia-Pacific editor but was laid off in February 2026. In March 2026, she joined The Spinoff to write the World Bulletin newsletter.</p></div>
                 </div>
@@ -1421,7 +1473,7 @@
                         <div class="j-meta">The Spinoff · Economics</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-bernard-hickey-thespinoff" style="display:none">
+                <div class="accordion-body" id="details-bernard-hickey-thespinoff">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/bernardchickey" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://bsky.app/profile/bernardchickey.bsky.social" target="_blank" rel="noopener" class="social-link social-bsky">Bluesky</a><a href="https://linkedin.com/in/bernard-hickey-44334a14" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a><a href="https://www.facebook.com/bernardhickeynz/" target="_blank" rel="noopener" class="social-link social-fb">Facebook</a><a href="https://thekaka.substack.com/" target="_blank" rel="noopener" class="social-link social-sub">Substack</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">The Spinoff</span> — Contributing writer; also The Kaka (Substack) <a href="https://thespinoff.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Bernard Hickey is a Wellington-based financial journalist, editor, and commentator with over two decades of experience spanning Reuters, the Financial Times Group, and Fairfax Media, working across London, Singapore, and Sydney. He co-founded and edited Interest.co.nz and Newsroom Pro. He is best known for an acknowledged ideological shift over his career: initially a conventional free-market economics commentator, he moved substantially leftward, becoming a vocal critic of New Zealand's housing policies, wealth inequality, and what he characterises as the failure of neoliberal settings to deliver for younger generations. His podcast with The Spinoff, "When the Facts Change" (named after the Keynes aphorism), reflects this evolution. He founded The Kaka, a Substack newsletter covering political economy, housing, climate, and poverty.</p></div>
                 </div>
@@ -1435,7 +1487,7 @@
                         <div class="j-meta">Newstalk ZB · Political commentary</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-chris-trotter-newstalkzb" style="display:none">
+                <div class="accordion-body" id="details-chris-trotter-newstalkzb">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/BowalleyRoad" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">NZ Labour Party</span> — Twice elected Industrial Representative to NZ Council of the Labour Party <a href="https://en.wikipedia.org/wiki/Chris_Trotter" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">NewLabour Party</span> — Followed Jim Anderton; stood as candidate in Dunedin North <a href="https://en.wikipedia.org/wiki/Chris_Trotter" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Christopher Marshall Trotter (born 1956) is one of New Zealand's most prominent left-wing political commentators, writing weekly political columns since the early 1980s. He served as Secretary of the Otago Trades Council and was twice elected Industrial Representative to the NZ Council of the Labour Party. He followed Jim Anderton into the NewLabour Party, standing in Dunedin North. He founded the NZ Political Review magazine (1992-2005), authored No Left Turn, and has blogged at Bowalley Road since 2008.</p></div>
                 </div>
@@ -1466,7 +1518,7 @@
                     <span class="lean-text" style="color:#d97706">13% left leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-derek-cheng-nzherald" style="display:none">
+            <div class="accordion-body" id="details-derek-cheng-nzherald">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -1508,24 +1560,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/dchengnz" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/chengderek" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Derek Cheng is a senior political journalist at the New Zealand Herald. He graduated with a journalism diploma from Massey University in 2004 and joined the Herald shortly after, where he has worked for two decades. He has served multiple stints in the parliamentary press gallery and held the role of deputy political editor. His political reporting career spans the Helen Clark, John Key, and Jacinda Ardern eras. He is known for evidence-based political analysis. Outside journalism, Cheng is an accomplished mountaineer and adventure writer.</p></div>
-            </div>
-            <div class="articles-section" id="articles-derek-cheng-nzherald" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('derek-cheng-nzherald')">
-                    <span>Articles (35)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-derek-cheng-nzherald" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('derek-cheng-nzherald')">
+                        <span>Articles (35)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-derek-cheng-nzherald">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-derek-cheng-nzherald-2026-03').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> March 2026 <span style="font-weight:400;color:#9ca3af">(5 articles)</span>
@@ -1766,8 +1817,9 @@
                     <td><span class="bucket-badge" style="background:#f9731620;color:#f97316;border:1px solid #f9731640">centre-left</span></td>
                     <td class="art-score" style="color:#f97316">-0.45</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1797,7 +1849,7 @@
                     <span class="lean-text" style="color:#f97316">31% left leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-guyon-espiner-rnz" style="display:none">
+            <div class="accordion-body" id="details-guyon-espiner-rnz">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -1839,24 +1891,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/GuyonEspiner" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/guyon-espiner-176aa438" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">RNZ</span> — Public broadcaster funded by NZ Government <a href="https://www.rnz.co.nz/about" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">spouse</span> <span class="conn-target">Emma Wehipeihana</span> — Former personal assistant to Labour MP Darren Hughes (married 2012 separated 2023) <a href="https://en.wikipedia.org/wiki/Guyon_Espiner" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Darren Hughes</span> — Labour MP — Espiner's wife Emma Wehipeihana was his personal assistant <a href="https://en.wikipedia.org/wiki/Darren_Hughes" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-connections"><div class="card-section-label">Key facts</div><div class="conn-row">Political journalist Duncan Garner served as best man at Espiner's 2012 wedding to Emma Wehipeihana <a href="https://en.wikipedia.org/wiki/Guyon_Espiner" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Guyon Espiner (born 31 December 1970, Christchurch) is an investigative journalist at Radio New Zealand with over 30 years in print, television, and radio. After a decade in newspapers, including as political editor of the Sunday Star-Times, he joined TVNZ in 2003, becoming political editor in 2006 and anchoring Q+A, Agenda, and Breakfast. He moved to TV3's 60 Minutes in 2011, then joined RNZ in 2014 as co-host of Morning Report. Since 2019 he has produced acclaimed podcasts (The Ninth Floor, The Service, Red Line) and documentaries. He authored The Drinking Game. Espiner married Emma Wehipeihana in 2012; they separated in 2023. Wehipeihana had previously worked as a personal assistant to Labour MP Darren Hughes, who served as MC at their wedding.</p></div>
-            </div>
-            <div class="articles-section" id="articles-guyon-espiner-rnz" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('guyon-espiner-rnz')">
-                    <span>Articles (25)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-guyon-espiner-rnz" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('guyon-espiner-rnz')">
+                        <span>Articles (25)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-guyon-espiner-rnz">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-guyon-espiner-rnz-2025-11').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> November 2025 <span style="font-weight:400;color:#9ca3af">(1 articles)</span>
@@ -2057,8 +2108,9 @@
                     <td><span class="bucket-badge" style="background:#f9731620;color:#f97316;border:1px solid #f9731640">centre-left</span></td>
                     <td class="art-score" style="color:#f97316">-0.35</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2071,7 +2123,7 @@
                         <div class="j-meta">TVNZ · Political interviews</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-jack-tame-tvnz" style="display:none">
+                <div class="accordion-body" id="details-jack-tame-tvnz">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/jacktame" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">TVNZ</span> — Host of Q+A political interview programme <a href="https://www.tvnz.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Jack Tame (born 4 March 1987, Christchurch) is one of New Zealand's most prominent broadcast journalists. He served as TVNZ's United States correspondent (2012-2017) before co-hosting Breakfast (2017-2019) and then taking over Q+A in 2019, where he has built a reputation for rigorous interviewing. In late 2025 he was named weekend presenter of 1News at Six. He also presents on Newstalk ZB. He married fellow TVNZ journalist Mava Moayyed in 2023.</p></div>
                 </div>
@@ -2102,7 +2154,7 @@
                     <span class="lean-text" style="color:#6b7280">4% right leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-jason-walls-nzherald" style="display:none">
+            <div class="accordion-body" id="details-jason-walls-nzherald">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -2144,24 +2196,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/Jasonwalls92" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/jason-walls-78355299" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-connections"><div class="card-section-label">Key facts</div><div class="conn-row">Moved from NZ Herald to Newstalk ZB Political Editor then to TVNZ 1News Business Correspondent (replacing Katie Bradford) <a href="https://www.tvnz.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Jason Walls is a New Zealand political and business journalist currently serving as business correspondent at TVNZ/1News. He holds degrees in economics and journalism from AUT. He began at NBR and Interest.co.nz before joining the NZ Herald's press gallery team in 2018, rising to political editor. He moved to Newstalk ZB in 2021, becoming political editor in 2023. Walls served as Chair of the Parliamentary Press Gallery. His wife, Jacinta Gulasekharam, co-founded Dignity NZ, a social enterprise combating period poverty.</p></div>
-            </div>
-            <div class="articles-section" id="articles-jason-walls-nzherald" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('jason-walls-nzherald')">
-                    <span>Articles (34)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-jason-walls-nzherald" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('jason-walls-nzherald')">
+                        <span>Articles (34)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-jason-walls-nzherald">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-jason-walls-nzherald-2025-06').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> June 2025 <span style="font-weight:400;color:#9ca3af">(1 articles)</span>
@@ -2416,8 +2467,9 @@
                     <td><span class="bucket-badge" style="background:#f9731620;color:#f97316;border:1px solid #f9731640">centre-left</span></td>
                     <td class="art-score" style="color:#f97316">-0.35</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2447,7 +2499,7 @@
                     <span class="lean-text" style="color:#6b7280">4% right leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-jessica-mutch-mckay-1news" style="display:none">
+            <div class="accordion-body" id="details-jessica-mutch-mckay-1news">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -2489,24 +2541,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/MutchJessica" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/jessica-mutch-mckay-45610984" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a><a href="https://www.facebook.com/JessicaMutchTVNZ/" target="_blank" rel="noopener" class="social-link social-fb">Facebook</a></div><div class="conn-row"><span class="conn-type">spouse</span> <span class="conn-target">Iain McKay</span> — Diplomatic Protection Squad officer (provided security for PMs Key English and Ardern) <a href="https://en.wikipedia.org/wiki/Jessica_Mutch_McKay" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">ANZ Bank</span> — Head of Government Relations and Corporate Responsibility (from early 2024 — revolving door from TVNZ Political Editor) <a href="https://www.anz.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-connections"><div class="card-section-label">Key facts</div><div class="conn-row">Left TVNZ/1News in early 2024 to join ANZ Bank as Head of Government Relations and Corporate Responsibility after serving as Political Editor and Press Gallery Chair/Deputy Chair <a href="https://en.wikipedia.org/wiki/Jessica_Mutch_McKay" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Jessica Mutch McKay is a former New Zealand television political journalist who served as TVNZ's 1News political editor. She joined Sky News in 2006 before moving to TVNZ in 2008. She hosted Q+A before becoming political editor in 2018, leading coverage of the COVID-19 pandemic and the 2023 general election. In early 2024, she departed TVNZ to become Head of Government Relations and Corporate Responsibility at ANZ Bank. Her husband, Iain McKay, is a Diplomatic Protection Service bodyguard who served on the personal protection detail of Prime Minister Ardern.</p></div>
-            </div>
-            <div class="articles-section" id="articles-jessica-mutch-mckay-1news" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('jessica-mutch-mckay-1news')">
-                    <span>Articles (7)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-jessica-mutch-mckay-1news" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('jessica-mutch-mckay-1news')">
+                        <span>Articles (7)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-jessica-mutch-mckay-1news">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-jessica-mutch-mckay-1news-2023-11').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> November 2023 <span style="font-weight:400;color:#9ca3af">(1 articles)</span>
@@ -2584,8 +2635,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">+0.15</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2598,7 +2650,7 @@
                         <div class="j-meta">Newstalk ZB · Current affairs</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-kate-hawkesby-newstalkzb" style="display:none">
+                <div class="accordion-body" id="details-kate-hawkesby-newstalkzb">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/katehawkesby" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">spouse</span> <span class="conn-target">Mike Hosking</span> — Newstalk ZB Breakfast host, open National Party supporter <a href="https://en.wikipedia.org/wiki/Kate_Hawkesby" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of Newstalk ZB and NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Kate Hawkesby (born 1 April 1973) is a New Zealand broadcaster, columnist and former television presenter. She holds a Political Studies degree and worked at London's Daily Express before returning to NZ. At TVNZ (1995-2007), she became the youngest person to present a One News at Six bulletin and co-anchored Breakfast with Mike Hosking in 2002. She hosted Newstalk ZB's Early Edition (5-6am weekdays) from 2017 until departing in November 2023. She is married to Mike Hosking. She is now an NZ Herald columnist and regular Friday panellist on The Mike Hosking Breakfast.</p></div>
                 </div>
@@ -2612,7 +2664,7 @@
                         <div class="j-meta">Newsroom · Political interviews</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-lisa-owen-newsroom" style="display:none">
+                <div class="accordion-body" id="details-lisa-owen-newsroom">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/lisaowennz" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">RNZ</span> — Checkpoint presenter <a href="https://www.rnz.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Lisa Owen is one of New Zealand's most experienced political broadcasters. She spent 14 years at TVNZ before moving to TV3/MediaWorks, where she hosted The Nation, the network's flagship weekend political programme. She hosted the Drive show on RadioLive before being appointed presenter of RNZ's Checkpoint in late 2018, replacing John Campbell. Owen won Best Talk Presenter at the 2021 NZ Radio Awards. She is widely regarded as one of New Zealand's sharpest political interviewers.</p></div>
                 </div>
@@ -2626,7 +2678,7 @@
                         <div class="j-meta">Stuff · Inequality and democracy</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-max-rashbrooke-stuff" style="display:none">
+                <div class="accordion-body" id="details-max-rashbrooke-stuff">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/MaxRashbrooke" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://bsky.app/profile/maxrashbrooke.bsky.social" target="_blank" rel="noopener" class="social-link social-bsky">Bluesky</a><a href="https://linkedin.com/in/max-rashbrooke-8a88a916" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a><a href="https://www.facebook.com/max.rashbrooke" target="_blank" rel="noopener" class="social-link social-fb">Facebook</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">Stuff Limited</span> — Columnist <a href="https://www.stuff.co.nz/about-stuff" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Green Party</span> — Paid research contracts (disclosed) <a href="https://www.maxrashbrooke.org.nz/about-me/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Max Rashbrooke (born 1980, Wellington) is a New Zealand journalist, author, and researcher best known for his work on economic inequality. He studied at Victoria University of Wellington. From 2003 to 2010 he worked as a political journalist in London, including freelancing for The Guardian. He has authored four books on inequality, including Inequality: A New Zealand Crisis (2013). He has undertaken research contracts for organisations including the Green Party. In 2024, he co-founded the Institute for Democratic and Economic Analysis (IDEA).</p></div>
                 </div>
@@ -2640,7 +2692,7 @@
                         <div class="j-meta">Newstalk ZB · Current affairs</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-ryan-bridge-newstalkzb" style="display:none">
+                <div class="accordion-body" id="details-ryan-bridge-newstalkzb">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of Newstalk ZB and NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Darren Hughes</span> — Served as Youth MP for Labour MP Darren Hughes <a href="https://en.wikipedia.org/wiki/Ryan_Bridge" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Ryan Bridge (born November 1987, Kapiti Coast) is a New Zealand broadcaster and journalist. He began as a political reporter in the parliamentary press gallery for RNZ, later becoming TV3's Beijing correspondent and co-host of AM on Three. When Newshub closed in 2024, he moved to NZME. He publicly came out as gay in 2021. In May 2025, he launched Herald NOW, a live-streamed morning news show. He hosts Early Edition (5-6am weekdays) on Newstalk ZB and Herald NOW on NZME.</p></div>
                 </div>
@@ -2671,7 +2723,7 @@
                     <span class="lean-text" style="color:#f97316">30% left leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-tova-obrien-1news" style="display:none">
+            <div class="accordion-body" id="details-tova-obrien-1news">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -2713,24 +2765,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/TovaOBrien" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">TVNZ</span> — Co-host of TVNZ Breakfast (from April 2026) <a href="https://www.tvnz.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Tova O'Brien (born c. 1982-83) is one of New Zealand's highest-profile political journalists. Born in Papua New Guinea, she began at TV3/MediaWorks in 2007, rising to Newshub's political editor in 2018. She won Political Journalist of the Year (2019). She briefly moved to Today FM in 2022 before it folded, then joined Stuff. In December 2025, TVNZ announced O'Brien would join Breakfast as co-host from April 2026.</p></div>
-            </div>
-            <div class="articles-section" id="articles-tova-obrien-1news" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('tova-obrien-1news')">
-                    <span>Articles (2)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-tova-obrien-1news" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('tova-obrien-1news')">
+                        <span>Articles (2)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-tova-obrien-1news">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-tova-obrien-1news-2024-01').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> January 2024 <span style="font-weight:400;color:#9ca3af">(2 articles)</span>
@@ -2748,8 +2799,9 @@
                     <td><span class="bucket-badge" style="background:#f9731620;color:#f97316;border:1px solid #f9731640">centre-left</span></td>
                     <td class="art-score" style="color:#f97316">-0.35</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div></div><div class="card-column">
@@ -2778,7 +2830,7 @@
                     <span class="lean-text" style="color:#6b7280">Centre</span>
                 </div>
             </div>
-            <div class="details-section" id="details-audrey-young-nzherald" style="display:none">
+            <div class="accordion-body" id="details-audrey-young-nzherald">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -2820,24 +2872,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/audreyNZH" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Audrey Young is one of New Zealand's most experienced political journalists. She began her career as a sub-editor at the Auckland Sun, and after its closure in 1988 joined the New Zealand Herald as a sub-editor. She rose through the ranks to become the Herald's political editor, a role she held for 18 years (2003-2021), leading the paper's press gallery team in Wellington. In 2021, she transitioned to the role of Senior Political Correspondent, allowing her to focus on in-depth reporting. She was named Political Journalist of the Year at the Voyager Media Awards in 2018, 2020, and 2023. Her 30th anniversary at the Herald was acknowledged in Parliament. She has a particular interest in foreign affairs and Treaty of Waitangi issues, and served for six years as the union representative on the Press Council.</p></div>
-            </div>
-            <div class="articles-section" id="articles-audrey-young-nzherald" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('audrey-young-nzherald')">
-                    <span>Articles (36)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-audrey-young-nzherald" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('audrey-young-nzherald')">
+                        <span>Articles (36)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-audrey-young-nzherald">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-audrey-young-nzherald-2026-03').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> March 2026 <span style="font-weight:400;color:#9ca3af">(10 articles)</span>
@@ -3079,8 +3130,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">+0.05</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3093,7 +3145,7 @@
                         <div class="j-meta">Newstalk ZB · Business commentary</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-bruce-cotterill-newstalkzb" style="display:none">
+                <div class="accordion-body" id="details-bruce-cotterill-newstalkzb">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/brucecotterill1" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — NZ Herald and Newstalk ZB columnist <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Bruce Cotterill is a New Zealand business leader, professional director, columnist and author. A five-time CEO, he led Colliers NZ and Australia, Canterbury International sportswear, and Yellow Pages Group. He is the author of The Best Leaders Don't Shout and hosts the podcast Leaders Getting Coffee. He writes a regular business and political commentary column for the NZ Herald and Newstalk ZB.</p></div>
                 </div>
@@ -3124,7 +3176,7 @@
                     <span class="lean-text" style="color:#d97706">5% left leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-claire-trevett-nzherald" style="display:none">
+            <div class="accordion-body" id="details-claire-trevett-nzherald">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -3166,24 +3218,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/CTrevettNZH" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZ Police</span> — Chief Media and Communications Adviser (from May 2025 — revolving door from NZ Herald Political Editor) <a href="https://www.police.govt.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-connections"><div class="card-section-label">Key facts</div><div class="conn-row">Left NZ Herald in May 2025 after almost two decades as Political Editor to become Chief Media and Communications Adviser to the NZ Police Commissioner <a href="https://en.wikipedia.org/wiki/Claire_Trevett" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Claire Trevett served as the NZ Herald's political editor for several years, becoming one of the most recognised press gallery journalists in New Zealand. Based in Wellington, she was known for her sharp political analysis, witty writing style, and coverage of multiple election cycles and changes of government. Trevett left the Herald in May 2025 after almost two decades as Political Editor to become Chief Media and Communications Adviser for New Zealand Police.</p></div>
-            </div>
-            <div class="articles-section" id="articles-claire-trevett-nzherald" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('claire-trevett-nzherald')">
-                    <span>Articles (36)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-claire-trevett-nzherald" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('claire-trevett-nzherald')">
+                        <span>Articles (36)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-claire-trevett-nzherald">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-claire-trevett-nzherald-2025-04').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> April 2025 <span style="font-weight:400;color:#9ca3af">(1 articles)</span>
@@ -3440,8 +3491,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">+0.15</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3454,7 +3506,7 @@
                         <div class="j-meta">Newshub · Political commentary</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-duncan-garner-newshub" style="display:none">
+                <div class="accordion-body" id="details-duncan-garner-newshub">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/duncangarnernz" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Guyon Espiner</span> — RNZ journalist — served as best man at Espiner's 2012 wedding to Emma Wehipeihana <a href="https://en.wikipedia.org/wiki/Guyon_Espiner" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">MediaWorks</span> — Former Newshub political editor and AM Show host <a href="https://en.wikipedia.org/wiki/Duncan_Garner" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Duncan Garner (born 8 March 1974) is a New Zealand broadcaster and journalist. He joined TVNV in the mid-1990s, then moved to TV3 in 2003. He won the 2004 Television Political News Reporter award for exposing a golden handshake to Labour MP John Tamihere. He served as Newshub's political editor before hosting The AM Show (2017-2021). He briefly presented on Today FM (2022-2023). He has attracted controversy over race: a 2017 column was found by the Press Council to constitute "gratuitous racism."</p></div>
                 </div>
@@ -3468,7 +3520,7 @@
                         <div class="j-meta">Newstalk ZB · Newstalk ZB</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-heather-du-plessis-allan-newstalkzb" style="display:none">
+                <div class="accordion-body" id="details-heather-du-plessis-allan-newstalkzb">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/hdpa" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/heather-du-plessis-allan-7b1081b" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a><a href="https://www.facebook.com/heatherdriveZB/" target="_blank" rel="noopener" class="social-link social-fb">Facebook</a></div><div class="conn-row"><span class="conn-type">spouse</span> <span class="conn-target">Barry Soper</span> — Political journalist Newstalk ZB <a href="https://en.wikipedia.org/wiki/Heather_du_Plessis-Allan" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of Newstalk ZB and NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Heather du Plessis-Allan (born 1984, South Africa) migrated to New Zealand aged 12 and is the host of the Newstalk ZB Drive show, a role she has held since 2019. She previously worked at TV3, Radio Live, and TVNZ. She is married to veteran political journalist Barry Soper. In 2015, while at TV3's Story, du Plessis-Allan sparked controversy by purchasing a firearm online using false details to expose weaknesses in New Zealand's Arms Act. Police raided her home and investigated but ultimately did not lay charges. She won Broadcaster of the Year at the 2025 NZ Radio and Podcast Awards.</p></div>
                 </div>
@@ -3482,7 +3534,7 @@
                         <div class="j-meta">Newsroom · Political commentary</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-jane-clifton-newsroom" style="display:none">
+                <div class="accordion-body" id="details-jane-clifton-newsroom">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/rumpole3" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">Newsroom</span> — Political columnist <a href="https://www.newsroom.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">spouse</span> <span class="conn-target">Trevor Mallard</span> — Labour MP and Speaker of the House (married Dec 2014); served as NZ Ambassador to Ireland 2022-2024 <a href="https://en.wikipedia.org/wiki/Trevor_Mallard" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Murray McCully</span> — National MP and Foreign Minister — Clifton was in a relationship with McCully for approximately 20 years before her marriage to Mallard <a href="https://en.wikipedia.org/wiki/Murray_McCully" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Jane Clifton is one of New Zealand's most experienced political commentators. She began journalism at age 16 in 1978 and spent roughly 20 years in Parliament's press gallery. She is best known for her political column in the NZ Listener, which she wrote for approximately 30 years. She married Labour MP (later Speaker of the House) Trevor Mallard in December 2014. She had previously been in a long relationship with National MP Murray McCully. Her writing is noted for its cross-partisan independence.</p></div>
                 </div>
@@ -3496,7 +3548,7 @@
                         <div class="j-meta">Stuff · Political editor</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-jenna-lynch-stuff" style="display:none">
+                <div class="accordion-body" id="details-jenna-lynch-stuff">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/JennaLynchNZ" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">spouse</span> <span class="conn-target">Andrew Ketels</span> — Former ACT Party Chief of Staff (5 years) and National Party ministerial adviser <a href="https://en.wikipedia.org/wiki/ACT_New_Zealand" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">Stuff</span> — Political editor <a href="https://www.stuff.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Jenna Lynch is a senior New Zealand political journalist. She began her career at the Waikato Times before joining TV3/MediaWorks in 2014, becoming Newshub's political editor in 2022 after Tova O'Brien's departure. She won Political Journalist of the Year at the 2022 Voyager Media Awards. Following Newshub's closure in July 2024, she moved to Stuff. Lynch's spouse is Andrew Ketels, who served as ACT Party chief of staff for five years and previously worked as a National Party ministerial adviser.</p></div>
                 </div>
@@ -3527,7 +3579,7 @@
                     <span class="lean-text" style="color:#d97706">10% left leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-jo-moir" style="display:none">
+            <div class="accordion-body" id="details-jo-moir">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -3569,24 +3621,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/jo_moir" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/jo-moir-a499a82a5" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">RNZ</span> — Political editor <a href="https://www.rnz.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Jo Moir is the political editor at Radio New Zealand, a role she took up in early 2024. She completed her postgraduate journalism diploma at Massey University in 2006. She worked at the Wairarapa Times-Age, Taranaki Daily News, and the Dominion Post before joining Stuff's press gallery team in 2015 and then RNZ in 2018. She subsequently served as political editor of Newsroom from 2021 before returning to RNZ. She has reported on five prime ministers and covered three general elections.</p></div>
-            </div>
-            <div class="articles-section" id="articles-jo-moir" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('jo-moir')">
-                    <span>Articles (25)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-jo-moir" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('jo-moir')">
+                        <span>Articles (25)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-jo-moir">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-jo-moir-2026-03').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> March 2026 <span style="font-weight:400;color:#9ca3af">(10 articles)</span>
@@ -3757,8 +3808,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">+0.05</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3788,7 +3840,7 @@
                     <span class="lean-text" style="color:#6b7280">3% left leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-katie-bradford-1news" style="display:none">
+            <div class="accordion-body" id="details-katie-bradford-1news">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -3830,24 +3882,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/katieabradford" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://www.facebook.com/KatieBradfordTVNZ/" target="_blank" rel="noopener" class="social-link social-fb">Facebook</a></div><div class="conn-row"><span class="conn-type">family</span> <span class="conn-target">Sue Bradford</span> — Former Green MP <a href="https://en.wikipedia.org/wiki/Sue_Bradford" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Judith Collins</span> — National MP who publicly attacked Bradford on social media in May 2014 and later apologised <a href="https://en.wikipedia.org/wiki/Judith_Collins" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">Infrastructure New Zealand</span> — Director of Advocacy and Policy (from April 2025 — revolving door from TVNZ) <a href="https://www.infrastructure.org.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-connections"><div class="card-section-label">Key facts</div><div class="conn-row">Left TVNZ in April 2025 to join Infrastructure New Zealand as Director of Advocacy and Policy after more than two decades in journalism <a href="https://www.infrastructure.org.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Katie Bradford is a veteran New Zealand political and business journalist with over 20 years' experience. She is the daughter of former Green Party MP and activist Sue Bradford and activist Jim Bradford. She spent more than a decade at TVNZ, working primarily as 1News business correspondent. In April 2025, Bradford left TVNZ to join Infrastructure New Zealand as strategy and engagement manager.</p></div>
-            </div>
-            <div class="articles-section" id="articles-katie-bradford-1news" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('katie-bradford-1news')">
-                    <span>Articles (16)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-katie-bradford-1news" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('katie-bradford-1news')">
+                        <span>Articles (16)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-katie-bradford-1news">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-katie-bradford-1news-2025-03').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> March 2025 <span style="font-weight:400;color:#9ca3af">(1 articles)</span>
@@ -4009,8 +4060,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">-0.20</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -4023,7 +4075,7 @@
                         <div class="j-meta">RNZ · Political journalism</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-mani-dunlop-rnz" style="display:none">
+                <div class="accordion-body" id="details-mani-dunlop-rnz">
                     <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/manidunlop" target="_blank" rel="noopener" class="social-link social-x">X</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">RNZ</span> — Public broadcaster funded by NZ Government <a href="https://www.rnz.co.nz/about" target="_blank" rel="noopener" class="conn-source">source</a></div><div class="conn-row"><span class="conn-type">political</span> <span class="conn-target">Kiri Allan</span> — Labour Cabinet Minister (Justice/Conservation) — former fiancée; couple separated mid-2023 after Allan's drunk-driving arrest; Allan gave speech at Dunlop's RNZ farewell criticising RNZ management <a href="https://en.wikipedia.org/wiki/Kiri_Allan" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                     <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Mani Dunlop (Ngapuhi, Scottish descent) is a Wellington-born journalist who began her career as an RNZ intern in 2011. She became the first Maori journalist to host a regular weekday programme on RNZ when she took over the Midday Report in 2020. She departed RNZ in March 2023 after being passed over for the Morning Report co-host role. She subsequently joined Whakaata Maori as a senior political editor at Te Ao Maori News.</p></div>
                 </div>
@@ -4054,7 +4106,7 @@
                     <span class="lean-text" style="color:#d97706">17% left leaning</span>
                 </div>
             </div>
-            <div class="details-section" id="details-michael-neilson-nzherald" style="display:none">
+            <div class="accordion-body" id="details-michael-neilson-nzherald">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -4096,24 +4148,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/mr_neilson_" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/michael-neilson-643ba8b8" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Michael Neilson is a New Zealand journalist from Christchurch who studied politics at the University of Otago before completing a journalism diploma at AUT in 2015. He joined the NZ Herald in 2018, covering social issues, the environment, and Maori affairs, later becoming a senior political reporter in the press gallery. He has since transitioned to freelance journalism and photography and is currently based in Indonesia.</p></div>
-            </div>
-            <div class="articles-section" id="articles-michael-neilson-nzherald" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('michael-neilson-nzherald')">
-                    <span>Articles (35)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-michael-neilson-nzherald" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('michael-neilson-nzherald')">
+                        <span>Articles (35)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-michael-neilson-nzherald">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-michael-neilson-nzherald-2023-12').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> December 2023 <span style="font-weight:400;color:#9ca3af">(21 articles)</span>
@@ -4334,8 +4385,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">+0.05</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -4365,7 +4417,7 @@
                     <span class="lean-text" style="color:#6b7280">Centre</span>
                 </div>
             </div>
-            <div class="details-section" id="details-thomas-coughlan-nzherald" style="display:none">
+            <div class="accordion-body" id="details-thomas-coughlan-nzherald">
                 <div class="dist-section">
                     
                 <div class="dist-row">
@@ -4407,24 +4459,23 @@
                 <div class="card-connections"><div class="card-section-label">Connections</div><div class="social-row"><a href="https://x.com/coughlthom" target="_blank" rel="noopener" class="social-link social-x">X</a><a href="https://linkedin.com/in/thomas-coughlan-37ba3380" target="_blank" rel="noopener" class="social-link social-li">LinkedIn</a></div><div class="conn-row"><span class="conn-type">employer</span> <span class="conn-target">NZME</span> — Parent company of NZ Herald <a href="https://www.nzme.co.nz/" target="_blank" rel="noopener" class="conn-source">source</a></div></div>
                 
                 <div class="card-bio"><div class="card-section-label">Background</div><p class="bio-text">Thomas Coughlan is the political editor of the New Zealand Herald. He holds a Master's degree in Political Thought and Intellectual History from the University of Cambridge (2014-2015). Coughlan joined the Parliamentary Press Gallery in 2018, working first for Newsroom and Stuff before moving to the NZ Herald in 2021. He is regarded as one of the younger generation's most authoritative political journalists.</p></div>
-            </div>
-            <div class="articles-section" id="articles-thomas-coughlan-nzherald" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('thomas-coughlan-nzherald')">
-                    <span>Articles (36)</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-thomas-coughlan-nzherald" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('thomas-coughlan-nzherald')">
+                        <span>Articles (36)</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-thomas-coughlan-nzherald">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                 <tr class="month-header" onclick="document.querySelectorAll('.month-thomas-coughlan-nzherald-2026-03').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
                         <span class="month-arrow toggle-icon open">▼</span> March 2026 <span style="font-weight:400;color:#9ca3af">(33 articles)</span>
@@ -4651,8 +4702,9 @@
                     <td><span class="bucket-badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">centre</span></td>
                     <td class="art-score" style="color:#6b7280">-0.15</td>
                 </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div></div>
@@ -4662,40 +4714,48 @@
 <footer>Byline Card · Open source at <a href="https://github.com/ferguswatts/byline-card" style="color:#999">GitHub</a></footer>
 
 <script>
+/* ── Accordion toggle — smooth height animation ── */
+function toggleAccordion(el) {
+  if (el.classList.contains('open')) {
+    // Collapse: set explicit height first, then animate to 0
+    el.style.height = el.scrollHeight + 'px';
+    requestAnimationFrame(() => { el.style.height = '0'; });
+    el.classList.remove('open');
+  } else {
+    // Expand: set height to scrollHeight, then clear after transition
+    el.style.height = el.scrollHeight + 'px';
+    el.classList.add('open');
+    const onEnd = () => { el.style.height = 'auto'; el.removeEventListener('transitionend', onEnd); };
+    el.addEventListener('transitionend', onEnd);
+  }
+}
+
 function toggleDetails(slug) {
   const el = document.getElementById('details-' + slug);
-  const card = el.closest('.journalist-card');
-  const icon = card.querySelector('.toggle-details');
-  const articlesSection = document.getElementById('articles-' + slug);
-  if (el.style.display === 'none') {
-    el.style.display = 'block';
-    if (articlesSection) articlesSection.style.display = 'block';
-    icon.classList.add('open');
-  } else {
-    el.style.display = 'none';
-    if (articlesSection) articlesSection.style.display = 'none';
-    icon.classList.remove('open');
-    // Also collapse articles content when collapsing details
+  if (!el) return;
+  toggleAccordion(el);
+
+  // If collapsing, also collapse inner articles
+  if (!el.classList.contains('open')) {
     const artContent = document.getElementById('articles-content-' + slug);
-    const artIcon = card.querySelector('.toggle-articles');
-    if (artContent) artContent.style.display = 'none';
+    if (artContent && artContent.classList.contains('open')) {
+      artContent.style.height = '0';
+      artContent.classList.remove('open');
+    }
+    const artIcon = el.querySelector('.toggle-articles');
     if (artIcon) artIcon.classList.remove('open');
   }
 }
 
 function toggleArticles(slug) {
   const el = document.getElementById('articles-content-' + slug);
-  const card = el.closest('.journalist-card');
-  const icon = card.querySelector('.toggle-articles');
-  if (el.style.display === 'none') {
-    el.style.display = 'block';
-    icon.classList.add('open');
-  } else {
-    el.style.display = 'none';
-    icon.classList.remove('open');
-  }
+  if (!el) return;
+  const icon = el.closest('.articles-section').querySelector('.toggle-articles');
+  toggleAccordion(el);
+  if (icon) icon.classList.toggle('open');
 }
 
+/* ── Filters ── */
 let activeShowFilter = 'all';
 let activeOutletFilter = 'all';
 let activeSearchTerm = '';
@@ -4703,12 +4763,9 @@ let activeSearchTerm = '';
 function applyFilters() {
   document.querySelectorAll('.journalist-card').forEach(card => {
     let show = true;
-    // Show filter
     if (activeShowFilter === 'scored' && card.classList.contains('empty')) show = false;
     if (activeShowFilter === 'empty' && !card.classList.contains('empty')) show = false;
-    // Outlet filter
     if (activeOutletFilter !== 'all' && card.dataset.outlet !== activeOutletFilter) show = false;
-    // Search filter
     if (activeSearchTerm && !card.dataset.name.includes(activeSearchTerm)) show = false;
     card.style.display = show ? '' : 'none';
   });
@@ -4733,20 +4790,24 @@ function searchCards(term) {
   applyFilters();
 }
 
+/* ── Expand / Collapse all ── */
 function expandAll() {
-  document.querySelectorAll('.details-section').forEach(el => el.style.display = 'block');
-  document.querySelectorAll('.articles-section').forEach(el => el.style.display = 'block');
-  document.querySelectorAll('.articles-content').forEach(el => el.style.display = 'block');
+  document.querySelectorAll('.accordion-body:not(.open)').forEach(el => {
+    el.style.height = 'auto';
+    el.classList.add('open');
+  });
   document.querySelectorAll('.toggle-icon').forEach(el => el.classList.add('open'));
 }
 
 function collapseAll() {
-  document.querySelectorAll('.details-section').forEach(el => el.style.display = 'none');
-  document.querySelectorAll('.articles-section').forEach(el => el.style.display = 'none');
-  document.querySelectorAll('.articles-content').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.accordion-body.open').forEach(el => {
+    el.style.height = '0';
+    el.classList.remove('open');
+  });
   document.querySelectorAll('.toggle-icon').forEach(el => el.classList.remove('open'));
 }
 
+/* ── Sort ── */
 function sortCards(mode, btn) {
   document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -4766,6 +4827,30 @@ function sortCards(mode, btn) {
   columns.forEach(col => { while (col.firstChild) col.removeChild(col.firstChild); });
   cards.forEach((c, i) => columns[i % columns.length].appendChild(c));
 }
+
+/* ── Deep linking via URL hash ── */
+function openFromHash() {
+  const slug = window.location.hash.replace('#', '');
+  if (!slug) return;
+  const el = document.getElementById('details-' + slug);
+  if (!el) return;
+  // Expand card
+  el.style.height = 'auto';
+  el.classList.add('open');
+  // Also expand articles if present
+  const artContent = document.getElementById('articles-content-' + slug);
+  if (artContent) {
+    artContent.style.height = 'auto';
+    artContent.classList.add('open');
+    const artIcon = el.querySelector('.toggle-articles');
+    if (artIcon) artIcon.classList.add('open');
+  }
+  // Scroll into view
+  const card = el.closest('.journalist-card');
+  setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+window.addEventListener('DOMContentLoaded', openFromHash);
+window.addEventListener('hashchange', openFromHash);
 </script>
 </body>
 </html>

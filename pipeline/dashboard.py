@@ -182,7 +182,7 @@ def generate_html(conn) -> str:
                         <div class="j-meta">{j['outlet']} · {j['beat'] or 'No beat set'}</div>
                     </div>
                 </div>
-                <div class="details-section" id="details-{j['slug']}" style="display:none">
+                <div class="accordion-body" id="details-{j['slug']}">
                     {connections_html}
                     {bio_html}
                 </div>
@@ -315,33 +315,33 @@ def generate_html(conn) -> str:
                     <span class="lean-text" style="color:{avg_color}">{lean_text}</span>
                 </div>
             </div>
-            <div class="details-section" id="details-{j['slug']}" style="display:none">
+            <div class="accordion-body" id="details-{j['slug']}">
                 <div class="dist-section">
                     {dist_bars}
                 </div>
                 {connections_html}
                 {facts_html}
                 {bio_html}
-            </div>
-            <div class="articles-section" id="articles-{j['slug']}" style="display:none">
-                <div class="articles-toggle" onclick="toggleArticles('{j['slug']}')">
-                    <span>Articles ({total})</span>
-                    <span class="toggle-icon toggle-articles">▼</span>
-                </div>
-                <div class="articles-content" id="articles-content-{j['slug']}" style="display:none">
-                    <table class="art-table">
-                        <thead>
-                            <tr>
-                                <th>Article</th>
-                                <th>Date</th>
-                                <th>Bucket</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {article_rows}
-                        </tbody>
-                    </table>
+                <div class="articles-section">
+                    <div class="articles-toggle" onclick="toggleArticles('{j['slug']}')">
+                        <span>Articles ({total})</span>
+                        <span class="toggle-icon toggle-articles">▼</span>
+                    </div>
+                    <div class="accordion-body" id="articles-content-{j['slug']}">
+                        <table class="art-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Date</th>
+                                    <th>Bucket</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {article_rows}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>""")
@@ -370,29 +370,30 @@ def generate_html(conn) -> str:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Byline Card — Dev Dashboard</title>
+<title>Byline Card — NZ Journalist Transparency</title>
 <style>
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-  body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: #f8f9fa; color: #1a1a1a; }}
+  body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: #f8f9fa; color: #1a1a1a; -webkit-font-smoothing: antialiased; }}
 
+  /* ── Header ── */
   header {{ background: #1a1a1a; color: #fff; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }}
-  header h1 {{ font-size: 18px; font-weight: 600; }}
+  header h1 {{ font-size: clamp(16px, 2vw, 18px); font-weight: 600; }}
   header .subtitle {{ font-size: 12px; color: #999; margin-top: 2px; }}
   .stats {{ display: flex; gap: 24px; }}
   .stat {{ text-align: right; }}
-  .stat-value {{ font-size: 22px; font-weight: 700; color: #fff; }}
+  .stat-value {{ font-size: clamp(18px, 2.5vw, 22px); font-weight: 700; color: #fff; }}
   .stat-label {{ font-size: 11px; color: #888; }}
 
+  /* ── Layout ── */
   .container {{ max-width: 1600px; margin: 0 auto; padding: 24px 16px; }}
   .card-grid {{ display: flex; gap: 8px; align-items: flex-start; }}
   .card-column {{ flex: 1; min-width: 0; }}
-  @media (max-width: 1200px) {{ .card-grid {{ flex-wrap: wrap; }} .card-column {{ flex: 0 0 calc(50% - 4px); }} }}
-  @media (max-width: 768px) {{ .card-column {{ flex: 0 0 100%; }} }}
 
-  .journalist-card {{ background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; overflow: hidden; }}
-  .journalist-card.empty {{ }}
+  /* ── Cards ── */
+  .journalist-card {{ background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.2s; }}
+  .journalist-card:hover {{ box-shadow: 0 4px 12px rgba(0,0,0,0.08); }}
 
-  .j-header {{ padding: 10px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }}
+  .j-header {{ padding: 10px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; min-height: 44px; flex-wrap: wrap; transition: background 0.15s; }}
   .j-header:hover {{ background: #f9fafb; }}
   .j-avatar {{ width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; overflow: hidden; }}
   .j-avatar img {{ width: 100%; height: 100%; object-fit: cover; }}
@@ -401,6 +402,8 @@ def generate_html(conn) -> str:
   .j-name {{ font-size: 15px; font-weight: 600; color: #1a1a1a; }}
   .j-meta {{ font-size: 12px; color: #888; margin-top: 2px; }}
   .j-right {{ display: flex; align-items: center; gap: 12px; flex-shrink: 0; }}
+
+  /* ── Spectrum widget ── */
   .spectrum-wrap {{ display: flex; align-items: center; gap: 4px; width: 140px; flex-shrink: 0; }}
   .spectrum-label-l {{ font-size: 10px; font-weight: 700; color: #dc2626; }}
   .spectrum-label-r {{ font-size: 10px; font-weight: 700; color: #1d4ed8; }}
@@ -415,6 +418,11 @@ def generate_html(conn) -> str:
   .toggle-icon {{ font-size: 11px; color: #bbb; transition: transform 0.2s; }}
   .toggle-icon.open {{ transform: rotate(180deg); }}
 
+  /* ── Accordion sections (Pretext-animated) ── */
+  .accordion-body {{ height: 0; overflow: clip; transition: height 250ms ease; }}
+  .accordion-body.open {{ /* height set by JS */ }}
+
+  /* ── Distribution ── */
   .dist-section {{ padding: 10px 18px 12px; border-top: 1px solid #f3f4f6; }}
   .dist-row {{ display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }}
   .dist-label {{ width: 88px; font-size: 11px; font-weight: 500; color: #555; text-align: right; flex-shrink: 0; }}
@@ -424,9 +432,9 @@ def generate_html(conn) -> str:
   .dist-pct {{ color: #aaa; }}
 
   .no-data {{ padding: 10px 18px; font-size: 12px; color: #aaa; }}
-
   .conf-badge {{ font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }}
 
+  /* ── Connections & bio ── */
   .card-connections {{ padding: 10px 18px; border-top: 1px solid #f3f4f6; }}
   .card-section-label {{ font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 6px; }}
   .conn-row {{ font-size: 12px; color: #444; margin-bottom: 4px; line-height: 1.4; }}
@@ -435,7 +443,7 @@ def generate_html(conn) -> str:
   .conn-source {{ color: #2563eb; text-decoration: none; font-size: 11px; margin-left: 6px; }}
   .conn-source:hover {{ text-decoration: underline; }}
   .social-row {{ display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }}
-  .social-link {{ font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 4px; text-decoration: none; }}
+  .social-link {{ font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 4px; text-decoration: none; transition: opacity 0.15s; }}
   .social-link:hover {{ opacity: 0.8; }}
   .social-x {{ background: #0f1419; color: #fff; }}
   .social-bsky {{ background: #0085ff; color: #fff; }}
@@ -444,12 +452,12 @@ def generate_html(conn) -> str:
   .social-sub {{ background: #ff6719; color: #fff; }}
 
   .card-methodology {{ padding: 6px 18px 10px; font-size: 11px; color: #aaa; border-top: 1px solid #f3f4f6; }}
-
   .card-bio {{ padding: 10px 18px; border-top: 1px solid #f3f4f6; }}
   .bio-text {{ font-size: 12px; color: #555; line-height: 1.6; margin: 0; }}
 
+  /* ── Articles ── */
   .details-section {{ }}
-  .articles-toggle {{ padding: 10px 18px; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; font-size: 12px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.4px; }}
+  .articles-toggle {{ padding: 10px 18px; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; font-size: 12px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.4px; min-height: 44px; transition: background 0.15s; }}
   .articles-toggle:hover {{ background: #f9fafb; }}
   .articles-section {{ border-top: 1px solid #f3f4f6; }}
   .art-table {{ width: 100%; border-collapse: collapse; font-size: 13px; }}
@@ -467,22 +475,66 @@ def generate_html(conn) -> str:
   .month-arrow.open {{ transform: rotate(0deg); }}
   .month-arrow:not(.open) {{ transform: rotate(-90deg); }}
 
-  .filter-bar {{ display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }}
-  .filter-btn {{ padding: 5px 12px; border-radius: 20px; border: 1px solid #e5e7eb; background: #fff; font-size: 12px; cursor: pointer; color: #555; }}
+  /* ── Filter bar ── */
+  .filter-bar {{ display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; position: sticky; top: 0; z-index: 10; background: #f8f9fa; padding: 8px 0; }}
+  .filter-btn {{ padding: 8px 14px; border-radius: 20px; border: 1px solid #e5e7eb; background: #fff; font-size: 12px; cursor: pointer; color: #555; min-height: 36px; transition: all 0.15s; }}
   .filter-btn:hover, .filter-btn.active {{ background: #1a1a1a; color: #fff; border-color: #1a1a1a; }}
   .filter-label {{ font-size: 12px; color: #888; margin-right: 4px; }}
-  .search-input {{ padding: 5px 12px; border-radius: 20px; border: 1px solid #e5e7eb; font-size: 12px; outline: none; width: 180px; margin-left: auto; }}
+  .search-input {{ padding: 8px 14px; border-radius: 20px; border: 1px solid #e5e7eb; font-size: 12px; outline: none; width: 180px; margin-left: auto; min-height: 36px; transition: border-color 0.15s; }}
   .search-input:focus {{ border-color: #1a1a1a; }}
 
   footer {{ text-align: center; font-size: 11px; color: #bbb; padding: 24px; }}
+  footer a {{ transition: color 0.15s; }}
+
+  /* ── Responsive: 3-col → 2-col ── */
+  @media (max-width: 1200px) {{
+    .card-grid {{ flex-wrap: wrap; }}
+    .card-column {{ flex: 0 0 calc(50% - 4px); }}
+  }}
+
+  /* ── Responsive: 2-col → 1-col ── */
+  @media (max-width: 1024px) {{
+    .card-column {{ flex: 0 0 100%; }}
+  }}
+
+  /* ── Responsive: tablet ── */
+  @media (max-width: 768px) {{
+    header {{ padding: 16px; flex-direction: column; align-items: flex-start; gap: 12px; }}
+    .stats {{ width: 100%; }}
+    .search-input {{ width: 100%; margin-left: 0; }}
+    .filter-bar {{ gap: 6px; }}
+    .filter-btn {{ padding: 8px 12px; font-size: 11px; }}
+    .art-table thead th:nth-child(4),
+    .art-table tbody td:nth-child(4) {{ display: none; }}
+  }}
+
+  /* ── Responsive: phone ── */
+  @media (max-width: 480px) {{
+    .container {{ padding: 12px 8px; }}
+    .j-header {{ flex-wrap: wrap; padding: 10px 12px; }}
+    .j-right {{ width: 100%; margin-top: 6px; padding-left: 52px; }}
+    .spectrum-wrap {{ width: 100%; }}
+    .art-table thead th:nth-child(2),
+    .art-table tbody td:nth-child(2) {{ display: none; }}
+    .art-table tbody td {{ padding: 8px 10px; }}
+    .dist-section {{ padding: 10px 12px; }}
+    .card-connections {{ padding: 10px 12px; }}
+    .card-bio {{ padding: 10px 12px; }}
+    .articles-toggle {{ padding: 10px 12px; }}
+  }}
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {{
+    .accordion-body, .toggle-icon, .month-arrow, .dist-bar, .journalist-card, .filter-btn, .social-link {{ transition: none !important; }}
+  }}
 </style>
 </head>
 <body>
 
 <header>
   <div>
-    <h1>Byline Card · Dev Dashboard</h1>
-    <div class="subtitle">Generated {generated_at}</div>
+    <h1>Byline Card</h1>
+    <div class="subtitle">NZ Journalist Transparency · Updated {generated_at}</div>
   </div>
   <div class="stats">
     <div class="stat">
@@ -525,40 +577,48 @@ def generate_html(conn) -> str:
 <footer>Byline Card · Open source at <a href="https://github.com/ferguswatts/byline-card" style="color:#999">GitHub</a></footer>
 
 <script>
+/* ── Accordion toggle — smooth height animation ── */
+function toggleAccordion(el) {{
+  if (el.classList.contains('open')) {{
+    // Collapse: set explicit height first, then animate to 0
+    el.style.height = el.scrollHeight + 'px';
+    requestAnimationFrame(() => {{ el.style.height = '0'; }});
+    el.classList.remove('open');
+  }} else {{
+    // Expand: set height to scrollHeight, then clear after transition
+    el.style.height = el.scrollHeight + 'px';
+    el.classList.add('open');
+    const onEnd = () => {{ el.style.height = 'auto'; el.removeEventListener('transitionend', onEnd); }};
+    el.addEventListener('transitionend', onEnd);
+  }}
+}}
+
 function toggleDetails(slug) {{
   const el = document.getElementById('details-' + slug);
-  const card = el.closest('.journalist-card');
-  const icon = card.querySelector('.toggle-details');
-  const articlesSection = document.getElementById('articles-' + slug);
-  if (el.style.display === 'none') {{
-    el.style.display = 'block';
-    if (articlesSection) articlesSection.style.display = 'block';
-    icon.classList.add('open');
-  }} else {{
-    el.style.display = 'none';
-    if (articlesSection) articlesSection.style.display = 'none';
-    icon.classList.remove('open');
-    // Also collapse articles content when collapsing details
+  if (!el) return;
+  toggleAccordion(el);
+
+  // If collapsing, also collapse inner articles
+  if (!el.classList.contains('open')) {{
     const artContent = document.getElementById('articles-content-' + slug);
-    const artIcon = card.querySelector('.toggle-articles');
-    if (artContent) artContent.style.display = 'none';
+    if (artContent && artContent.classList.contains('open')) {{
+      artContent.style.height = '0';
+      artContent.classList.remove('open');
+    }}
+    const artIcon = el.querySelector('.toggle-articles');
     if (artIcon) artIcon.classList.remove('open');
   }}
 }}
 
 function toggleArticles(slug) {{
   const el = document.getElementById('articles-content-' + slug);
-  const card = el.closest('.journalist-card');
-  const icon = card.querySelector('.toggle-articles');
-  if (el.style.display === 'none') {{
-    el.style.display = 'block';
-    icon.classList.add('open');
-  }} else {{
-    el.style.display = 'none';
-    icon.classList.remove('open');
-  }}
+  if (!el) return;
+  const icon = el.closest('.articles-section').querySelector('.toggle-articles');
+  toggleAccordion(el);
+  if (icon) icon.classList.toggle('open');
 }}
 
+/* ── Filters ── */
 let activeShowFilter = 'all';
 let activeOutletFilter = 'all';
 let activeSearchTerm = '';
@@ -566,12 +626,9 @@ let activeSearchTerm = '';
 function applyFilters() {{
   document.querySelectorAll('.journalist-card').forEach(card => {{
     let show = true;
-    // Show filter
     if (activeShowFilter === 'scored' && card.classList.contains('empty')) show = false;
     if (activeShowFilter === 'empty' && !card.classList.contains('empty')) show = false;
-    // Outlet filter
     if (activeOutletFilter !== 'all' && card.dataset.outlet !== activeOutletFilter) show = false;
-    // Search filter
     if (activeSearchTerm && !card.dataset.name.includes(activeSearchTerm)) show = false;
     card.style.display = show ? '' : 'none';
   }});
@@ -596,20 +653,24 @@ function searchCards(term) {{
   applyFilters();
 }}
 
+/* ── Expand / Collapse all ── */
 function expandAll() {{
-  document.querySelectorAll('.details-section').forEach(el => el.style.display = 'block');
-  document.querySelectorAll('.articles-section').forEach(el => el.style.display = 'block');
-  document.querySelectorAll('.articles-content').forEach(el => el.style.display = 'block');
+  document.querySelectorAll('.accordion-body:not(.open)').forEach(el => {{
+    el.style.height = 'auto';
+    el.classList.add('open');
+  }});
   document.querySelectorAll('.toggle-icon').forEach(el => el.classList.add('open'));
 }}
 
 function collapseAll() {{
-  document.querySelectorAll('.details-section').forEach(el => el.style.display = 'none');
-  document.querySelectorAll('.articles-section').forEach(el => el.style.display = 'none');
-  document.querySelectorAll('.articles-content').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.accordion-body.open').forEach(el => {{
+    el.style.height = '0';
+    el.classList.remove('open');
+  }});
   document.querySelectorAll('.toggle-icon').forEach(el => el.classList.remove('open'));
 }}
 
+/* ── Sort ── */
 function sortCards(mode, btn) {{
   document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -629,6 +690,30 @@ function sortCards(mode, btn) {{
   columns.forEach(col => {{ while (col.firstChild) col.removeChild(col.firstChild); }});
   cards.forEach((c, i) => columns[i % columns.length].appendChild(c));
 }}
+
+/* ── Deep linking via URL hash ── */
+function openFromHash() {{
+  const slug = window.location.hash.replace('#', '');
+  if (!slug) return;
+  const el = document.getElementById('details-' + slug);
+  if (!el) return;
+  // Expand card
+  el.style.height = 'auto';
+  el.classList.add('open');
+  // Also expand articles if present
+  const artContent = document.getElementById('articles-content-' + slug);
+  if (artContent) {{
+    artContent.style.height = 'auto';
+    artContent.classList.add('open');
+    const artIcon = el.querySelector('.toggle-articles');
+    if (artIcon) artIcon.classList.add('open');
+  }}
+  // Scroll into view
+  const card = el.closest('.journalist-card');
+  setTimeout(() => card.scrollIntoView({{ behavior: 'smooth', block: 'start' }}), 100);
+}}
+window.addEventListener('DOMContentLoaded', openFromHash);
+window.addEventListener('hashchange', openFromHash);
 </script>
 </body>
 </html>"""
