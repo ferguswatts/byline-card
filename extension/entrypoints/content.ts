@@ -299,7 +299,7 @@ function buildCardHTML(j: JournalistData, version: string): string {
       <!-- Footer -->
       <div style="padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#999;border-top:1px solid #f3f4f6">
         <span>AI-scored · Updated ${version}</span>
-        <a href="${browser.runtime.getURL('/dashboard.html')}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none">View all journalists</a>
+        <a href="https://ferguswatts.github.io/byline-card/" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none">View all journalists</a>
       </div>
     </div>
   `;
