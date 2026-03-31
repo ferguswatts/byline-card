@@ -222,17 +222,45 @@ def generate_html(conn) -> str:
         else:
             lean_text = f"{lean_pct}% right leaning"
 
-        # Article rows
+        # Article rows — grouped by year/month, most recent first
+        from collections import OrderedDict
+        month_groups: OrderedDict[str, list] = OrderedDict()
+        sorted_articles = sorted(articles, key=lambda a: a["publish_date"] or a["scored_at"] or "", reverse=True)
+        for a in sorted_articles:
+            date_str = (a["publish_date"] or a["scored_at"] or "")[:10]
+            if len(date_str) >= 7:
+                ym = date_str[:7]  # "2026-03"
+            else:
+                ym = "Unknown"
+            month_groups.setdefault(ym, []).append(a)
+
         article_rows = ""
-        for a in articles:
-            score = a["median_score"] or 0
-            bucket = a["bucket"] or "centre"
-            color = BUCKET_COLORS.get(bucket, "#6b7280")
-            date = (a["publish_date"] or a["scored_at"] or "")[:10]
-            title = (a["title"] or "Untitled")[:90]
-            url = a["url"] or "#"
+        for ym, group in month_groups.items():
+            if ym != "Unknown":
+                try:
+                    from datetime import datetime
+                    dt = datetime.strptime(ym, "%Y-%m")
+                    month_label = dt.strftime("%B %Y")
+                except ValueError:
+                    month_label = ym
+            else:
+                month_label = "Unknown date"
+            group_id = f"month-{j['slug']}-{ym}"
             article_rows += f"""
-                <tr>
+                <tr class="month-header" onclick="document.querySelectorAll('.{group_id}').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
+                    <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
+                        <span class="month-arrow toggle-icon open">▼</span> {month_label} <span style="font-weight:400;color:#9ca3af">({len(group)} articles)</span>
+                    </td>
+                </tr>"""
+            for a in group:
+                score = a["median_score"] or 0
+                bucket = a["bucket"] or "centre"
+                color = BUCKET_COLORS.get(bucket, "#6b7280")
+                date = (a["publish_date"] or a["scored_at"] or "")[:10]
+                title = (a["title"] or "Untitled")[:90]
+                url = a["url"] or "#"
+                article_rows += f"""
+                <tr class="{group_id}">
                     <td class="art-title"><a href="{url}" target="_blank" rel="noopener">{title}</a></td>
                     <td class="art-date">{date}</td>
                     <td><span class="bucket-badge" style="background:{color}20;color:{color};border:1px solid {color}40">{bucket}</span></td>
@@ -429,6 +457,11 @@ def generate_html(conn) -> str:
   .art-date {{ color: #888; font-size: 12px; white-space: nowrap; }}
   .art-score {{ font-weight: 700; font-size: 13px; text-align: right; white-space: nowrap; }}
   .bucket-badge {{ font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }}
+  .month-header td {{ position: sticky; top: 0; z-index: 1; }}
+  .month-header:hover td {{ background: #f3f4f6 !important; }}
+  .month-arrow {{ display: inline-block; transition: transform 0.2s; font-size: 10px; margin-right: 6px; }}
+  .month-arrow.open {{ transform: rotate(0deg); }}
+  .month-arrow:not(.open) {{ transform: rotate(-90deg); }}
 
   .filter-bar {{ display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }}
   .filter-btn {{ padding: 5px 12px; border-radius: 20px; border: 1px solid #e5e7eb; background: #fff; font-size: 12px; cursor: pointer; color: #555; }}
