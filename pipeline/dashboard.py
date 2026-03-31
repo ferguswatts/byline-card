@@ -235,6 +235,7 @@ def generate_html(conn) -> str:
             month_groups.setdefault(ym, []).append(a)
 
         article_rows = ""
+        is_first_month = True
         for ym, group in month_groups.items():
             if ym != "Unknown":
                 try:
@@ -246,10 +247,12 @@ def generate_html(conn) -> str:
             else:
                 month_label = "Unknown date"
             group_id = f"month-{j['slug']}-{ym}"
+            collapsed = "" if is_first_month else " style=\"display:none\""
+            arrow_class = "month-arrow toggle-icon open" if is_first_month else "month-arrow toggle-icon"
             article_rows += f"""
                 <tr class="month-header" onclick="document.querySelectorAll('.{group_id}').forEach(r=>r.style.display=r.style.display==='none'?'':'none');this.querySelector('.month-arrow').classList.toggle('open')">
                     <td colspan="4" style="background:#f9fafb;font-weight:600;font-size:12px;color:#374151;padding:8px 12px;cursor:pointer;user-select:none">
-                        <span class="month-arrow toggle-icon open">▼</span> {month_label} <span style="font-weight:400;color:#9ca3af">({len(group)} articles)</span>
+                        <span class="{arrow_class}">▼</span> {month_label} <span style="font-weight:400;color:#9ca3af">({len(group)} articles)</span>
                     </td>
                 </tr>"""
             for a in group:
@@ -260,12 +263,13 @@ def generate_html(conn) -> str:
                 title = (a["title"] or "Untitled")[:90]
                 url = a["url"] or "#"
                 article_rows += f"""
-                <tr class="{group_id}">
+                <tr class="{group_id}"{collapsed}>
                     <td class="art-title"><a href="{url}" target="_blank" rel="noopener">{title}</a></td>
                     <td class="art-date">{date}</td>
                     <td><span class="bucket-badge" style="background:{color}20;color:{color};border:1px solid {color}40">{bucket}</span></td>
                     <td class="art-score" style="color:{color}">{score:+.2f}</td>
                 </tr>"""
+            is_first_month = False
 
         # Baseball card section
         conf_colors = {
