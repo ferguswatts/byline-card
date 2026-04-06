@@ -34,7 +34,7 @@ describe("loadData", () => {
 
   it("returns cached data if fresh", async () => {
     const testData = { version: "2026-03-29", journalists: {}, sites: {} };
-    mockStorage["bylinecard_data"] = {
+    mockStorage["bias_data"] = {
       data: testData,
       fetchedAt: Date.now() - 1000, // 1 second ago
     };
@@ -46,7 +46,7 @@ describe("loadData", () => {
 
   it("fetches from GitHub when cache is stale", async () => {
     const freshData = { version: "2026-03-29", journalists: {}, sites: {} };
-    mockStorage["bylinecard_data"] = {
+    mockStorage["bias_data"] = {
       data: { version: "old", journalists: {}, sites: {} },
       fetchedAt: Date.now() - 25 * 60 * 60 * 1000, // 25 hours ago
     };
@@ -63,7 +63,7 @@ describe("loadData", () => {
 
   it("falls back to stale cache on network error", async () => {
     const staleData = { version: "stale", journalists: {}, sites: {} };
-    mockStorage["bylinecard_data"] = {
+    mockStorage["bias_data"] = {
       data: staleData,
       fetchedAt: Date.now() - 48 * 60 * 60 * 1000, // 2 days ago
     };

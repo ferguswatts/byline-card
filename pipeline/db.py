@@ -7,7 +7,7 @@ from pathlib import Path
 
 log = logging.getLogger(__name__)
 
-DB_PATH = Path(__file__).parent / "bylinecard.db"
+DB_PATH = Path(__file__).parent / "bias.db"
 
 
 def get_connection(db_path: Path = DB_PATH) -> sqlite3.Connection:
