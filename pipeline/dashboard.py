@@ -432,6 +432,74 @@ def generate_html(conn) -> str:
   .dist-pct {{ color: #aaa; }}
 
   .no-data {{ padding: 10px 18px; font-size: 12px; color: #aaa; }}
+
+  /* ── Methodology Section ── */
+  .methodology-section {{ background: #fff; border-top: 1px solid #e5e7eb; margin-top: 48px; padding: 64px 0; }}
+  .methodology-inner {{ max-width: 960px; margin: 0 auto; padding: 0 24px; }}
+  .methodology-title {{ font-size: 28px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }}
+  .methodology-subtitle {{ font-size: 15px; color: #666; margin-bottom: 40px; }}
+
+  .methodology-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 48px; }}
+  .methodology-card {{ background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 24px; position: relative; }}
+  .methodology-step {{ position: absolute; top: -12px; left: 20px; background: #1a1a1a; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }}
+  .methodology-card h3 {{ font-size: 16px; font-weight: 600; margin-bottom: 8px; color: #1a1a1a; }}
+  .methodology-card p {{ font-size: 14px; color: #555; line-height: 1.6; }}
+  .methodology-card a {{ color: #2563eb; text-decoration: none; }}
+  .methodology-card a:hover {{ text-decoration: underline; }}
+  .methodology-detail {{ margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #888; }}
+  .methodology-detail strong {{ color: #555; }}
+
+  .scoring-dimensions {{ margin-bottom: 48px; }}
+  .scoring-dimensions h3 {{ font-size: 20px; font-weight: 600; margin-bottom: 8px; }}
+  .scoring-dimensions > p {{ font-size: 14px; color: #666; margin-bottom: 20px; }}
+  .dimensions-grid {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }}
+  .dimension {{ background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center; }}
+  .dimension-icon {{ font-size: 20px; color: #888; margin-bottom: 8px; }}
+  .dimension strong {{ display: block; font-size: 13px; margin-bottom: 6px; color: #1a1a1a; }}
+  .dimension p {{ font-size: 12px; color: #666; line-height: 1.5; }}
+
+  .scoring-example {{ margin-bottom: 48px; }}
+  .scoring-example h3 {{ font-size: 20px; font-weight: 600; margin-bottom: 8px; }}
+  .scoring-example > p {{ font-size: 14px; color: #666; margin-bottom: 16px; }}
+  .example-card {{ background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; }}
+  .example-header {{ padding: 20px 24px; border-bottom: 1px solid #e5e7eb; }}
+  .example-article-title {{ font-size: 16px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }}
+  .example-meta {{ font-size: 13px; color: #888; }}
+  .example-meta strong {{ color: #1a1a1a; }}
+  .example-reasoning {{ padding: 20px 24px; border-bottom: 1px solid #e5e7eb; }}
+  .example-label {{ font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }}
+  .example-reasoning p {{ font-size: 14px; color: #555; line-height: 1.7; }}
+  .example-dimensions {{ padding: 16px 24px; display: flex; gap: 16px; flex-wrap: wrap; }}
+  .example-dim {{ display: flex; align-items: center; gap: 8px; }}
+  .dim-name {{ font-size: 12px; color: #888; }}
+  .dim-score {{ font-size: 13px; font-weight: 700; color: #1a1a1a; background: #e5e7eb; padding: 2px 8px; border-radius: 4px; }}
+
+  .scoring-prompt-section {{ margin-bottom: 48px; }}
+  .scoring-prompt-section h3 {{ font-size: 20px; font-weight: 600; margin-bottom: 8px; }}
+  .scoring-prompt-section > p {{ font-size: 14px; color: #666; margin-bottom: 16px; }}
+  .scoring-prompt-section a {{ color: #2563eb; text-decoration: none; }}
+  .scoring-prompt-section a:hover {{ text-decoration: underline; }}
+  .prompt-details {{ background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; }}
+  .prompt-details summary {{ padding: 14px 20px; cursor: pointer; font-size: 14px; font-weight: 500; color: #555; }}
+  .prompt-details summary:hover {{ background: #f3f4f6; }}
+  .prompt-text {{ padding: 20px; font-size: 13px; line-height: 1.7; color: #555; white-space: pre-wrap; font-family: "SF Mono", "Fira Code", monospace; background: #1a1a1a; color: #d4d4d4; border-radius: 0 0 8px 8px; overflow-x: auto; }}
+
+  .methodology-caveats {{ margin-bottom: 0; }}
+  .methodology-caveats h3 {{ font-size: 20px; font-weight: 600; margin-bottom: 16px; }}
+  .methodology-caveats ul {{ list-style: none; padding: 0; }}
+  .methodology-caveats li {{ font-size: 14px; color: #555; line-height: 1.7; padding: 12px 0; border-bottom: 1px solid #f3f4f6; }}
+  .methodology-caveats li:last-child {{ border-bottom: none; }}
+  .methodology-caveats li strong {{ color: #1a1a1a; }}
+
+  @media (max-width: 768px) {{
+    .methodology-grid {{ grid-template-columns: 1fr; }}
+    .dimensions-grid {{ grid-template-columns: repeat(2, 1fr); }}
+    .example-dimensions {{ flex-direction: column; gap: 8px; }}
+    .methodology-title {{ font-size: 22px; }}
+  }}
+  @media (max-width: 480px) {{
+    .dimensions-grid {{ grid-template-columns: 1fr; }}
+  }}
   .conf-badge {{ font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }}
 
   /* ── Connections & bio ── */
@@ -555,6 +623,147 @@ def generate_html(conn) -> str:
 
   <div class="card-grid">
   {sections_html}
+  </div>
+</div>
+
+<!-- ── Methodology Section ── -->
+<div class="methodology-section" id="methodology">
+  <div class="methodology-inner">
+    <h2 class="methodology-title">How We Score</h2>
+    <p class="methodology-subtitle">Complete transparency in our methodology — every step is open source</p>
+
+    <div class="methodology-grid">
+      <div class="methodology-card">
+        <div class="methodology-step">1</div>
+        <h3>Article Discovery</h3>
+        <p>We crawl sitemaps from NZ's major news outlets to build a comprehensive index of every published article. For each URL, we extract the author name using outlet-specific strategies — APIs, structured data, or streaming HTML.</p>
+        <div class="methodology-detail">
+          <strong>Outlets:</strong> NZ Herald, Stuff, RNZ, The Spinoff, Newstalk ZB, 1News, Newsroom
+        </div>
+      </div>
+
+      <div class="methodology-card">
+        <div class="methodology-step">2</div>
+        <h3>Text Extraction</h3>
+        <p>Full article text is extracted using <a href="https://trafilatura.readthedocs.io/" target="_blank" rel="noopener">trafilatura</a>, an open-source library designed for web content extraction. For paywalled articles, we attempt to retrieve archived versions from <a href="https://archive.is" target="_blank" rel="noopener">archive.is</a>.</p>
+        <div class="methodology-detail">
+          <strong>Minimum threshold:</strong> Articles under 200 characters are excluded as likely stubs or paywalled fragments
+        </div>
+      </div>
+
+      <div class="methodology-card">
+        <div class="methodology-step">3</div>
+        <h3>AI Scoring</h3>
+        <p>Each article is scored by <strong>Claude Sonnet 4.5</strong> (Anthropic) on a scale from <strong>-1.0</strong> (hard left) to <strong>+1.0</strong> (hard right). The AI evaluates five dimensions of bias for each article and applies the "Cui Bono" principle — asking who benefits from the story being published.</p>
+        <div class="methodology-detail">
+          <strong>Model:</strong> claude-sonnet-4-5 &nbsp;|&nbsp; <strong>Prompt version:</strong> v2-cuibono
+        </div>
+      </div>
+
+      <div class="methodology-card">
+        <div class="methodology-step">4</div>
+        <h3>Aggregation</h3>
+        <p>Individual article scores are aggregated into five buckets for each journalist. The spectrum position shown on each card is the median score across all their articles from the past 24 months. Confidence ratings (low/medium/high) reflect the number of articles scored.</p>
+        <div class="methodology-detail">
+          <strong>Buckets:</strong> Left (&lt;-0.6) · Centre-Left (-0.6 to -0.2) · Centre (-0.2 to 0.2) · Centre-Right (0.2 to 0.6) · Right (&gt;0.6)
+        </div>
+      </div>
+    </div>
+
+    <div class="scoring-dimensions">
+      <h3>The Five Dimensions of Bias</h3>
+      <p>Every article is evaluated across these five dimensions, each scored independently:</p>
+      <div class="dimensions-grid">
+        <div class="dimension">
+          <div class="dimension-icon">&#9664;</div>
+          <strong>Story Selection</strong>
+          <p>The editorial choice of what to cover. Publishing a story about one party's scandal while ignoring the other's is itself a signal — even before a word is written.</p>
+        </div>
+        <div class="dimension">
+          <div class="dimension-icon">&#9632;</div>
+          <strong>Framing</strong>
+          <p>How is the topic presented? Who is positioned as protagonist or antagonist? The frame shapes reader perception before they process the facts.</p>
+        </div>
+        <div class="dimension">
+          <div class="dimension-icon">&#9654;</div>
+          <strong>Source Selection</strong>
+          <p>Which voices are quoted? Are opposing views included? Over-representing one side's experts or spokespeople creates an imbalanced narrative.</p>
+        </div>
+        <div class="dimension">
+          <div class="dimension-icon">&#9650;</div>
+          <strong>Language</strong>
+          <p>Loaded words like "slammed", "controversial", "radical", or "common sense" inject editorial judgement into ostensibly neutral reporting.</p>
+        </div>
+        <div class="dimension">
+          <div class="dimension-icon">&#9660;</div>
+          <strong>Omission</strong>
+          <p>What relevant context is missing? Profiling a politician's controversial views while omitting their actual policy record is bias by absence.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scoring-example">
+      <h3>Worked Example</h3>
+      <p>Here's how the AI scored a real article to show the process in action:</p>
+      <div class="example-card">
+        <div class="example-header">
+          <div class="example-article-title">"Audrey Young: 8 horrific child deaths since 2006 — why won't MPs act?"</div>
+          <div class="example-meta">Audrey Young · NZ Herald · Score: <strong>-0.25</strong> · Bucket: <strong>Centre-Left</strong></div>
+        </div>
+        <div class="example-reasoning">
+          <div class="example-label">AI Reasoning</div>
+          <p>The article frames parliamentary inaction on child welfare as the central problem, implicitly criticising the government for not doing enough — a framing that aligns with left-leaning policy positions (more state intervention). However, the criticism is directed at MPs across parties and uses factual child death statistics rather than emotive language. The source selection is balanced. The "cui bono" test: this story benefits parties advocating for stronger child protection legislation, which in NZ politics skews centre-left. Overall: mild centre-left lean from topic selection and framing, tempered by factual reporting style.</p>
+        </div>
+        <div class="example-dimensions">
+          <div class="example-dim"><span class="dim-name">Story Selection</span><span class="dim-score">-0.3</span></div>
+          <div class="example-dim"><span class="dim-name">Framing</span><span class="dim-score">-0.3</span></div>
+          <div class="example-dim"><span class="dim-name">Source Selection</span><span class="dim-score">-0.1</span></div>
+          <div class="example-dim"><span class="dim-name">Language</span><span class="dim-score">-0.1</span></div>
+          <div class="example-dim"><span class="dim-name">Omission</span><span class="dim-score">-0.2</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scoring-prompt-section">
+      <h3>The Exact Prompt</h3>
+      <p>In the spirit of full transparency, this is the exact prompt sent to the AI for every article. Nothing is hidden. <a href="https://github.com/ferguswatts/byline-card/blob/main/pipeline/scorer.py" target="_blank" rel="noopener">View source on GitHub →</a></p>
+      <details class="prompt-details">
+        <summary>Click to expand the full scoring prompt</summary>
+        <pre class="prompt-text">You are a political bias analyst for New Zealand media. Score the following
+news article on a scale from -1.0 (hard left) to +1.0 (hard right).
+
+Consider these dimensions:
+- FRAMING: How is the topic presented? Who is the protagonist/antagonist?
+- SOURCE SELECTION: Which politicians, experts, or voices are quoted?
+- LANGUAGE: Is loaded or emotive language used?
+- TOPIC EMPHASIS: What aspects are highlighted vs downplayed?
+- OMISSION: What relevant context or perspectives are missing?
+
+CRITICAL — ask "CUI BONO?" (who benefits from this story being published?):
+- An article exposing a right-wing party's failures BENEFITS THE LEFT
+- An article exposing a left-wing party's problems BENEFITS THE RIGHT
+- The editorial choice of what to write about is itself a signal of lean
+- "Both sides quoted" does NOT mean neutral
+
+NZ political context:
+- Left = Labour, Greens, Te Pati Maori
+- Right = National, ACT
+- Centre = NZ First (varies by issue)
+
+Returns: score (-1.0 to 1.0), confidence, reasoning, and per-dimension scores.</pre>
+      </details>
+    </div>
+
+    <div class="methodology-caveats">
+      <h3>Limitations &amp; Caveats</h3>
+      <ul>
+        <li><strong>AI is not infallible.</strong> Large language models can misinterpret sarcasm, cultural context, or NZ-specific political nuance. Individual article scores should be taken with a grain of salt — the aggregate pattern across hundreds of articles is what matters.</li>
+        <li><strong>Bias is multidimensional.</strong> A single left-right spectrum is a simplification. Journalists may be progressive on social issues but conservative on economic policy. We use five sub-dimensions to partially address this.</li>
+        <li><strong>Article availability varies.</strong> Paywalled articles may be underrepresented. We use archive.is as a fallback, but some articles are simply unavailable.</li>
+        <li><strong>Correlation is not intent.</strong> A journalist whose work scores left-leaning may be accurately reporting on a left-leaning government's policies. Context matters.</li>
+        <li><strong>This is a starting point, not a verdict.</strong> Byline Card exists to surface patterns and encourage critical reading — not to label journalists as biased.</li>
+      </ul>
+    </div>
   </div>
 </div>
 
