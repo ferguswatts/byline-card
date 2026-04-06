@@ -1,4 +1,4 @@
-# Byline Card
+# Bias
 
 **Know who's writing what you're reading.**
 
@@ -8,7 +8,7 @@ A Chrome extension and open data project that brings transparency to New Zealand
 
 Every journalist has a perspective. That's normal and human — it's what makes journalism interesting. But readers deserve to know what that perspective looks like across hundreds of articles, not just the one in front of them.
 
-Byline Card doesn't label journalists as "biased" or "neutral." Instead, it shows the **distribution** of their coverage — how many articles lean left, centre, or right — and lets you draw your own conclusions. A journalist who writes 90% centre articles and 10% centre-left is different from one who writes 50/50, and both are different from one who writes opinion pieces that consistently lean one direction. The distribution tells the story.
+Bias doesn't label journalists as "biased" or "neutral." Instead, it shows the **distribution** of their coverage — how many articles lean left, centre, or right — and lets you draw your own conclusions. A journalist who writes 90% centre articles and 10% centre-left is different from one who writes 50/50, and both are different from one who writes opinion pieces that consistently lean one direction. The distribution tells the story.
 
 We believe transparency improves trust in media. When readers can see a journalist's track record before reading an article, they're better equipped to identify framing, weigh arguments, and form their own views. That's not anti-media — it's pro-reader.
 

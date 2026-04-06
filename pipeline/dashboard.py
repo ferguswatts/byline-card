@@ -370,7 +370,7 @@ def generate_html(conn) -> str:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Byline Card — NZ Journalist Transparency</title>
+<title>Bias — NZ Journalist Transparency</title>
 <style>
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: #f8f9fa; color: #1a1a1a; -webkit-font-smoothing: antialiased; }}
@@ -791,13 +791,13 @@ Returns: score (-1.0 to 1.0), confidence, reasoning, and per-dimension scores.</
         <li><strong>Bias is multidimensional.</strong> A single left-right spectrum is a simplification. Journalists may be progressive on social issues but conservative on economic policy. We use five sub-dimensions to partially address this.</li>
         <li><strong>Article availability varies.</strong> Not all articles are accessible for scoring. Some may be unavailable, removed, or behind access restrictions, which can affect representation.</li>
         <li><strong>Correlation is not intent.</strong> A journalist whose work scores left-leaning may be accurately reporting on a left-leaning government's policies. Context matters.</li>
-        <li><strong>This is a starting point, not a verdict.</strong> Byline Card exists to surface patterns and encourage critical reading — not to label journalists as biased.</li>
+        <li><strong>This is a starting point, not a verdict.</strong> Bias exists to surface patterns and encourage critical reading — not to label journalists as biased.</li>
       </ul>
     </div>
   </div>
 </div>
 
-<footer>Byline Card · Open source at <a href="https://github.com/ferguswatts/byline-card" style="color:#999">GitHub</a></footer>
+<footer>Bias · Open source at <a href="https://github.com/ferguswatts/byline-card" style="color:#999">GitHub</a></footer>
 
 <script>
 /* ── Accordion toggle — smooth height animation ── */
@@ -943,7 +943,7 @@ window.addEventListener('hashchange', openFromHash);
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate Byline Card dev dashboard")
+    parser = argparse.ArgumentParser(description="Generate Bias dashboard")
     parser.add_argument("--open", action="store_true", help="Open in browser after generating")
     parser.add_argument("--output", type=str, default="dashboard.html", help="Output file path")
     args = parser.parse_args()

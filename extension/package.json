@@ -1,12 +1,15 @@
 {
-  "name": "byline-card",
+  "name": "bias",
   "version": "0.1.0",
   "description": "NZ Journalist Transparency — see the political lean and connections of the journalist writing the article you're reading",
   "type": "module",
   "scripts": {
     "dev": "wxt",
     "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
     "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "dev:firefox": "wxt -b firefox",
     "test": "vitest"
   },
   "dependencies": {

@@ -3,7 +3,7 @@ import { defineConfig } from "wxt";
 export default defineConfig({
   modules: [],
   manifest: {
-    name: "Byline Card — NZ Journalist Transparency",
+    name: "Bias — NZ Journalist Transparency",
     description:
       "See the political lean and connections of the journalist writing the article you're reading",
     permissions: ["storage"],

@@ -1,4 +1,4 @@
-"""SQLite database schema and helpers for the Byline Card pipeline."""
+"""SQLite database schema and helpers for the Bias pipeline."""
 
 import sqlite3
 import json

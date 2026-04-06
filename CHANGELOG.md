@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Byline Card are documented here.
+All notable changes to Bias are documented here.
 
 ---
 

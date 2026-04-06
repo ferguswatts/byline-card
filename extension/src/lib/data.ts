@@ -19,7 +19,7 @@ export async function loadData(): Promise<DataFile> {
     if (response.ok) {
       const data: DataFile = await response.json();
       if (data.journalists && Object.keys(data.journalists).length > 0) {
-        console.log(`[Byline Card] Loaded ${Object.keys(data.journalists).length} journalists from GitHub`);
+        console.log(`[Bias] Loaded ${Object.keys(data.journalists).length} journalists from GitHub`);
         return data;
       }
     }
@@ -31,18 +31,18 @@ export async function loadData(): Promise<DataFile> {
   try {
     // In content scripts, we need to get the extension's URL for bundled resources
     const bundledUrl = (typeof browser !== "undefined" ? browser : chrome).runtime.getURL("data.json");
-    console.log(`[Byline Card] Fetching bundled data from: ${bundledUrl}`);
+    console.log(`[Bias] Fetching bundled data from: ${bundledUrl}`);
     const response = await fetch(bundledUrl);
     if (response.ok) {
       const data: DataFile = await response.json();
-      console.log(`[Byline Card] Loaded ${Object.keys(data.journalists).length} journalists from bundle`);
+      console.log(`[Bias] Loaded ${Object.keys(data.journalists).length} journalists from bundle`);
       return data;
     }
   } catch (e) {
-    console.error("[Byline Card] Failed to load bundled data:", e);
+    console.error("[Bias] Failed to load bundled data:", e);
   }
 
   // 3. Return empty data as last resort
-  console.warn("[Byline Card] All data sources failed — returning empty data");
+  console.warn("[Bias] All data sources failed — returning empty data");
   return { version: "unknown", journalists: {}, sites: {} };
 }

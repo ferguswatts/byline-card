@@ -1,4 +1,4 @@
-"""Main orchestrator for the Byline Card pipeline.
+"""Main orchestrator for the Bias pipeline.
 
 Usage:
     python -m pipeline.run                         # Full run (cap: 20 articles/journalist)
@@ -128,7 +128,7 @@ async def scrape_and_score_journalist(conn, journalist: dict, adapters: dict, ca
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="Byline Card scoring pipeline")
+    parser = argparse.ArgumentParser(description="Bias scoring pipeline")
     parser.add_argument("--journalists", type=int, default=0, help="Limit to first N journalists")
     parser.add_argument("--dry-run", action="store_true", help="Scrape + score but don't export")
     parser.add_argument("--export-only", action="store_true", help="Just regenerate JSON")

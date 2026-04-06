@@ -40,12 +40,12 @@ export default defineContentScript({
     try {
       data = await loadData();
     } catch (e) {
-      console.error("[Byline Card] Failed to load data:", e);
+      console.error("[Bias] Failed to load data:", e);
       return;
     }
 
     if (!data.journalists || Object.keys(data.journalists).length === 0) {
-      console.log("[Byline Card] No journalist data loaded.");
+      console.log("[Bias] No journalist data loaded.");
       return;
     }
 
@@ -59,19 +59,19 @@ export default defineContentScript({
         if (!byline) return;
       }
 
-      console.log(`[Byline Card] Byline detected: ${byline.name} @ ${byline.outlet}`);
+      console.log(`[Bias] Byline detected: ${byline.name} @ ${byline.outlet}`);
 
       const match = matchJournalist(byline.name, byline.outlet, data);
       if (!match) {
-        console.log(`[Byline Card] No match for: ${byline.name}`);
+        console.log(`[Bias] No match for: ${byline.name}`);
         return;
       }
 
-      console.log(`[Byline Card] Matched: ${match.journalist.name}`);
+      console.log(`[Bias] Matched: ${match.journalist.name}`);
 
       const bylineEl = findBylineElement(byline.name);
       if (!bylineEl) {
-        console.log("[Byline Card] Could not find byline DOM element.");
+        console.log("[Bias] Could not find byline DOM element.");
         return;
       }
 
@@ -82,7 +82,7 @@ export default defineContentScript({
       // Add visual indicator
       bylineEl.style.borderBottom = "2px dotted #3b82f6";
       bylineEl.style.cursor = "pointer";
-      bylineEl.title = "Byline Card available — hover to see journalist profile";
+      bylineEl.title = "Bias — hover to see journalist profile";
 
       let cardEl: HTMLDivElement | null = null;
       let isCardHovered = false;
@@ -169,7 +169,7 @@ export default defineContentScript({
       if (location.href !== lastUrl) {
         lastUrl = location.href;
         currentBylineEl = null;
-        console.log("[Byline Card] URL changed (soft navigation), re-scanning...");
+        console.log("[Bias] URL changed (soft navigation), re-scanning...");
         scanForByline();
       }
     });
@@ -279,7 +279,7 @@ function buildCardHTML(slug: string, j: JournalistData, version: string): string
           <div style="font-size:15px;font-weight:600;color:#1a1a1a">${j.name}</div>
           <div style="font-size:12px;color:#888;margin-top:2px">${j.outlet} · ${j.beat || "Politics"}</div>
         </div>
-        <span style="font-size:10px;color:#6b7280;font-weight:500;white-space:nowrap">Byline Card</span>
+        <span style="font-size:10px;color:#6b7280;font-weight:500;white-space:nowrap">Bias</span>
       </div>
 
       <!-- Spectrum bar -->

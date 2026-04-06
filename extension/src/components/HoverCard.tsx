@@ -39,7 +39,7 @@ export const HoverCard: FC<{
         boxShadow: "0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04)",
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
         zIndex: 2147483647,
-        animation: "bylinecard-fadein 150ms ease-out",
+        animation: "bias-fadein 150ms ease-out",
       }}
     >
       {/* Header zone */}
@@ -73,7 +73,7 @@ export const HoverCard: FC<{
               whiteSpace: "nowrap" as const,
             }}
           >
-            Byline Card
+            Bias
           </span>
         </div>
         <div style={{ display: "flex", gap: "8px", marginTop: "6px", alignItems: "center" }}>
@@ -158,12 +158,12 @@ export const HoverCard: FC<{
       </div>
 
       <style>{`
-        @keyframes bylinecard-fadein {
+        @keyframes bias-fadein {
           from { opacity: 0; transform: translateY(4px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @media (prefers-reduced-motion: reduce) {
-          @keyframes bylinecard-fadein {
+          @keyframes bias-fadein {
             from { opacity: 1; }
             to { opacity: 1; }
           }

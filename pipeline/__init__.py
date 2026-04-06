@@ -1,1 +1,1 @@
-"""Byline Card pipeline — scrape, score, aggregate, export."""
+"""Bias pipeline — scrape, score, aggregate, export."""
