@@ -23,23 +23,63 @@
           "type": "employer",
           "target": "Stuff Limited",
           "role": "Formerly Fairfax NZ",
-          "source": "https://www.stuff.co.nz/about-stuff"
+          "source": "https://www.stuff.co.nz/authors/andrea-vance"
         },
         {
           "type": "political",
           "target": "Peter Dunne",
           "role": "United Future leader and Revenue Minister — Textgate 2013 (86 emails in 13 days; Dunne resigned; Vance's phone records and parliamentary swipe card data were improperly accessed)",
-          "source": "https://en.wikipedia.org/wiki/Textgate_(New_Zealand)"
+          "source": "https://www.nbr.co.nz/peters-says-hes-seen-personally-embarrassing-emails-between-peter-dunne-and-andrea-vance/"
         }
       ],
       "facts": [
         {
           "text": "'Textgate' (2013): exchanged 86 emails over 13 days with Revenue Minister Peter Dunne about GCSB leak inquiry; Dunne resigned; a subsequent inquiry improperly accessed Vance's phone records AND parliamentary swipe card movement data — a major NZ privacy scandal",
-          "source": "https://en.wikipedia.org/wiki/Textgate_(New_Zealand)"
+          "source": "https://www.nbr.co.nz/peters-says-hes-seen-personally-embarrassing-emails-between-peter-dunne-and-andrea-vance/"
         }
       ],
       "bio": "Andrea Vance is a Northern Irish political journalist currently serving as a senior journalist at Stuff in Wellington. She grew up near Belfast, where her father edited three local newspapers. She worked for seven years as an investigative reporter at the British tabloid News of the World. When the phone hacking scandal broke, Vance was in the Glasgow newsroom and has denied any personal involvement, stating \"no one had any idea it was going on.\" She subsequently worked as night news editor at The Scotsman before emigrating to New Zealand with her Kiwi husband. She became a prominent press gallery journalist, working for Fairfax/Stuff and later 1News. In 2013, she was at the centre of the Peter Dunne email scandal, in which minister Dunne resigned after refusing to release 86 email exchanges with Vance regarding a leaked GCSB report. Her phone records and parliamentary swipe-card data were improperly provided to the inquiry without her knowledge, prompting a major privacy breach complaint. She was named Political Journalist of the Year in 2025.",
       "methodology": "Based on 20 articles scored by AI"
+    },
+    "anna-leask-nzherald": {
+      "name": "Anna Leask",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Crime and justice",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/dc440950-48a8-48e4-b67b-9abae2af8be7.png",
+      "article_count": 2,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 100,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Senior crime and justice journalist since 2008",
+          "source": "https://www.nzherald.co.nz/author/anna-leask/"
+        },
+        {
+          "type": "employer",
+          "target": "Penguin Books NZ",
+          "role": "Published true crime author",
+          "source": "https://www.penguin.co.nz/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Hosts 'A Moment In Crime' true crime podcast (iHeart/NZME) and published two books with Penguin NZ including 'Christie' and 'Behind Bars'",
+          "source": "https://www.nzherald.co.nz/author/anna-leask/"
+        }
+      ],
+      "bio": "Anna Leask is a senior crime and justice journalist at the NZ Herald, where she has worked since 2008. She hosts the award-winning true crime podcast 'A Moment In Crime' and is a published author with Penguin Books NZ. She has covered NZ's highest-profile criminal cases over 20 years including the March 15 terror attack, Grace Millane murder, and Pike River mine disaster.",
+      "methodology": "Based on 2 articles scored by AI"
     },
     "audrey-young-nzherald": {
       "name": "Audrey Young",
@@ -62,8 +102,8 @@
         {
           "type": "employer",
           "target": "NZME",
-          "role": "Parent company of NZ Herald",
-          "source": "https://www.nzme.co.nz/"
+          "role": "Political editor NZ Herald",
+          "source": "https://www.nzherald.co.nz/author/audrey-young/"
         }
       ],
       "facts": [],
@@ -92,19 +132,19 @@
           "type": "employer",
           "target": "NZME",
           "role": "Parent company of NZ Herald",
-          "source": "https://www.nzme.co.nz/"
+          "source": "https://www.nzherald.co.nz/author/claire-trevett/"
         },
         {
           "type": "employer",
           "target": "NZ Police",
           "role": "Chief Media and Communications Adviser (from May 2025 — revolving door from NZ Herald Political Editor)",
-          "source": "https://www.police.govt.nz/"
+          "source": "https://www.nzherald.co.nz/business/media-insider/media-insider-former-nz-herald-political-editor-claire-trevett-becomes-a-public-servant-with-a-new-senior-police-role/4BUOWA6RJFGWPGQ3FWMQ2FCAPE/"
         }
       ],
       "facts": [
         {
           "text": "Left NZ Herald in May 2025 after almost two decades as Political Editor to become Chief Media and Communications Adviser to the NZ Police Commissioner",
-          "source": "https://en.wikipedia.org/wiki/Claire_Trevett"
+          "source": "https://www.nzherald.co.nz/business/media-insider/media-insider-former-nz-herald-political-editor-claire-trevett-becomes-a-public-servant-with-a-new-senior-police-role/4BUOWA6RJFGWPGQ3FWMQ2FCAPE/"
         }
       ],
       "bio": "Claire Trevett served as the NZ Herald's political editor for several years, becoming one of the most recognised press gallery journalists in New Zealand. Based in Wellington, she was known for her sharp political analysis, witty writing style, and coverage of multiple election cycles and changes of government. Trevett left the Herald in May 2025 after almost two decades as Political Editor to become Chief Media and Communications Adviser for New Zealand Police.",
@@ -131,8 +171,8 @@
         {
           "type": "employer",
           "target": "NZME",
-          "role": "Parent company of NZ Herald",
-          "source": "https://www.nzme.co.nz/"
+          "role": "Political journalist NZ Herald",
+          "source": "https://www.nzherald.co.nz/author/derek-cheng/"
         }
       ],
       "facts": [],
@@ -143,7 +183,7 @@
       "name": "Guyon Espiner",
       "aliases": [],
       "outlet": "RNZ",
-      "formerly": "TVNZ, TV3, Sunday Star-Times",
+      "formerly": "",
       "beat": "Investigative",
       "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--rNdz9vFZ--/c_scale,f_auto,q_auto,w_576/v1765844621/4JXDTR0_Guyon_Espiner_headshot_square_Nov25_jpg",
       "article_count": 25,
@@ -161,7 +201,7 @@
           "type": "employer",
           "target": "RNZ",
           "role": "Public broadcaster funded by NZ Government",
-          "source": "https://www.rnz.co.nz/about"
+          "source": "https://www.rnz.co.nz/authors/guyon-espiner"
         },
         {
           "type": "spouse",
@@ -173,13 +213,13 @@
           "type": "political",
           "target": "Darren Hughes",
           "role": "Labour MP — Espiner's wife Emma Wehipeihana was his personal assistant",
-          "source": "https://en.wikipedia.org/wiki/Darren_Hughes"
+          "source": "https://www.nzherald.co.nz/nz/tv-stars-politicians-mix-at-espiner-wedding/62QKADTMEEXFYPUCX42DT2Z5SM/"
         }
       ],
       "facts": [
         {
           "text": "Political journalist Duncan Garner served as best man at Espiner's 2012 wedding to Emma Wehipeihana",
-          "source": "https://en.wikipedia.org/wiki/Guyon_Espiner"
+          "source": "https://www.nzherald.co.nz/nz/tv-stars-politicians-mix-at-espiner-wedding/62QKADTMEEXFYPUCX42DT2Z5SM/"
         }
       ],
       "bio": "Guyon Espiner (born 31 December 1970, Christchurch) is an investigative journalist at Radio New Zealand with over 30 years in print, television, and radio. After a decade in newspapers, including as political editor of the Sunday Star-Times, he joined TVNZ in 2003, becoming political editor in 2006 and anchoring Q+A, Agenda, and Breakfast. He moved to TV3's 60 Minutes in 2011, then joined RNZ in 2014 as co-host of Morning Report. Since 2019 he has produced podcasts (The Ninth Floor, The Service, Red Line) and documentaries. He authored The Drinking Game. Espiner married Emma Wehipeihana in 2012; they separated in 2023. Wehipeihana had previously worked as a personal assistant to Labour MP Darren Hughes, who served as MC at their wedding.",
@@ -205,9 +245,9 @@
       "connections": [
         {
           "type": "employer",
-          "target": "Stuff Limited",
-          "role": "Formerly Fairfax NZ",
-          "source": "https://www.stuff.co.nz/about-stuff"
+          "target": "Stuff",
+          "role": "Deputy political reporter",
+          "source": "https://www.stuff.co.nz/authors/henry-cooke"
         }
       ],
       "facts": [
@@ -218,6 +258,46 @@
       ],
       "bio": "Henry Cooke is a political journalist at Stuff/The Post. He studied international relations, political science, and media studies at Victoria University of Wellington. He joined Stuff through a summer internship, moving to the press gallery in 2017. He rose to chief political reporter and deputy political editor. He left journalism to work in public relations in London before returning as deputy political reporter at The Post in September 2025. He runs the 'Museum Street' politics newsletter on Substack.",
       "methodology": "Based on 12 articles scored by AI"
+    },
+    "jamie-morton-nzherald": {
+      "name": "Jamie Morton",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Science and environment",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/1a606027-89b8-458f-b47c-6c8334cd13fb.png",
+      "article_count": 54,
+      "confidence": "high",
+      "bias_score": -0.075,
+      "distribution": {
+        "left": 0,
+        "centre_left": 15,
+        "centre": 85,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "NZ Herald science reporter (2011-2025)",
+          "source": "https://www.nzherald.co.nz/author/jamie-morton/"
+        },
+        {
+          "type": "employer",
+          "target": "The Conversation NZ",
+          "role": "Deputy Editor (from 2025)",
+          "source": "https://theconversation.com/nz"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Left NZ Herald in April 2025 after 14 years as science reporter to become Deputy Editor at The Conversation New Zealand",
+          "source": "https://theconversation.com/nz"
+        }
+      ],
+      "bio": "Jamie Morton is a science and environment journalist with 20+ years' experience. He spent 14 years at the NZ Herald (2011-2025) before joining The Conversation New Zealand as Deputy Editor. He has reported from Antarctica and global climate summits. He has been named Science Reporter of the Year four times (2013, 2016, 2022, 2023).",
+      "methodology": "Based on 54 articles scored by AI"
     },
     "jane-patterson-rnz": {
       "name": "Jane Patterson",
@@ -241,7 +321,7 @@
           "type": "employer",
           "target": "RNZ",
           "role": "Public broadcaster funded by NZ Government",
-          "source": "https://www.rnz.co.nz/about"
+          "source": "https://www.rnz.co.nz/authors/jane-patterson"
         }
       ],
       "facts": [],
@@ -270,7 +350,7 @@
           "type": "employer",
           "target": "NZME",
           "role": "Parent company of NZ Herald",
-          "source": "https://www.nzme.co.nz/"
+          "source": "https://www.nzherald.co.nz/author/jason-walls/"
         }
       ],
       "facts": [
@@ -286,7 +366,7 @@
       "name": "Jo Moir",
       "aliases": [],
       "outlet": "RNZ",
-      "formerly": "Newsroom, Stuff, Dominion Post",
+      "formerly": "",
       "beat": "Political journalism",
       "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--MjeXcnJ9--/f_auto,q_auto/v1739233026/4KC5GJK_Jo_Moir_portrait_WK_crop_jpg",
       "article_count": 25,
@@ -303,8 +383,8 @@
         {
           "type": "employer",
           "target": "RNZ",
-          "role": "Political editor",
-          "source": "https://www.rnz.co.nz/"
+          "role": "Political journalist",
+          "source": "https://www.rnz.co.nz/authors/jo-moir"
         }
       ],
       "facts": [],
@@ -314,8 +394,8 @@
     "john-campbell": {
       "name": "John Campbell",
       "aliases": [],
-      "outlet": "RNZ",
-      "formerly": "TVNZ, TV3",
+      "outlet": "RNZ / 1News",
+      "formerly": "",
       "beat": "Morning Report",
       "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/John_Campbell_in_2019_%28cropped%29.jpg/330px-John_Campbell_in_2019_%28cropped%29.jpg",
       "article_count": 17,
@@ -333,13 +413,13 @@
           "type": "employer",
           "target": "RNZ",
           "role": "Public broadcaster funded by NZ Government",
-          "source": "https://www.rnz.co.nz/about"
+          "source": "https://www.rnz.co.nz/authors/john-campbell"
         },
         {
           "type": "spouse",
           "target": "Emma Patterson",
           "role": "Documentary editor",
-          "source": "https://en.wikipedia.org/wiki/John_Campbell_(journalist)"
+          "source": "https://en.wikipedia.org/wiki/John_Campbell_(broadcaster)"
         },
         {
           "type": "employer",
@@ -348,23 +428,14 @@
           "source": "https://www.tvnz.co.nz/"
         }
       ],
-      "facts": [
-        {
-          "text": "Chief Correspondent at TVNZ/1News; announced in late 2025 to join RNZ Morning Report in 2026",
-          "source": "https://www.rnz.co.nz/"
-        },
-        {
-          "text": "Chief Correspondent at TVNZ/1News; announced in late 2025 to join RNZ Morning Report in 2026",
-          "source": "https://www.rnz.co.nz/"
-        }
-      ],
+      "facts": [],
       "bio": "John Campbell (born 10 February 1964) is one of New Zealand's most recognised broadcast journalists. He began at Radio New Zealand as a business reporter in 1989. He moved to TV3 in 1991, co-anchoring 3 News (1998-2005). He fronted Campbell Live (2005-2015), whose cancellation prompted significant public debate. He returned to RNZ in 2016 to host Checkpoint, then joined TVNZ in 2018. In December 2025 he was announced as co-host of RNZ's Morning Report from April 2026. He is married to documentary editor Emma Patterson.",
       "methodology": "Based on 17 articles scored by AI"
     },
     "katie-bradford-1news": {
       "name": "Katie Bradford",
       "aliases": [],
-      "outlet": "TVNZ",
+      "outlet": "1News",
       "formerly": "",
       "beat": "Parliamentary politics",
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/tvnz/9942a886-eba2-4da2-b455-8c1ae017fdde.jpg",
@@ -383,19 +454,19 @@
           "type": "family",
           "target": "Sue Bradford",
           "role": "Former Green MP",
-          "source": "https://en.wikipedia.org/wiki/Sue_Bradford"
+          "source": "https://www.stuff.co.nz/entertainment/tv-radio/tv-guide/120532362/katie-bradford-i-cant-think-of-anything-worse-than-being-a-politician"
         },
         {
           "type": "political",
           "target": "Judith Collins",
           "role": "National MP who publicly attacked Bradford on social media in May 2014 and later apologised",
-          "source": "https://en.wikipedia.org/wiki/Judith_Collins"
+          "source": "https://www.nzherald.co.nz/nz/news/article.cfm?c_id=1&objectid=11249346"
         },
         {
           "type": "employer",
           "target": "Infrastructure New Zealand",
           "role": "Director of Advocacy and Policy (from April 2025 — revolving door from TVNZ)",
-          "source": "https://www.infrastructure.org.nz/"
+          "source": "https://www.nzherald.co.nz/business/media-insider/media-insider-katie-bradford-resigns-from-tvnz-as-1news-business-correspondent/HQ3WR3O33VGQHPJJJHFOCKKBXY/"
         }
       ],
       "facts": [
@@ -411,7 +482,7 @@
       "name": "Thomas Coughlan",
       "aliases": [],
       "outlet": "NZ Herald",
-      "formerly": "Newsroom, Stuff",
+      "formerly": "",
       "beat": "Political editor",
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/f87e20f7-9a5c-4fdd-a0ca-90ad59252111.png",
       "article_count": 36,
@@ -429,7 +500,7 @@
           "type": "employer",
           "target": "NZME",
           "role": "Parent company of NZ Herald",
-          "source": "https://www.nzme.co.nz/"
+          "source": "https://www.nzherald.co.nz/author/thomas-coughlan/"
         }
       ],
       "facts": [],
