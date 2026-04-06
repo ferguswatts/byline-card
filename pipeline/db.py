@@ -208,13 +208,12 @@ def get_journalist_by_slug(conn: sqlite3.Connection, slug: str) -> dict | None:
     return dict(row) if row else None
 
 
-def get_articles_for_journalist(conn: sqlite3.Connection, journalist_id: int, max_age_months: int = 24) -> list[dict]:
+def get_articles_for_journalist(conn: sqlite3.Connection, journalist_id: int) -> list[dict]:
     rows = conn.execute(
         """SELECT * FROM articles
            WHERE journalist_id = ?
-           AND publish_date >= date('now', ?)
            ORDER BY publish_date DESC""",
-        (journalist_id, f"-{max_age_months} months"),
+        (journalist_id,),
     ).fetchall()
     return [dict(r) for r in rows]
 

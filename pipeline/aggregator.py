@@ -21,7 +21,6 @@ def compute_distribution(conn: sqlite3.Connection, journalist_id: int) -> dict:
     rows = conn.execute(
         """SELECT bucket FROM articles
            WHERE journalist_id = ?
-           AND publish_date >= date('now', '-24 months')
            AND bucket IS NOT NULL""",
         (journalist_id,),
     ).fetchall()

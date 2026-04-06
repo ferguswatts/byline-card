@@ -723,7 +723,7 @@ def generate_html(conn) -> str:
       <div class="methodology-card">
         <div class="methodology-step">4</div>
         <h3>Aggregation</h3>
-        <p>Individual article scores are aggregated into five buckets for each journalist. The spectrum position shown on each card is the median score across all their articles from the past 24 months. Confidence ratings (low/medium/high) reflect the number of articles scored.</p>
+        <p>Individual article scores are aggregated into five buckets for each journalist. The spectrum position shown on each card is the median score across all their scored articles. Confidence ratings (low/medium/high) reflect the number of articles scored.</p>
         <div class="methodology-detail">
           <strong>Buckets:</strong> Left (&lt;-0.6) · Centre-Left (-0.6 to -0.2) · Centre (-0.2 to 0.2) · Centre-Right (0.2 to 0.6) · Right (&gt;0.6)
         </div>

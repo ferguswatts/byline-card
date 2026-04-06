@@ -48,8 +48,8 @@
       "formerly": "",
       "beat": "Crime and justice",
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/dc440950-48a8-48e4-b67b-9abae2af8be7.png",
-      "article_count": 2,
-      "confidence": "low",
+      "article_count": 20,
+      "confidence": "medium",
       "bias_score": 0.0,
       "distribution": {
         "left": 0,
@@ -79,7 +79,7 @@
         }
       ],
       "bio": "Anna Leask is a senior crime and justice journalist at the NZ Herald, where she has worked since 2008. She hosts the award-winning true crime podcast 'A Moment In Crime' and is a published author with Penguin Books NZ. She has covered NZ's highest-profile criminal cases over 20 years including the March 15 terror attack, Grace Millane murder, and Pike River mine disaster.",
-      "methodology": "Based on 2 articles scored by AI"
+      "methodology": "Based on 20 articles scored by AI"
     },
     "audrey-young-nzherald": {
       "name": "Audrey Young",
@@ -266,13 +266,13 @@
       "formerly": "",
       "beat": "Science and environment",
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/1a606027-89b8-458f-b47c-6c8334cd13fb.png",
-      "article_count": 54,
+      "article_count": 710,
       "confidence": "high",
-      "bias_score": -0.075,
+      "bias_score": -0.085,
       "distribution": {
         "left": 0,
-        "centre_left": 15,
-        "centre": 85,
+        "centre_left": 17,
+        "centre": 83,
         "centre_right": 0,
         "right": 0
       },
@@ -297,7 +297,7 @@
         }
       ],
       "bio": "Jamie Morton is a science and environment journalist with 20+ years' experience. He spent 14 years at the NZ Herald (2011-2025) before joining The Conversation New Zealand as Deputy Editor. He has reported from Antarctica and global climate summits. He has been named Science Reporter of the Year four times (2013, 2016, 2022, 2023).",
-      "methodology": "Based on 54 articles scored by AI"
+      "methodology": "Based on 710 articles scored by AI"
     },
     "jane-patterson-rnz": {
       "name": "Jane Patterson",
@@ -306,8 +306,8 @@
       "formerly": "",
       "beat": "Political editor",
       "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--8UzLNBnU--/f_auto,q_auto/v1720740623/4KN5TF5_Jane_Patterson_portrait_png",
-      "article_count": 2,
-      "confidence": "low",
+      "article_count": 24,
+      "confidence": "medium",
       "bias_score": 0.0,
       "distribution": {
         "left": 0,
@@ -326,7 +326,7 @@
       ],
       "facts": [],
       "bio": "Jane Patterson is a senior journalist at Radio New Zealand who joined in May 2000. She spent most of her career in the Parliamentary Press Gallery, where she is a life member, including eight years as RNZ's political editor. She was appointed Director of Editorial Quality and Training at RNZ. Her awards include Best Coverage of a News Event for Election 2017 at the 2018 Voyager Awards.",
-      "methodology": "Based on 2 articles scored by AI"
+      "methodology": "Based on 24 articles scored by AI"
     },
     "jason-walls-nzherald": {
       "name": "Jason Walls",
@@ -361,6 +361,48 @@
       ],
       "bio": "Jason Walls is a New Zealand political and business journalist currently serving as business correspondent at TVNZ/1News. He holds degrees in economics and journalism from AUT. He began at NBR and Interest.co.nz before joining the NZ Herald's press gallery team in 2018, rising to political editor. He moved to Newstalk ZB in 2021, becoming political editor in 2023. Walls served as Chair of the Parliamentary Press Gallery. His wife, Jacinta Gulasekharam, co-founded Dignity NZ, a social enterprise combating period poverty.",
       "methodology": "Based on 34 articles scored by AI"
+    },
+    "jessica-mutch-mckay-1news": {
+      "name": "Jessica Mutch McKay",
+      "aliases": [
+        "Jessica Mutch-McKay"
+      ],
+      "outlet": "1News",
+      "formerly": "",
+      "beat": "Political editor",
+      "photo_url": "https://www.nzonscreen.com/content/images/0028/9668/Jessica_Mutch_Thumbnail.KEY.jpg",
+      "article_count": 7,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 100,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "spouse",
+          "target": "Iain McKay",
+          "role": "Diplomatic Protection Squad officer (provided security for PMs Key English and Ardern)",
+          "source": "https://en.wikipedia.org/wiki/Jessica_Mutch_McKay"
+        },
+        {
+          "type": "employer",
+          "target": "ANZ Bank",
+          "role": "Head of Government Relations and Corporate Responsibility (from early 2024 — revolving door from TVNZ Political Editor)",
+          "source": "https://www.nzherald.co.nz/business/media-insider/political-editor-jessica-mutch-mckay-quits-tvnz-for-top-anz-bank-corporate-role-media-insider/GUOWYFRQIRGYDMARNGFXD2S4WA/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Left TVNZ/1News in early 2024 to join ANZ Bank as Head of Government Relations and Corporate Responsibility after serving as Political Editor and Press Gallery Chair/Deputy Chair",
+          "source": "https://en.wikipedia.org/wiki/Jessica_Mutch_McKay"
+        }
+      ],
+      "bio": "Jessica Mutch McKay is a former New Zealand television political journalist who served as TVNZ's 1News political editor. She joined Sky News in 2006 before moving to TVNZ in 2008. She hosted Q+A before becoming political editor in 2018, leading coverage of the COVID-19 pandemic and the 2023 general election. In early 2024, she departed TVNZ to become Head of Government Relations and Corporate Responsibility at ANZ Bank. Her husband, Iain McKay, is a Diplomatic Protection Service bodyguard who served on the personal protection detail of Prime Minister Ardern.",
+      "methodology": "Based on 7 articles scored by AI"
     },
     "jo-moir": {
       "name": "Jo Moir",
@@ -398,13 +440,13 @@
       "formerly": "",
       "beat": "Morning Report",
       "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/John_Campbell_in_2019_%28cropped%29.jpg/330px-John_Campbell_in_2019_%28cropped%29.jpg",
-      "article_count": 17,
-      "confidence": "low",
-      "bias_score": -0.415,
+      "article_count": 37,
+      "confidence": "medium",
+      "bias_score": -0.485,
       "distribution": {
-        "left": 18,
-        "centre_left": 47,
-        "centre": 35,
+        "left": 27,
+        "centre_left": 43,
+        "centre": 30,
         "centre_right": 0,
         "right": 0
       },
@@ -430,7 +472,7 @@
       ],
       "facts": [],
       "bio": "John Campbell (born 10 February 1964) is one of New Zealand's most recognised broadcast journalists. He began at Radio New Zealand as a business reporter in 1989. He moved to TV3 in 1991, co-anchoring 3 News (1998-2005). He fronted Campbell Live (2005-2015), whose cancellation prompted significant public debate. He returned to RNZ in 2016 to host Checkpoint, then joined TVNZ in 2018. In December 2025 he was announced as co-host of RNZ's Morning Report from April 2026. He is married to documentary editor Emma Patterson.",
-      "methodology": "Based on 17 articles scored by AI"
+      "methodology": "Based on 37 articles scored by AI"
     },
     "katie-bradford-1news": {
       "name": "Katie Bradford",
@@ -439,14 +481,14 @@
       "formerly": "",
       "beat": "Parliamentary politics",
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/tvnz/9942a886-eba2-4da2-b455-8c1ae017fdde.jpg",
-      "article_count": 11,
+      "article_count": 16,
       "confidence": "low",
-      "bias_score": -0.09,
+      "bias_score": -0.03,
       "distribution": {
         "left": 0,
-        "centre_left": 18,
-        "centre": 82,
-        "centre_right": 0,
+        "centre_left": 12,
+        "centre": 81,
+        "centre_right": 6,
         "right": 0
       },
       "connections": [
@@ -476,7 +518,65 @@
         }
       ],
       "bio": "Katie Bradford is a veteran New Zealand political and business journalist with over 20 years' experience. She is the daughter of former Green Party MP and activist Sue Bradford and activist Jim Bradford. She spent more than a decade at TVNZ, working primarily as 1News business correspondent. In April 2025, Bradford left TVNZ to join Infrastructure New Zealand as strategy and engagement manager.",
-      "methodology": "Based on 11 articles scored by AI"
+      "methodology": "Based on 16 articles scored by AI"
+    },
+    "michael-neilson-nzherald": {
+      "name": "Michael Neilson",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Social issues",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/be8d9135-31dc-479b-8035-ffc3484d19e6.png",
+      "article_count": 35,
+      "confidence": "medium",
+      "bias_score": -0.26,
+      "distribution": {
+        "left": 3,
+        "centre_left": 46,
+        "centre": 51,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Social issues reporter",
+          "source": "https://www.nzherald.co.nz/author/michael-neilson/"
+        }
+      ],
+      "facts": [],
+      "bio": "Michael Neilson is a New Zealand journalist from Christchurch who studied politics at the University of Otago before completing a journalism diploma at AUT in 2015. He joined the NZ Herald in 2018, covering social issues, the environment, and Maori affairs, later becoming a senior political reporter in the press gallery. He has since transitioned to freelance journalism and photography and is currently based in Indonesia.",
+      "methodology": "Based on 35 articles scored by AI"
+    },
+    "mike-hosking-newstalkzb": {
+      "name": "Mike Hosking",
+      "aliases": [],
+      "outlet": "Newstalk ZB",
+      "formerly": "",
+      "beat": "Current affairs",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/b282519a-87f4-4f12-89a5-5314ba1a98cb.png",
+      "article_count": 120,
+      "confidence": "high",
+      "bias_score": 0.39,
+      "distribution": {
+        "left": 4,
+        "centre_left": 22,
+        "centre": 8,
+        "centre_right": 22,
+        "right": 43
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Host of Mike Hosking Breakfast on Newstalk ZB",
+          "source": "https://www.nzherald.co.nz/author/mike-hosking/"
+        }
+      ],
+      "facts": [],
+      "bio": "Mike Hosking (born 1965, Dunedin) is New Zealand's most prominent radio broadcaster. He left school at 16, starting as an advertising copywriter before getting his break on Wellington's Radio Windy. He hosted Radio New Zealand's Tonight Show and Morning Report, then joined Newstalk ZB in 2008 as weekday Breakfast host — a role he still holds. On television, he co-presented TVNZ's Breakfast (1997-2005) and Seven Sharp (2014-2017). He writes a regular opinion column for the NZ Herald. Hosking is an open supporter of the centre-right National Party and is frequently critical of Labour-led governments. His career has drawn multiple successful Broadcasting Standards Authority complaints. He is married to fellow Newstalk ZB broadcaster Kate Hawkesby. A landmark 2003 privacy case involving Hosking established \"the Hosking principles\" in NZ common law.",
+      "methodology": "Based on 120 articles scored by AI"
     },
     "thomas-coughlan-nzherald": {
       "name": "Thomas Coughlan",
@@ -506,6 +606,37 @@
       "facts": [],
       "bio": "Thomas Coughlan is the political editor of the New Zealand Herald. He holds a Master's degree in Political Thought and Intellectual History from the University of Cambridge (2014-2015). Coughlan joined the Parliamentary Press Gallery in 2018, working first for Newsroom and Stuff before moving to the NZ Herald in 2021.",
       "methodology": "Based on 36 articles scored by AI"
+    },
+    "tova-obrien-1news": {
+      "name": "Tova O'Brien",
+      "aliases": [
+        "Tova OBrien"
+      ],
+      "outlet": "1News",
+      "formerly": "",
+      "beat": "Political commentary",
+      "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Tova_O%27Brien_021_%28cropped%29.jpg/250px-Tova_O%27Brien_021_%28cropped%29.jpg",
+      "article_count": 2,
+      "confidence": "low",
+      "bias_score": -0.5,
+      "distribution": {
+        "left": 0,
+        "centre_left": 100,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "TVNZ",
+          "role": "Co-host of TVNZ Breakfast (from April 2026)",
+          "source": "https://www.tvnz.co.nz/"
+        }
+      ],
+      "facts": [],
+      "bio": "Tova O'Brien (born c. 1982-83) is one of New Zealand's highest-profile political journalists. Born in Papua New Guinea, she began at TV3/MediaWorks in 2007, rising to Newshub's political editor in 2018. She won Political Journalist of the Year (2019). She briefly moved to Today FM in 2022 before it folded, then joined Stuff. In December 2025, TVNZ announced O'Brien would join Breakfast as co-host from April 2026.",
+      "methodology": "Based on 2 articles scored by AI"
     }
   },
   "sites": {
