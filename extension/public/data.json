@@ -10,7 +10,7 @@
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/63c08bb6-77fe-46c1-831a-1f605b413cdd.png",
       "article_count": 330,
       "confidence": "high",
-      "bias_score": -0.045,
+      "bias_score": 0.0,
       "distribution": {
         "left": 1,
         "centre_left": 7,
@@ -39,7 +39,7 @@
       "photo_url": "https://images.thespinoff.co.nz/1/2022/07/Screen-Shot-2022-07-18-at-8.15.16-PM.png",
       "article_count": 30,
       "confidence": "medium",
-      "bias_score": -0.27,
+      "bias_score": -0.25,
       "distribution": {
         "left": 7,
         "centre_left": 50,
@@ -79,7 +79,7 @@
       "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Anna_Fifield%2C_Book_signing_at_The_Garden_Party.jpg/250px-Anna_Fifield%2C_Book_signing_at_The_Garden_Party.jpg",
       "article_count": 27,
       "confidence": "medium",
-      "bias_score": -0.095,
+      "bias_score": 0.0,
       "distribution": {
         "left": 4,
         "centre_left": 11,
@@ -108,7 +108,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/dc440950-48a8-48e4-b67b-9abae2af8be7.png",
       "article_count": 401,
       "confidence": "high",
-      "bias_score": -0.035,
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 9,
@@ -148,7 +148,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/DS66VYQARNGEDATFWOOKMWWFYM.png",
       "article_count": 200,
       "confidence": "high",
-      "bias_score": -0.075,
+      "bias_score": 0.0,
       "distribution": {
         "left": 1,
         "centre_left": 16,
@@ -188,7 +188,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/45f16500-c683-4ac8-aa9d-fa12beb73171.png",
       "article_count": 336,
       "confidence": "high",
-      "bias_score": -0.16,
+      "bias_score": 0.0,
       "distribution": {
         "left": 1,
         "centre_left": 41,
@@ -217,7 +217,7 @@
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/620a62db-3400-49d4-b1f6-5b4e04db456c.png",
       "article_count": 240,
       "confidence": "high",
-      "bias_score": -0.275,
+      "bias_score": -0.3,
       "distribution": {
         "left": 15,
         "centre_left": 50,
@@ -257,7 +257,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/72481af3-2759-4275-9a08-932e5d2554a4.JPG",
       "article_count": 200,
       "confidence": "high",
-      "bias_score": -0.03,
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 6,
@@ -286,7 +286,7 @@
       "photo_url": "https://images.thespinoff.co.nz/1/2018/11/Screen-Shot-2018-11-04-at-6.14.05-PM.jpg",
       "article_count": 100,
       "confidence": "high",
-      "bias_score": -0.595,
+      "bias_score": -0.425,
       "distribution": {
         "left": 30,
         "centre_left": 61,
@@ -315,7 +315,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/3568b1fb-4adb-4334-aa82-e56f6dff6134.png",
       "article_count": 290,
       "confidence": "high",
-      "bias_score": -0.265,
+      "bias_score": -0.3,
       "distribution": {
         "left": 3,
         "centre_left": 54,
@@ -349,7 +349,7 @@
       "photo_url": "https://assets.celebrityspeakers.co.nz/images/_1200x630_crop_center-center_82_none/CSNZ1321_Bruce_Cotterill_HERO_2025-10-17-220057_qeqm.jpg?mtime=1760738457",
       "article_count": 100,
       "confidence": "high",
-      "bias_score": 0.145,
+      "bias_score": 0.0,
       "distribution": {
         "left": 2,
         "centre_left": 21,
@@ -378,7 +378,7 @@
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/5e9e0ba0-95e0-478c-bce7-f367d263154b.png",
       "article_count": 100,
       "confidence": "high",
-      "bias_score": -0.525,
+      "bias_score": -0.325,
       "distribution": {
         "left": 11,
         "centre_left": 85,
@@ -407,7 +407,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/9c36db5b-77f8-41e1-8b20-0f64c76f7992.jpg",
       "article_count": 198,
       "confidence": "high",
-      "bias_score": -0.08,
+      "bias_score": 0.0,
       "distribution": {
         "left": 1,
         "centre_left": 15,
@@ -436,7 +436,7 @@
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/af148945-53ce-495b-af6d-1ba521ce7e99.png",
       "article_count": 446,
       "confidence": "high",
-      "bias_score": -0.23,
+      "bias_score": -0.25,
       "distribution": {
         "left": 0,
         "centre_left": 53,
@@ -476,7 +476,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/170d6f3c-093e-4a92-8203-b91546a98a4d.png",
       "article_count": 345,
       "confidence": "high",
-      "bias_score": -0.19,
+      "bias_score": -0.2,
       "distribution": {
         "left": 1,
         "centre_left": 48,
@@ -505,7 +505,7 @@
       "photo_url": "https://images.thespinoff.co.nz/1/2023/05/duncanhs-may23.png",
       "article_count": 100,
       "confidence": "high",
-      "bias_score": -0.275,
+      "bias_score": -0.3,
       "distribution": {
         "left": 0,
         "centre_left": 58,
@@ -536,7 +536,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/ad6988bf-dc6a-412b-9243-b6ae035f2af1.png",
       "article_count": 90,
       "confidence": "high",
-      "bias_score": -0.14,
+      "bias_score": -0.2,
       "distribution": {
         "left": 8,
         "centre_left": 42,
@@ -602,7 +602,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/c57aac85-a5eb-485b-8cf2-dda35cabbd6f.png",
       "article_count": 196,
       "confidence": "high",
-      "bias_score": -0.135,
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 32,
@@ -642,7 +642,7 @@
       "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--rNdz9vFZ--/c_scale,f_auto,q_auto,w_576/v1765844621/4JXDTR0_Guyon_Espiner_headshot_square_Nov25_jpg",
       "article_count": 25,
       "confidence": "medium",
-      "bias_score": -0.4,
+      "bias_score": -0.35,
       "distribution": {
         "left": 0,
         "centre_left": 80,
@@ -691,7 +691,7 @@
       "photo_url": "https://www.newstalkzb.co.nz/media/gurlc1b5/heather-du-plessis-allan.jpg?rmode=crop&height=320&width=320&quality=95",
       "article_count": 100,
       "confidence": "high",
-      "bias_score": -0.185,
+      "bias_score": -0.35,
       "distribution": {
         "left": 22,
         "centre_left": 37,
@@ -726,7 +726,7 @@
       "photo_url": "https://static3.stuff.co.nz/henry-cooke-stuff-seniorpolitica-619e29ee.jpg",
       "article_count": 32,
       "confidence": "medium",
-      "bias_score": -0.28,
+      "bias_score": -0.275,
       "distribution": {
         "left": 3,
         "centre_left": 50,
@@ -760,7 +760,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/6f88914e-699c-41f0-969a-cd8d91f5024c.png",
       "article_count": 300,
       "confidence": "high",
-      "bias_score": -0.11,
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 23,
@@ -789,7 +789,7 @@
       "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Jack_Tame_52748377101_%28cropped%29.jpg/250px-Jack_Tame_52748377101_%28cropped%29.jpg",
       "article_count": 190,
       "confidence": "high",
-      "bias_score": -0.155,
+      "bias_score": 0.0,
       "distribution": {
         "left": 5,
         "centre_left": 22,
@@ -823,7 +823,7 @@
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/1a606027-89b8-458f-b47c-6c8334cd13fb.png",
       "article_count": 1110,
       "confidence": "high",
-      "bias_score": -0.075,
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 15,
@@ -863,7 +863,7 @@
       "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--8UzLNBnU--/f_auto,q_auto/v1720740623/4KN5TF5_Jane_Patterson_portrait_png",
       "article_count": 224,
       "confidence": "high",
-      "bias_score": -0.355,
+      "bias_score": -0.3,
       "distribution": {
         "left": 1,
         "centre_left": 72,
@@ -892,7 +892,7 @@
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/dcd224b9-bb20-4e63-b514-9c1ee8c5f78f.png",
       "article_count": 234,
       "confidence": "high",
-      "bias_score": -0.17,
+      "bias_score": -0.15,
       "distribution": {
         "left": 0,
         "centre_left": 40,
@@ -926,7 +926,7 @@
       "photo_url": "https://wintecprodpublicwebsite.blob.core.windows.net/cache/8/d/6/8/d/5/8d68d56122bafde92e1db65e9ded5e794fd8c683.webp",
       "article_count": 50,
       "confidence": "high",
-      "bias_score": -0.42,
+      "bias_score": -0.35,
       "distribution": {
         "left": 4,
         "centre_left": 82,
@@ -963,7 +963,7 @@
       "photo_url": "https://www.nzonscreen.com/content/images/0028/9668/Jessica_Mutch_Thumbnail.KEY.jpg",
       "article_count": 7,
       "confidence": "low",
-      "bias_score": 0.0,
+      "bias_score": 0.05,
       "distribution": {
         "left": 0,
         "centre_left": 0,
@@ -1003,7 +1003,7 @@
       "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--MjeXcnJ9--/f_auto,q_auto/v1739233026/4KC5GJK_Jo_Moir_portrait_WK_crop_jpg",
       "article_count": 225,
       "confidence": "high",
-      "bias_score": -0.32,
+      "bias_score": -0.3,
       "distribution": {
         "left": 1,
         "centre_left": 67,
@@ -1032,7 +1032,7 @@
       "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/John_Campbell_in_2019_%28cropped%29.jpg/330px-John_Campbell_in_2019_%28cropped%29.jpg",
       "article_count": 37,
       "confidence": "medium",
-      "bias_score": -0.485,
+      "bias_score": -0.35,
       "distribution": {
         "left": 27,
         "centre_left": 43,
@@ -1073,7 +1073,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/tvnz/9942a886-eba2-4da2-b455-8c1ae017fdde.jpg",
       "article_count": 16,
       "confidence": "low",
-      "bias_score": -0.03,
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 12,
@@ -1121,7 +1121,7 @@
       "photo_url": "https://www.newstalkzb.co.nz/media/apee0cbg/zb2021_km_talentimage_880x495.png?rmode=crop&v=1d84aca0ff281b0&width=674&quality=95&scale=both",
       "article_count": 200,
       "confidence": "high",
-      "bias_score": -0.025,
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 24,
@@ -1150,7 +1150,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/c654f4bd-a185-4387-9a91-cc6d561b5185.png",
       "article_count": 330,
       "confidence": "high",
-      "bias_score": -0.03,
+      "bias_score": 0.0,
       "distribution": {
         "left": 0,
         "centre_left": 6,
@@ -1184,7 +1184,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/4fe51989-d966-451c-91f3-ebf94861a4b0.png",
       "article_count": 100,
       "confidence": "high",
-      "bias_score": -0.1,
+      "bias_score": 0.0,
       "distribution": {
         "left": 1,
         "centre_left": 27,
@@ -1213,7 +1213,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/AW3YDYFWOZAPDA4OICKPO3YJJI.jpg",
       "article_count": 100,
       "confidence": "high",
-      "bias_score": 0.07,
+      "bias_score": 0.075,
       "distribution": {
         "left": 16,
         "centre_left": 30,
@@ -1265,7 +1265,7 @@
       "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Max_Rashbrooke_writer_%28cropped%29.jpg/1280px-Max_Rashbrooke_writer_%28cropped%29.jpg",
       "article_count": 30,
       "confidence": "medium",
-      "bias_score": -0.765,
+      "bias_score": -0.65,
       "distribution": {
         "left": 53,
         "centre_left": 47,
@@ -1294,7 +1294,7 @@
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/be8d9135-31dc-479b-8035-ffc3484d19e6.png",
       "article_count": 35,
       "confidence": "medium",
-      "bias_score": -0.26,
+      "bias_score": -0.15,
       "distribution": {
         "left": 3,
         "centre_left": 46,
@@ -1323,7 +1323,7 @@
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/b282519a-87f4-4f12-89a5-5314ba1a98cb.png",
       "article_count": 470,
       "confidence": "high",
-      "bias_score": 0.395,
+      "bias_score": 0.45,
       "distribution": {
         "left": 5,
         "centre_left": 21,
@@ -1352,7 +1352,7 @@
       "photo_url": "https://www.newstalkzb.co.nz/media/ucjnjbs0/zb2024_rb_website.jpg?rmode=crop&v=1daceeff0887030&width=674&quality=95&scale=both",
       "article_count": 100,
       "confidence": "high",
-      "bias_score": 0.36,
+      "bias_score": 0.45,
       "distribution": {
         "left": 3,
         "centre_left": 24,
@@ -1381,7 +1381,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/024b4a01-30c7-4ae7-9638-10f1770d7d08.png",
       "article_count": 300,
       "confidence": "high",
-      "bias_score": -0.445,
+      "bias_score": -0.3,
       "distribution": {
         "left": 14,
         "centre_left": 62,
@@ -1410,7 +1410,7 @@
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/f87e20f7-9a5c-4fdd-a0ca-90ad59252111.png",
       "article_count": 136,
       "confidence": "high",
-      "bias_score": -0.215,
+      "bias_score": -0.25,
       "distribution": {
         "left": 0,
         "centre_left": 51,
@@ -1439,7 +1439,7 @@
       "photo_url": "https://images.thespinoff.co.nz/1/2023/09/tobymanhirehs-23v2.png",
       "article_count": 341,
       "confidence": "high",
-      "bias_score": -0.45,
+      "bias_score": -0.3,
       "distribution": {
         "left": 7,
         "centre_left": 77,
@@ -1470,7 +1470,7 @@
       "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Tova_O%27Brien_021_%28cropped%29.jpg/250px-Tova_O%27Brien_021_%28cropped%29.jpg",
       "article_count": 62,
       "confidence": "high",
-      "bias_score": -0.5,
+      "bias_score": -0.4,
       "distribution": {
         "left": 8,
         "centre_left": 87,

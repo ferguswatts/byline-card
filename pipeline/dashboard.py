@@ -212,7 +212,9 @@ def generate_html(conn) -> str:
                     <span class="dist-count">{count} <span class="dist-pct">({pct}%)</span></span>
                 </div>"""
 
-        avg_score = sum(a["median_score"] or 0 for a in articles) / total
+        sorted_scores = sorted(a["median_score"] or 0 for a in articles)
+        n = len(sorted_scores)
+        avg_score = sorted_scores[n // 2] if n % 2 == 1 else (sorted_scores[n // 2 - 1] + sorted_scores[n // 2]) / 2
         avg_color = score_to_color(avg_score)
         avg_label = score_to_label(avg_score)
         lean_pct = abs(round(avg_score * 100))
