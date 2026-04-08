@@ -110,7 +110,7 @@ def generate_html(conn) -> str:
 
     for j in journalists:
         articles = conn.execute(
-            """SELECT title, url, publish_date, bucket, median_score, score_claude, scored_at
+            """SELECT title, url, publish_date, bucket, median_score, score_claude, scored_at, topic
                FROM articles WHERE journalist_id = ?
                ORDER BY scored_at DESC""",
             (j["id"],)
@@ -212,6 +212,44 @@ def generate_html(conn) -> str:
                     <span class="dist-count">{count} <span class="dist-pct">({pct}%)</span></span>
                 </div>"""
 
+        # Topic profile
+        from collections import Counter
+        topic_counts = Counter(a["topic"] for a in articles if a["topic"])
+        topic_total = sum(topic_counts.values())
+        top_topics = topic_counts.most_common(6)
+
+        topic_pills_html = ""
+        if topic_total > 0:
+            topic_pills = ""
+            for topic, count in top_topics:
+                pct = round(count / topic_total * 100)
+                if pct >= 3:  # Only show topics >= 3%
+                    label = topic.replace("-", " ").title()
+                    topic_pills += f'<span class="topic-pill" title="{count} articles">{label} <span class="topic-pct">{pct}%</span></span>'
+            if topic_pills:
+                topic_pills_html = f"""
+                <div class="topic-profile">
+                    <div class="card-section-label">Topic Profile</div>
+                    <div class="topic-pills">{topic_pills}</div>
+                </div>"""
+
+        # Per-year score data (for year filter)
+        year_data = dict()
+        for a in articles:
+            yr = (a["publish_date"] or "")[:4]
+            if yr and yr.isdigit():
+                year_data.setdefault(yr, []).append(a["median_score"] or 0)
+
+        year_scores_json = dict()
+        for yr, scores in sorted(year_data.items()):
+            scores.sort()
+            n_yr = len(scores)
+            median_yr = scores[n_yr // 2] if n_yr % 2 == 1 else (scores[n_yr // 2 - 1] + scores[n_yr // 2]) / 2
+            year_scores_json[yr] = dict(count=n_yr, median=round(median_yr, 3))
+
+        import json as _json
+        year_data_attr = _json.dumps(year_scores_json).replace('"', '&quot;')
+
         sorted_scores = sorted(a["median_score"] or 0 for a in articles)
         n = len(sorted_scores)
         avg_score = sorted_scores[n // 2] if n % 2 == 1 else (sorted_scores[n // 2 - 1] + sorted_scores[n // 2]) / 2
@@ -293,7 +331,7 @@ def generate_html(conn) -> str:
             facts_html = f'<div class="card-connections"><div class="card-section-label">Key facts</div>{fact_rows}</div>'
 
         journalist_sections.append(f"""
-        <div class="journalist-card" data-outlet="{j['outlet']}" data-name="{j['name'].lower()}" data-score="{avg_score:.4f}">
+        <div class="journalist-card" data-outlet="{j['outlet']}" data-name="{j['name'].lower()}" data-score="{avg_score:.4f}" data-years="{year_data_attr}">
             <div class="j-header" onclick="toggleDetails('{j['slug']}')">
                 {avatar_html}
                 <div class="j-left">
@@ -323,6 +361,7 @@ def generate_html(conn) -> str:
                 <div class="dist-section">
                     {dist_bars}
                 </div>
+                {topic_pills_html}
                 {connections_html}
                 {facts_html}
                 {bio_html}
@@ -437,6 +476,21 @@ def generate_html(conn) -> str:
   .dist-pct {{ color: #aaa; }}
 
   .no-data {{ padding: 10px 18px; font-size: 12px; color: #aaa; }}
+
+  /* ── Topic profile ── */
+  .topic-profile {{ padding: 10px 18px; border-top: 1px solid #f3f4f6; }}
+  .topic-pills {{ display: flex; flex-wrap: wrap; gap: 6px; }}
+  .topic-pill {{ font-size: 11px; padding: 3px 10px; border-radius: 12px; background: #f3f4f6; color: #555; font-weight: 500; white-space: nowrap; }}
+  .topic-pct {{ color: #999; font-weight: 400; margin-left: 2px; }}
+
+  /* ── Year filter ── */
+  .year-filter-bar {{ padding: 8px 16px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #f3f4f6; }}
+  .year-filter-bar .filter-label {{ font-size: 11px; color: #888; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }}
+  .year-pill {{ font-size: 11px; padding: 4px 10px; border-radius: 4px; border: 1px solid #e5e7eb; background: #fff; cursor: pointer; color: #555; font-weight: 500; transition: all 0.15s; }}
+  .year-pill:hover {{ background: #f3f4f6; }}
+  .year-pill.active {{ background: #1a1a1a; color: #fff; border-color: #1a1a1a; }}
+  .year-pill.govt-labour {{ border-left: 3px solid #dc2626; }}
+  .year-pill.govt-national {{ border-left: 3px solid #1d4ed8; }}
 
   /* ── Methodology Section ── */
   .methodology-section {{ background: #fff; border-top: 1px solid #e5e7eb; margin-top: 48px; padding: 64px 0; }}
@@ -653,6 +707,14 @@ def generate_html(conn) -> str:
     <button class="filter-btn outlet-btn active" onclick="filterOutlet('all', this)">All</button>
     {outlet_buttons}
     <input type="text" class="search-input" placeholder="Search by name…" oninput="searchCards(this.value)">
+  </div>
+
+  <div class="year-filter-bar">
+    <span class="filter-label">Period:</span>
+    <button class="year-pill active" onclick="filterYear('all', this)">All years</button>
+    <button class="year-pill govt-national" onclick="filterYear('2008-2017', this)">2008–2017 <span style="font-size:9px;color:#888">(National)</span></button>
+    <button class="year-pill govt-labour" onclick="filterYear('2017-2023', this)">2017–2023 <span style="font-size:9px;color:#888">(Labour)</span></button>
+    <button class="year-pill govt-national" onclick="filterYear('2023-2026', this)">2023–2026 <span style="font-size:9px;color:#888">(National)</span></button>
   </div>
 
   <div class="card-grid">
@@ -908,6 +970,7 @@ function toggleArticles(slug) {{
 let activeShowFilter = 'all';
 let activeOutletFilter = 'all';
 let activeSearchTerm = '';
+let activeYearFilter = 'all';
 
 function applyFilters() {{
   document.querySelectorAll('.journalist-card').forEach(card => {{
@@ -917,7 +980,82 @@ function applyFilters() {{
     if (activeOutletFilter !== 'all' && card.dataset.outlet !== activeOutletFilter) show = false;
     if (activeSearchTerm && !card.dataset.name.includes(activeSearchTerm)) show = false;
     card.style.display = show ? '' : 'none';
+
+    // Update spectrum marker and lean text based on year filter
+    if (activeYearFilter !== 'all' && card.dataset.years) {{
+      try {{
+        const yearData = JSON.parse(card.dataset.years.replace(/&quot;/g, '"'));
+        const [startYear, endYear] = activeYearFilter.split('-').map(Number);
+        let scores = [];
+        for (const [yr, data] of Object.entries(yearData)) {{
+          if (parseInt(yr) >= startYear && parseInt(yr) < endYear) {{
+            scores.push({{median: data.median, count: data.count}});
+          }}
+        }}
+        const marker = card.querySelector('.spectrum-marker');
+        const leanEl = card.querySelector('.lean-text');
+        if (scores.length > 0 && marker && leanEl) {{
+          // Weighted median by article count
+          let totalCount = scores.reduce((s, d) => s + d.count, 0);
+          let weightedScore = scores.reduce((s, d) => s + d.median * d.count, 0) / totalCount;
+          let pos = ((weightedScore + 1) / 2) * 100;
+          marker.style.left = pos.toFixed(1) + '%';
+          let pct = Math.abs(Math.round(weightedScore * 100));
+          if (pct <= 2) {{
+            leanEl.textContent = 'Centre';
+            leanEl.style.color = '#6b7280';
+          }} else if (weightedScore < 0) {{
+            leanEl.textContent = pct + '% left leaning';
+            leanEl.style.color = '#d97706';
+          }} else {{
+            leanEl.textContent = pct + '% right leaning';
+            leanEl.style.color = '#3b82f6';
+          }}
+          leanEl.dataset.filtered = 'true';
+        }} else if (marker) {{
+          // No data for this period — dim the card
+          if (leanEl) {{ leanEl.textContent = 'No data for period'; leanEl.style.color = '#ccc'; leanEl.dataset.filtered = 'true'; }}
+        }}
+      }} catch(e) {{}}
+    }} else {{
+      // Reset to original values
+      const leanEl = card.querySelector('.lean-text');
+      if (leanEl && leanEl.dataset.filtered) {{
+        // Restore original — recalculate from full data
+        const yearData = JSON.parse((card.dataset.years || '{{}}').replace(/&quot;/g, '"'));
+        let scores = [];
+        for (const [yr, data] of Object.entries(yearData)) {{
+          scores.push({{median: data.median, count: data.count}});
+        }}
+        if (scores.length > 0) {{
+          let totalCount = scores.reduce((s, d) => s + d.count, 0);
+          let weightedScore = scores.reduce((s, d) => s + d.median * d.count, 0) / totalCount;
+          let pos = ((weightedScore + 1) / 2) * 100;
+          const marker = card.querySelector('.spectrum-marker');
+          if (marker) marker.style.left = pos.toFixed(1) + '%';
+          let pct = Math.abs(Math.round(weightedScore * 100));
+          if (pct <= 2) {{
+            leanEl.textContent = 'Centre';
+            leanEl.style.color = '#6b7280';
+          }} else if (weightedScore < 0) {{
+            leanEl.textContent = pct + '% left leaning';
+            leanEl.style.color = '#d97706';
+          }} else {{
+            leanEl.textContent = pct + '% right leaning';
+            leanEl.style.color = '#3b82f6';
+          }}
+        }}
+        delete leanEl.dataset.filtered;
+      }}
+    }}
   }});
+}}
+
+function filterYear(period, btn) {{
+  document.querySelectorAll('.year-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeYearFilter = period;
+  applyFilters();
 }}
 
 function filterCards(type, btn) {{
