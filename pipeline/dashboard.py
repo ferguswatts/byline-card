@@ -361,6 +361,19 @@ def generate_html(conn) -> str:
                 <div class="dist-section">
                     {dist_bars}
                 </div>
+                {f"""<div class="year-range-section" data-slug="{j['slug']}" data-years='{year_data_attr.replace("&quot;", chr(34))}'>
+                    <div class="card-section-label">Filter by period</div>
+                    <div class="range-slider-wrap">
+                        <span class="range-label range-label-min">{min(year_data.keys()) if year_data else '?'}</span>
+                        <div class="range-track" id="range-track-{j['slug']}">
+                            <div class="range-fill" id="range-fill-{j['slug']}"></div>
+                            <input type="range" class="range-input range-min" min="{min(int(y) for y in year_data.keys()) if year_data else 2010}" max="{max(int(y) for y in year_data.keys()) if year_data else 2026}" value="{min(int(y) for y in year_data.keys()) if year_data else 2010}" oninput="updateYearRange('{j['slug']}')">
+                            <input type="range" class="range-input range-max" min="{min(int(y) for y in year_data.keys()) if year_data else 2010}" max="{max(int(y) for y in year_data.keys()) if year_data else 2026}" value="{max(int(y) for y in year_data.keys()) if year_data else 2026}" oninput="updateYearRange('{j['slug']}')">
+                        </div>
+                        <span class="range-label range-label-max">{max(year_data.keys()) if year_data else '?'}</span>
+                    </div>
+                    <div class="range-info" id="range-info-{j['slug']}">All years · {total} articles</div>
+                </div>""" if year_data and len(year_data) > 1 else ""}
                 {topic_pills_html}
                 {connections_html}
                 {facts_html}
@@ -483,14 +496,18 @@ def generate_html(conn) -> str:
   .topic-pill {{ font-size: 11px; padding: 3px 10px; border-radius: 12px; background: #f3f4f6; color: #555; font-weight: 500; white-space: nowrap; }}
   .topic-pct {{ color: #999; font-weight: 400; margin-left: 2px; }}
 
-  /* ── Year filter ── */
-  .year-filter-bar {{ padding: 8px 16px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #f3f4f6; }}
-  .year-filter-bar .filter-label {{ font-size: 11px; color: #888; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }}
-  .year-pill {{ font-size: 11px; padding: 4px 10px; border-radius: 4px; border: 1px solid #e5e7eb; background: #fff; cursor: pointer; color: #555; font-weight: 500; transition: all 0.15s; }}
-  .year-pill:hover {{ background: #f3f4f6; }}
-  .year-pill.active {{ background: #1a1a1a; color: #fff; border-color: #1a1a1a; }}
-  .year-pill.govt-labour {{ border-left: 3px solid #dc2626; }}
-  .year-pill.govt-national {{ border-left: 3px solid #1d4ed8; }}
+  /* ── Year range slider ── */
+  .year-range-section {{ padding: 10px 18px; border-top: 1px solid #f3f4f6; }}
+  .range-slider-wrap {{ display: flex; align-items: center; gap: 10px; margin-top: 6px; }}
+  .range-label {{ font-size: 11px; font-weight: 600; color: #555; min-width: 32px; }}
+  .range-label-max {{ text-align: right; }}
+  .range-track {{ position: relative; flex: 1; height: 24px; }}
+  .range-fill {{ position: absolute; top: 10px; height: 4px; background: #1a1a1a; border-radius: 2px; pointer-events: none; }}
+  .range-input {{ position: absolute; top: 0; left: 0; width: 100%; height: 24px; -webkit-appearance: none; appearance: none; background: transparent; pointer-events: none; margin: 0; }}
+  .range-input::-webkit-slider-runnable-track {{ height: 4px; background: #e5e7eb; border-radius: 2px; }}
+  .range-input::-webkit-slider-thumb {{ -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #1a1a1a; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.3); cursor: pointer; pointer-events: all; margin-top: -6px; }}
+  .range-input::-moz-range-thumb {{ width: 16px; height: 16px; border-radius: 50%; background: #1a1a1a; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.3); cursor: pointer; pointer-events: all; }}
+  .range-info {{ font-size: 11px; color: #888; margin-top: 4px; }}
 
   /* ── Methodology Section ── */
   .methodology-section {{ background: #fff; border-top: 1px solid #e5e7eb; margin-top: 48px; padding: 64px 0; }}
@@ -709,13 +726,6 @@ def generate_html(conn) -> str:
     <input type="text" class="search-input" placeholder="Search by name…" oninput="searchCards(this.value)">
   </div>
 
-  <div class="year-filter-bar">
-    <span class="filter-label">Period:</span>
-    <button class="year-pill active" onclick="filterYear('all', this)">All years</button>
-    <button class="year-pill govt-national" onclick="filterYear('2008-2017', this)">2008–2017 <span style="font-size:9px;color:#888">(National)</span></button>
-    <button class="year-pill govt-labour" onclick="filterYear('2017-2023', this)">2017–2023 <span style="font-size:9px;color:#888">(Labour)</span></button>
-    <button class="year-pill govt-national" onclick="filterYear('2023-2026', this)">2023–2026 <span style="font-size:9px;color:#888">(National)</span></button>
-  </div>
 
   <div class="card-grid">
   {sections_html}
@@ -970,8 +980,6 @@ function toggleArticles(slug) {{
 let activeShowFilter = 'all';
 let activeOutletFilter = 'all';
 let activeSearchTerm = '';
-let activeYearFilter = 'all';
-
 function applyFilters() {{
   document.querySelectorAll('.journalist-card').forEach(card => {{
     let show = true;
@@ -980,82 +988,83 @@ function applyFilters() {{
     if (activeOutletFilter !== 'all' && card.dataset.outlet !== activeOutletFilter) show = false;
     if (activeSearchTerm && !card.dataset.name.includes(activeSearchTerm)) show = false;
     card.style.display = show ? '' : 'none';
-
-    // Update spectrum marker and lean text based on year filter
-    if (activeYearFilter !== 'all' && card.dataset.years) {{
-      try {{
-        const yearData = JSON.parse(card.dataset.years.replace(/&quot;/g, '"'));
-        const [startYear, endYear] = activeYearFilter.split('-').map(Number);
-        let scores = [];
-        for (const [yr, data] of Object.entries(yearData)) {{
-          if (parseInt(yr) >= startYear && parseInt(yr) < endYear) {{
-            scores.push({{median: data.median, count: data.count}});
-          }}
-        }}
-        const marker = card.querySelector('.spectrum-marker');
-        const leanEl = card.querySelector('.lean-text');
-        if (scores.length > 0 && marker && leanEl) {{
-          // Weighted median by article count
-          let totalCount = scores.reduce((s, d) => s + d.count, 0);
-          let weightedScore = scores.reduce((s, d) => s + d.median * d.count, 0) / totalCount;
-          let pos = ((weightedScore + 1) / 2) * 100;
-          marker.style.left = pos.toFixed(1) + '%';
-          let pct = Math.abs(Math.round(weightedScore * 100));
-          if (pct <= 2) {{
-            leanEl.textContent = 'Centre';
-            leanEl.style.color = '#6b7280';
-          }} else if (weightedScore < 0) {{
-            leanEl.textContent = pct + '% left leaning';
-            leanEl.style.color = '#d97706';
-          }} else {{
-            leanEl.textContent = pct + '% right leaning';
-            leanEl.style.color = '#3b82f6';
-          }}
-          leanEl.dataset.filtered = 'true';
-        }} else if (marker) {{
-          // No data for this period — dim the card
-          if (leanEl) {{ leanEl.textContent = 'No data for period'; leanEl.style.color = '#ccc'; leanEl.dataset.filtered = 'true'; }}
-        }}
-      }} catch(e) {{}}
-    }} else {{
-      // Reset to original values
-      const leanEl = card.querySelector('.lean-text');
-      if (leanEl && leanEl.dataset.filtered) {{
-        // Restore original — recalculate from full data
-        const yearData = JSON.parse((card.dataset.years || '{{}}').replace(/&quot;/g, '"'));
-        let scores = [];
-        for (const [yr, data] of Object.entries(yearData)) {{
-          scores.push({{median: data.median, count: data.count}});
-        }}
-        if (scores.length > 0) {{
-          let totalCount = scores.reduce((s, d) => s + d.count, 0);
-          let weightedScore = scores.reduce((s, d) => s + d.median * d.count, 0) / totalCount;
-          let pos = ((weightedScore + 1) / 2) * 100;
-          const marker = card.querySelector('.spectrum-marker');
-          if (marker) marker.style.left = pos.toFixed(1) + '%';
-          let pct = Math.abs(Math.round(weightedScore * 100));
-          if (pct <= 2) {{
-            leanEl.textContent = 'Centre';
-            leanEl.style.color = '#6b7280';
-          }} else if (weightedScore < 0) {{
-            leanEl.textContent = pct + '% left leaning';
-            leanEl.style.color = '#d97706';
-          }} else {{
-            leanEl.textContent = pct + '% right leaning';
-            leanEl.style.color = '#3b82f6';
-          }}
-        }}
-        delete leanEl.dataset.filtered;
-      }}
-    }}
   }});
 }}
 
-function filterYear(period, btn) {{
-  document.querySelectorAll('.year-pill').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeYearFilter = period;
-  applyFilters();
+/* ── Per-journalist year range slider ── */
+function updateYearRange(slug) {{
+  const section = document.querySelector(`.year-range-section[data-slug="${{slug}}"]`);
+  if (!section) return;
+
+  const minInput = section.querySelector('.range-min');
+  const maxInput = section.querySelector('.range-max');
+  let minVal = parseInt(minInput.value);
+  let maxVal = parseInt(maxInput.value);
+
+  // Ensure min <= max
+  if (minVal > maxVal) {{ minVal = maxVal; minInput.value = minVal; }}
+
+  // Update fill bar
+  const track = document.getElementById(`range-track-${{slug}}`);
+  const fill = document.getElementById(`range-fill-${{slug}}`);
+  const rangeMin = parseInt(minInput.min);
+  const rangeMax = parseInt(minInput.max);
+  const span = rangeMax - rangeMin || 1;
+  const leftPct = ((minVal - rangeMin) / span) * 100;
+  const rightPct = ((maxVal - rangeMin) / span) * 100;
+  fill.style.left = leftPct + '%';
+  fill.style.width = (rightPct - leftPct) + '%';
+
+  // Update labels
+  const minLabel = section.querySelector('.range-label-min');
+  const maxLabel = section.querySelector('.range-label-max');
+  minLabel.textContent = minVal;
+  maxLabel.textContent = maxVal;
+
+  // Compute filtered score
+  const yearData = JSON.parse(section.dataset.years || '{{}}');
+  let scores = [];
+  let totalCount = 0;
+  for (const [yr, data] of Object.entries(yearData)) {{
+    const y = parseInt(yr);
+    if (y >= minVal && y <= maxVal) {{
+      scores.push(data);
+      totalCount += data.count;
+    }}
+  }}
+
+  const card = section.closest('.journalist-card');
+  const marker = card.querySelector('.spectrum-marker');
+  const leanEl = card.querySelector('.lean-text');
+  const infoEl = document.getElementById(`range-info-${{slug}}`);
+
+  // Government period label
+  let govLabel = '';
+  if (minVal >= 2023) govLabel = ' · National govt';
+  else if (maxVal <= 2017) govLabel = ' · National govt';
+  else if (minVal >= 2017 && maxVal <= 2023) govLabel = ' · Labour govt';
+
+  if (scores.length > 0 && marker && leanEl) {{
+    let weightedScore = scores.reduce((s, d) => s + d.median * d.count, 0) / totalCount;
+    let pos = ((weightedScore + 1) / 2) * 100;
+    marker.style.left = pos.toFixed(1) + '%';
+    marker.style.transition = 'left 0.3s ease';
+    let pct = Math.abs(Math.round(weightedScore * 100));
+    if (pct <= 2) {{
+      leanEl.textContent = 'Centre';
+      leanEl.style.color = '#6b7280';
+    }} else if (weightedScore < 0) {{
+      leanEl.textContent = pct + '% left leaning';
+      leanEl.style.color = '#d97706';
+    }} else {{
+      leanEl.textContent = pct + '% right leaning';
+      leanEl.style.color = '#3b82f6';
+    }}
+    if (infoEl) infoEl.textContent = `${{minVal}}–${{maxVal}}${{govLabel}} · ${{totalCount}} articles`;
+  }} else {{
+    if (leanEl) {{ leanEl.textContent = 'No data'; leanEl.style.color = '#ccc'; }}
+    if (infoEl) infoEl.textContent = `${{minVal}}–${{maxVal}} · No articles`;
+  }}
 }}
 
 function filterCards(type, btn) {{
