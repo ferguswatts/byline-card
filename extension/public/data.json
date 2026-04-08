@@ -1,6 +1,75 @@
 {
   "version": "2026-04-08",
   "journalists": {
+    "adam-pearse-nzherald": {
+      "name": "Adam Pearse",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Politics",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/04cedcd7-38a7-4483-895b-dd2866250c10.png",
+      "article_count": 49,
+      "confidence": "medium",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 2,
+        "centre_left": 35,
+        "centre": 59,
+        "centre_right": 4,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Deputy Political Editor — Press Gallery Wellington",
+          "source": "https://www.nzherald.co.nz/author/adam-pearse/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Joined NZME in 2018 as sole sports reporter at Northern Advocate in Whangarei; progressed through Covid/crime reporting to Deputy Political Editor in the Press Gallery",
+          "source": "https://stoppress.co.nz/news/and-comers-adam-pearse/"
+        }
+      ],
+      "bio": "Adam Pearse is the Deputy Political Editor for the NZ Herald, based in the Parliamentary Press Gallery in Wellington. He joined NZME in 2018 after completing Massey University's postgraduate journalism course, starting as the sole sports reporter at the Northern Advocate in Whangarei. He was nominated for Best Junior Reporter at the 2022 Voyager Media Awards.",
+      "methodology": "Based on 49 articles scored by AI"
+    },
+    "alex-braae-thespinoff": {
+      "name": "Alex Braae",
+      "aliases": [],
+      "outlet": "The Spinoff",
+      "formerly": "",
+      "beat": "Politics and current affairs",
+      "photo_url": "https://images.thespinoff.co.nz/1/2019/03/Screen-Shot-2019-03-11-at-6.02.58-AM.png",
+      "article_count": 60,
+      "confidence": "high",
+      "bias_score": -0.3,
+      "distribution": {
+        "left": 2,
+        "centre_left": 75,
+        "centre": 23,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "The Spinoff",
+          "role": "Founded The Bulletin daily newsletter (2018)",
+          "source": "https://thespinoff.co.nz/authors/alex-braae"
+        },
+        {
+          "type": "employer",
+          "target": "TVNZ",
+          "role": "Executive Producer of Q+A with Jack Tame",
+          "source": "https://www.1news.co.nz/reporter/alex-braae/"
+        }
+      ],
+      "facts": [],
+      "bio": "Alex Braae founded The Bulletin, The Spinoff's daily news newsletter, in 2018. He later became Executive Producer of TVNZ's Q+A with Jack Tame.",
+      "methodology": "Based on 60 articles scored by AI"
+    },
     "ana-samways-nzherald": {
       "name": "Ana Samways",
       "aliases": [],
@@ -106,14 +175,14 @@
       "formerly": "",
       "beat": "Crime and justice",
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/dc440950-48a8-48e4-b67b-9abae2af8be7.png",
-      "article_count": 501,
+      "article_count": 621,
       "confidence": "high",
       "bias_score": 0.0,
       "distribution": {
         "left": 0,
-        "centre_left": 10,
+        "centre_left": 11,
         "centre": 88,
-        "centre_right": 1,
+        "centre_right": 2,
         "right": 0
       },
       "connections": [
@@ -137,7 +206,7 @@
         }
       ],
       "bio": "Anna Leask is a senior crime and justice journalist at the NZ Herald, where she has worked since 2008. She hosts the award-winning true crime podcast 'A Moment In Crime' and is a published author with Penguin Books NZ. She has covered NZ's highest-profile criminal cases over 20 years including the March 15 terror attack, Grace Millane murder, and Pike River mine disaster.",
-      "methodology": "Based on 501 articles scored by AI"
+      "methodology": "Based on 621 articles scored by AI"
     },
     "anne-gibson-nzherald": {
       "name": "Anne Gibson",
@@ -186,14 +255,14 @@
       "formerly": "",
       "beat": "Political editor",
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/45f16500-c683-4ac8-aa9d-fa12beb73171.png",
-      "article_count": 386,
+      "article_count": 476,
       "confidence": "high",
-      "bias_score": -0.15,
+      "bias_score": -0.2,
       "distribution": {
         "left": 1,
-        "centre_left": 45,
-        "centre": 43,
-        "centre_right": 11,
+        "centre_left": 47,
+        "centre": 41,
+        "centre_right": 10,
         "right": 1
       },
       "connections": [
@@ -206,7 +275,7 @@
       ],
       "facts": [],
       "bio": "Audrey Young is one of New Zealand's most experienced political journalists. She began her career as a sub-editor at the Auckland Sun, and after its closure in 1988 joined the New Zealand Herald as a sub-editor. She rose through the ranks to become the Herald's political editor, a role she held for 18 years (2003-2021), leading the paper's press gallery team in Wellington. In 2021, she transitioned to the role of Senior Political Correspondent, allowing her to focus on in-depth reporting. She was named Political Journalist of the Year at the Voyager Media Awards in 2018, 2020, and 2023. Her 30th anniversary at the Herald was acknowledged in Parliament. She has a particular interest in foreign affairs and Treaty of Waitangi issues, and served for six years as the union representative on the Press Council.",
-      "methodology": "Based on 386 articles scored by AI"
+      "methodology": "Based on 476 articles scored by AI"
     },
     "barry-soper-newstalkzb": {
       "name": "Barry Soper",
@@ -376,14 +445,14 @@
       "formerly": "",
       "beat": "Political analysis",
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/5e9e0ba0-95e0-478c-bce7-f367d263154b.png",
-      "article_count": 200,
+      "article_count": 300,
       "confidence": "high",
-      "bias_score": -0.325,
+      "bias_score": -0.35,
       "distribution": {
-        "left": 12,
-        "centre_left": 70,
+        "left": 15,
+        "centre_left": 69,
         "centre": 4,
-        "centre_right": 10,
+        "centre_right": 9,
         "right": 4
       },
       "connections": [
@@ -396,7 +465,7 @@
       ],
       "facts": [],
       "bio": "Bryce Edwards is a political commentator and academic based at Victoria University of Wellington, where he is a Research Associate in the Institute of Governance and Policy Studies and Director of the Democracy Project. He holds a PhD in political sociology (2004) and previously lectured in Political Studies at Otago University. Edwards has a well-documented history on the political left. He helped found the Canterbury University Progressive Left Club in 1993 and was a contact for the Canterbury University Marxist Society in 1995. He worked in the Alliance Party's electoral liaison unit in 2001 as an executive assistant. In 2007, he was identified as a member of the Workers Party and spoke at the Marxism 2007 conference. Despite this left-wing background, he has built a mainstream media career as a political analyst, writing regular columns for the NZ Herald, The Guardian, and other outlets.",
-      "methodology": "Based on 200 articles scored by AI"
+      "methodology": "Based on 300 articles scored by AI"
     },
     "chris-keall-nzherald": {
       "name": "Chris Keall",
@@ -463,11 +532,11 @@
       "formerly": "",
       "beat": "Political editor",
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/af148945-53ce-495b-af6d-1ba521ce7e99.png",
-      "article_count": 636,
+      "article_count": 736,
       "confidence": "high",
       "bias_score": -0.3,
       "distribution": {
-        "left": 0,
+        "left": 1,
         "centre_left": 55,
         "centre": 37,
         "centre_right": 7,
@@ -494,7 +563,7 @@
         }
       ],
       "bio": "Claire Trevett served as the NZ Herald's political editor for several years, becoming one of the most recognised press gallery journalists in New Zealand. Based in Wellington, she was known for her sharp political analysis, witty writing style, and coverage of multiple election cycles and changes of government. Trevett left the Herald in May 2025 after almost two decades as Political Editor to become Chief Media and Communications Adviser for New Zealand Police.",
-      "methodology": "Based on 636 articles scored by AI"
+      "methodology": "Based on 736 articles scored by AI"
     },
     "derek-cheng-nzherald": {
       "name": "Derek Cheng",
@@ -850,7 +919,7 @@
       "formerly": "",
       "beat": "Science and environment",
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/1a606027-89b8-458f-b47c-6c8334cd13fb.png",
-      "article_count": 1270,
+      "article_count": 1320,
       "confidence": "high",
       "bias_score": 0.0,
       "distribution": {
@@ -881,7 +950,7 @@
         }
       ],
       "bio": "Jamie Morton is a science and environment journalist with 20+ years' experience. He spent 14 years at the NZ Herald (2011-2025) before joining The Conversation New Zealand as Deputy Editor. He has reported from Antarctica and global climate summits. He has been named Science Reporter of the Year four times (2013, 2016, 2022, 2023).",
-      "methodology": "Based on 1270 articles scored by AI"
+      "methodology": "Based on 1320 articles scored by AI"
     },
     "jane-patterson-rnz": {
       "name": "Jane Patterson",
@@ -1246,7 +1315,7 @@
       "formerly": "",
       "beat": "Crime and courts",
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/c654f4bd-a185-4387-9a91-cc6d561b5185.png",
-      "article_count": 430,
+      "article_count": 530,
       "confidence": "high",
       "bias_score": 0.0,
       "distribution": {
@@ -1271,7 +1340,7 @@
         }
       ],
       "bio": "Kurt Bayer is the NZ Herald's South Island Head of News, based in Christchurch. Before joining the Herald in 2011, he spent a decade at a UK news agency and ghost-wrote the Sunday Times No. 1 bestseller 'The Forgotten Highlander'. He won Crime & Justice Reporter of the Year and Regional Journalist of the Year at the 2021 Voyager Media Awards.",
-      "methodology": "Based on 430 articles scored by AI"
+      "methodology": "Based on 530 articles scored by AI"
     },
     "liam-dann-nzherald": {
       "name": "Liam Dann",
@@ -1470,6 +1539,40 @@
       "bio": "Ryan Bridge (born November 1987, Kapiti Coast) is a New Zealand broadcaster and journalist. He began as a political reporter in the parliamentary press gallery for RNZ, later becoming TV3's Beijing correspondent and co-host of AM on Three. When Newshub closed in 2024, he moved to NZME. He publicly came out as gay in 2021. In May 2025, he launched Herald NOW, a live-streamed morning news show. He hosts Early Edition (5-6am weekdays) on Newstalk ZB and Herald NOW on NZME.",
       "methodology": "Based on 200 articles scored by AI"
     },
+    "simon-collins-nzherald": {
+      "name": "Simon Collins",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Education and social issues",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/a84e232b-8934-4674-81f3-983f8b1e99d9.png",
+      "article_count": 50,
+      "confidence": "high",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 2,
+        "centre_left": 32,
+        "centre": 64,
+        "centre_right": 2,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Education and social issues reporter (~30 years at Herald — now retired)",
+          "source": "https://www.nzherald.co.nz/author/simon-collins/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "45+ year career from 1976; co-founded Wellington community newspaper City Voice in 1993; led onstage protest at 2006 Qantas Media Awards against editorial cuts",
+          "source": "https://www.rnz.co.nz/national/programmes/mediawatch/audio/2018790029/simon-collins-a-lifetime-in-journalism"
+        }
+      ],
+      "bio": "Simon Collins was a long-serving NZ Herald reporter for ~30 years, covering education and social issues. His 45+ year career began in 1976. He co-founded community newspaper City Voice in 1993. Now retired.",
+      "methodology": "Based on 50 articles scored by AI"
+    },
     "simon-wilson-nzherald": {
       "name": "Simon Wilson",
       "aliases": [],
@@ -1477,12 +1580,12 @@
       "formerly": "",
       "beat": "Political commentary",
       "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/024b4a01-30c7-4ae7-9638-10f1770d7d08.png",
-      "article_count": 400,
+      "article_count": 420,
       "confidence": "high",
       "bias_score": -0.3,
       "distribution": {
-        "left": 13,
-        "centre_left": 62,
+        "left": 12,
+        "centre_left": 63,
         "centre": 24,
         "centre_right": 1,
         "right": 0
@@ -1497,7 +1600,7 @@
       ],
       "facts": [],
       "bio": "Simon Wilson is an award-winning senior writer at the NZ Herald covering politics, climate, transport, housing, and urban design. He was formerly editor of Metro magazine and has worked in magazines since the mid-1980s. He authored 'Homeground' (2022) about the Auckland City Mission and the novel 'The Age of Light' (1994). He is the first non-fiction writer to win the Nigel Cox Unity Books Award.",
-      "methodology": "Based on 400 articles scored by AI"
+      "methodology": "Based on 420 articles scored by AI"
     },
     "thomas-coughlan-nzherald": {
       "name": "Thomas Coughlan",
@@ -1535,13 +1638,13 @@
       "formerly": "",
       "beat": "Political commentary",
       "photo_url": "https://images.thespinoff.co.nz/1/2023/09/tobymanhirehs-23v2.png",
-      "article_count": 441,
+      "article_count": 511,
       "confidence": "high",
       "bias_score": -0.3,
       "distribution": {
-        "left": 9,
-        "centre_left": 72,
-        "centre": 17,
+        "left": 10,
+        "centre_left": 70,
+        "centre": 18,
         "centre_right": 1,
         "right": 1
       },
@@ -1555,7 +1658,7 @@
       ],
       "facts": [],
       "bio": "Toby Manhire is a New Zealand journalist, editor, and the son of Bill Manhire, New Zealand's inaugural Poet Laureate. He edited student magazine Salient in 1997 before spending over a decade in London, where he worked at The Guardian, including as editor of its comment pages. He is editor-at-large at The Spinoff and host of Gone By Lunchtime, a popular politics podcast alongside Annabelle Lee-Mather and Ben Thomas.",
-      "methodology": "Based on 441 articles scored by AI"
+      "methodology": "Based on 511 articles scored by AI"
     },
     "tova-obrien-1news": {
       "name": "Tova O'Brien",
