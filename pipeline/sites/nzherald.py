@@ -141,7 +141,7 @@ class NZHeraldAdapter(SiteAdapter):
                     if resp.status == 200:
                         html = await resp.text()
                         extracted = trafilatura.extract(html, include_comments=False, include_tables=False)
-                        if extracted and len(extracted) >= 200:
+                        if extracted and len(extracted) >= 500:
                             log.info(f"[NZHerald] archive.is hit for {url}")
                             return extracted
         except Exception as e:
@@ -170,11 +170,11 @@ class NZHeraldAdapter(SiteAdapter):
         extracted = trafilatura.extract(html, include_comments=False, include_tables=False)
 
         # If paywalled (short or no text), try archive.is
-        if not extracted or len(extracted) < 200:
+        if not extracted or len(extracted) < 500:
             log.info(f"[NZHerald] Possible paywall, trying archive.is: {url}")
             extracted = await self._fetch_from_archive(url)
 
-        if not extracted or len(extracted) < 200:
+        if not extracted or len(extracted) < 500:
             return None
 
         metadata = trafilatura.extract_metadata(html)

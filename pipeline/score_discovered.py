@@ -28,6 +28,8 @@ from urllib.parse import quote as urlquote
 from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent.parent / ".env")
 
+import json
+
 from .db import get_connection, migrate_db
 from .scorer import score_article_claude, PROMPT_VERSION
 from .aggregator import update_journalist_stats
@@ -37,6 +39,23 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 log = logging.getLogger("score-discovered")
 
 EXTENSION_DATA = Path(__file__).parent.parent / "extension" / "public" / "data.json"
+HERALD_COOKIE_FILE = Path(__file__).parent / ".herald_cookies.json"
+
+
+def _load_herald_cookies() -> dict[str, str] | None:
+    """Load saved Herald cookies as a dict for aiohttp. Returns None if missing."""
+    if not HERALD_COOKIE_FILE.exists():
+        return None
+    try:
+        cookies_list = json.loads(HERALD_COOKIE_FILE.read_text())
+        return {
+            c["name"]: c["value"]
+            for c in cookies_list
+            if "nzherald" in c.get("domain", "")
+        }
+    except Exception as e:
+        log.warning(f"Failed to load Herald cookies: {e}")
+        return None
 
 # Concurrency limits
 FETCH_SEM = asyncio.Semaphore(10)
@@ -183,7 +202,7 @@ async def fetch_stuff_api(session, url: str) -> tuple[str, str, str, int] | None
     else:
         return None
 
-    if len(text) < 200:
+    if len(text) < 500:
         return None
 
     date = data.get("publishedDate", "")
@@ -193,10 +212,11 @@ async def fetch_stuff_api(session, url: str) -> tuple[str, str, str, int] | None
     return (title, date, text, 200)
 
 
-async def fetch_article_text(session, url: str, outlet: str) -> tuple[str, str, str, int] | None:
+async def fetch_article_text(session, url: str, outlet: str, herald_cookies: dict | None = None) -> tuple[str, str, str, int] | None:
     """Fetch article text. Returns (title, date, text, status_code) or None.
 
     Uses Stuff JSON API for stuff.co.nz/thepost.co.nz, trafilatura for others.
+    For NZ Herald, uses saved premium cookies if available.
     Falls back to archive.is for paywalled content.
     """
     # Stuff/The Post: use their internal JSON API (SPA site, trafilatura can't extract)
@@ -215,21 +235,37 @@ async def fetch_article_text(session, url: str, outlet: str) -> tuple[str, str, 
     status_code = 0
     html = None
 
-    async with FETCH_SEM:
-        try:
-            import aiohttp
-            timeout = aiohttp.ClientTimeout(total=30)
-            async with session.get(url, timeout=timeout, headers={
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
-            }) as resp:
-                status_code = resp.status
-                if resp.status == 200:
-                    html = await resp.text()
-        except asyncio.TimeoutError:
-            return None  # Will be recorded as timeout
-        except Exception as e:
-            log.debug(f"Fetch failed {url}: {e}")
-            return None
+    # NZ Herald: use premium cookies if available
+    if "nzherald.co.nz" in url and herald_cookies:
+        async with FETCH_SEM:
+            try:
+                import aiohttp
+                timeout = aiohttp.ClientTimeout(total=30)
+                async with aiohttp.ClientSession(cookies=herald_cookies) as auth_session:
+                    async with auth_session.get(url, timeout=timeout, headers={
+                        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+                    }) as resp:
+                        status_code = resp.status
+                        if resp.status == 200:
+                            html = await resp.text()
+            except Exception as e:
+                log.debug(f"Herald cookie fetch failed {url}: {e}")
+    else:
+        async with FETCH_SEM:
+            try:
+                import aiohttp
+                timeout = aiohttp.ClientTimeout(total=30)
+                async with session.get(url, timeout=timeout, headers={
+                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+                }) as resp:
+                    status_code = resp.status
+                    if resp.status == 200:
+                        html = await resp.text()
+            except asyncio.TimeoutError:
+                return None
+            except Exception as e:
+                log.debug(f"Fetch failed {url}: {e}")
+                return None
 
     # Try extracting from direct fetch
     text = None
@@ -247,13 +283,13 @@ async def fetch_article_text(session, url: str, outlet: str) -> tuple[str, str, 
             )
 
             # Check for paywall indicators even on 200 responses
-            if text and len(text) < 300:
+            if text and len(text) < 500:
                 # Might be a paywall stub — check for common indicators
                 lower = text.lower()
                 if any(w in lower for w in ["subscribe", "premium content", "sign in to read", "this content is for"]):
                     text = None  # Treat as paywalled
 
-            if text and len(text) >= 200:
+            if text and len(text) >= 500:
                 # Extract metadata using trafilatura's metadata extractor
                 meta = trafilatura.extract_metadata(html)
                 if meta:
@@ -309,7 +345,7 @@ async def fetch_article_text(session, url: str, outlet: str) -> tuple[str, str, 
     return None
 
 
-async def process_batch(conn, session, rows, lookup_name, total_for_journalist, stats):
+async def process_batch(conn, session, rows, lookup_name, total_for_journalist, stats, herald_cookies=None):
     """Process a batch of URLs: fetch text, score, insert into articles."""
     for row in rows:
         if _shutdown:
@@ -333,7 +369,7 @@ async def process_batch(conn, session, rows, lookup_name, total_for_journalist, 
             continue
 
         # Fetch article text
-        result = await fetch_article_text(session, url, row["outlet"])
+        result = await fetch_article_text(session, url, row["outlet"], herald_cookies=herald_cookies)
         if not result:
             stats["fetch_failed"] += 1
             _record_failure(conn, url, row["journalist_id"], row["outlet"], 0, "no_text")
@@ -410,6 +446,7 @@ async def main():
     parser.add_argument("--retry-failed", action="store_true", help="Retry previously failed URLs")
     parser.add_argument("--priority", type=str, default="", help="Comma-separated journalist names to process first, in order")
     parser.add_argument("--only", type=str, default="", help="Comma-separated journalist names — ONLY process these (for parallel workers)")
+    parser.add_argument("--rescore-truncated", action="store_true", help="Delete scores where text_body < 500 chars, then re-fetch and re-score")
     args = parser.parse_args()
 
     import sqlite3 as _sqlite3
@@ -417,6 +454,41 @@ async def main():
     conn.execute("PRAGMA busy_timeout = 30000")  # Wait up to 30s for locks
     migrate_db(conn)
     _ensure_fetch_failures_table(conn)
+
+    # Load Herald cookies for premium access
+    herald_cookies = _load_herald_cookies()
+    if herald_cookies:
+        log.info(f"Loaded Herald premium cookies ({len(herald_cookies)} cookies)")
+    else:
+        log.warning("No Herald cookies found — Herald articles may be truncated. Run: python -m pipeline.login_herald")
+
+    if args.rescore_truncated:
+        truncated = conn.execute(
+            "SELECT id, url, outlet FROM articles WHERE text_body IS NOT NULL AND LENGTH(text_body) < 500"
+        ).fetchall()
+        null_text = conn.execute(
+            "SELECT id, url, outlet FROM articles WHERE text_body IS NULL OR text_body = ''"
+        ).fetchall()
+        all_bad = truncated + null_text
+        log.info(f"Found {len(all_bad)} articles with truncated/missing text (< 500 chars)")
+
+        if args.dry_run:
+            by_outlet = {}
+            for row in all_bad:
+                o = row["outlet"] or "unknown"
+                by_outlet[o] = by_outlet.get(o, 0) + 1
+            for outlet, count in sorted(by_outlet.items(), key=lambda x: -x[1]):
+                log.info(f"  {outlet}: {count}")
+            conn.close()
+            return
+
+        # Delete truncated articles — they'll be re-fetched as unscored discovered_urls
+        bad_urls = [row["url"] for row in all_bad]
+        for url in bad_urls:
+            conn.execute("DELETE FROM articles WHERE url = ?", (url,))
+            conn.execute("DELETE FROM fetch_failures WHERE url = ?", (url,))
+        conn.commit()
+        log.info(f"Deleted {len(bad_urls)} truncated articles — they will be re-fetched and re-scored")
 
     if args.retry_failed:
         # Reset unresolved failures for retry
@@ -557,7 +629,7 @@ async def main():
                     if _shutdown:
                         break
                     batch = rows[i:i + args.batch_size]
-                    await process_batch(conn, session, batch, jname, len(rows), stats)
+                    await process_batch(conn, session, batch, jname, len(rows), stats, herald_cookies=herald_cookies)
 
                 # Update stats
                 update_journalist_stats(conn, j["id"])

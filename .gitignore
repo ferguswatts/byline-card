@@ -9,3 +9,4 @@ venv/
 .DS_Store
 extension/.output/
 dashboard.html
+pipeline/.herald_cookies.json
