@@ -162,6 +162,10 @@ def migrate_db(conn: sqlite3.Connection) -> None:
         cursor.execute("ALTER TABLE articles ADD COLUMN score_prompt_version TEXT")
         log.info("Migration: added score_prompt_version column to articles")
 
+    if "topic" not in existing_cols:
+        cursor.execute("ALTER TABLE articles ADD COLUMN topic TEXT")
+        log.info("Migration: added topic column to articles")
+
     # Journalists table migrations
     j_cols = {row[1] for row in cursor.execute("PRAGMA table_info(journalists)").fetchall()}
 

@@ -46,6 +46,7 @@ Return a JSON object:
 {
   "score": float (-1.0 to 1.0),
   "confidence": float (0.0 to 1.0),
+  "topic": "one of: politics, economy, crime, health, education, environment, housing, foreign-affairs, social-issues, media, culture, sport, transport, science, maori-affairs, pacific-affairs, other",
   "reasoning": "2-3 sentence explanation",
   "dimensions": {
     "story_selection": float,
@@ -78,6 +79,7 @@ class ScoreResult:
     dimensions: dict[str, float]
     bucket: str
     model: str
+    topic: str = ""
 
 
 def score_to_bucket(score: float) -> str:
@@ -130,6 +132,7 @@ async def score_article_claude(article_text: str) -> ScoreResult | None:
                 dimensions=data.get("dimensions", {}),
                 bucket=score_to_bucket(score),
                 model="claude",
+                topic=data.get("topic", ""),
             )
         except (json.JSONDecodeError, KeyError, IndexError) as e:
             log.warning(f"JSON parse error on attempt {attempt + 1}: {e}")

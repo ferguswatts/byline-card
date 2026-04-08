@@ -361,12 +361,12 @@ async def process_batch(conn, session, rows, lookup_name, total_for_journalist, 
                 conn.execute(
                     """INSERT OR IGNORE INTO articles
                        (journalist_id, url, title, publish_date, outlet, text_body, text_hash,
-                        score_claude, median_score, bucket, score_prompt_version, scored_at)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))""",
+                        score_claude, median_score, bucket, topic, score_prompt_version, scored_at)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))""",
                     (
                         row["journalist_id"], url, title, date or None,
                         row["outlet"], text, text_hash, score_result.score, score_result.score,
-                        score_result.bucket, PROMPT_VERSION,
+                        score_result.bucket, score_result.topic, PROMPT_VERSION,
                     ),
                 )
                 conn.execute("UPDATE fetch_failures SET resolved = 1 WHERE url = ?", (url,))
@@ -540,7 +540,7 @@ async def main():
                        WHERE d.journalist_id = ?
                        AND a.id IS NULL
                        AND d.url NOT IN (SELECT url FROM fetch_failures WHERE resolved = 0 AND retry_count >= 2)
-                       ORDER BY d.id DESC
+                       ORDER BY d.id ASC
                        LIMIT ?""",
                     (j["id"], this_round)
                 ).fetchall()
