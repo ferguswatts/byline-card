@@ -513,13 +513,15 @@ def generate_html(conn) -> str:
   .range-label {{ font-size: 12px; font-weight: 700; color: #1a1a1a; min-width: 34px; font-variant-numeric: tabular-nums; }}
   .range-label-max {{ text-align: right; }}
   .range-track {{ position: relative; flex: 1; height: 32px; }}
+  .range-track::before {{ content: ''; position: absolute; top: 13px; left: 0; right: 0; height: 6px; background: #e5e7eb; border-radius: 3px; z-index: 0; }}
   .range-fill {{ position: absolute; top: 13px; height: 6px; background: linear-gradient(to right, #f97316, #6b7280, #3b82f6); border-radius: 3px; pointer-events: none; z-index: 1; }}
-  .range-input {{ position: absolute; top: 0; left: 0; width: 100%; height: 32px; -webkit-appearance: none; appearance: none; background: transparent; pointer-events: none; margin: 0; z-index: 2; }}
-  .range-input::-webkit-slider-runnable-track {{ height: 6px; background: #e5e7eb; border-radius: 3px; margin-top: 13px; }}
+  .range-input {{ position: absolute; top: 0; left: 0; width: 100%; height: 32px; -webkit-appearance: none; appearance: none; background: transparent; pointer-events: none; margin: 0; z-index: 3; }}
+  .range-input.range-min {{ z-index: 4; }}
+  .range-input::-webkit-slider-runnable-track {{ height: 6px; background: transparent; border-radius: 3px; margin-top: 13px; }}
   .range-input::-webkit-slider-thumb {{ -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 2px solid #1a1a1a; box-shadow: 0 1px 4px rgba(0,0,0,0.15); cursor: pointer; pointer-events: all; margin-top: -7px; transition: box-shadow 0.15s, transform 0.15s; }}
   .range-input::-webkit-slider-thumb:hover {{ box-shadow: 0 2px 8px rgba(0,0,0,0.25); transform: scale(1.15); }}
   .range-input::-webkit-slider-thumb:active {{ box-shadow: 0 1px 6px rgba(0,0,0,0.3); transform: scale(1.05); background: #f9fafb; }}
-  .range-input::-moz-range-track {{ height: 6px; background: #e5e7eb; border-radius: 3px; border: none; }}
+  .range-input::-moz-range-track {{ height: 6px; background: transparent; border-radius: 3px; border: none; }}
   .range-input::-moz-range-thumb {{ width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 2px solid #1a1a1a; box-shadow: 0 1px 4px rgba(0,0,0,0.15); cursor: pointer; pointer-events: all; }}
   .range-info {{ font-size: 11px; color: #888; margin-top: 6px; display: flex; align-items: center; gap: 6px; }}
   .range-govt-badge {{ display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 3px; }}
