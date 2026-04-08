@@ -198,18 +198,29 @@ def generate_html(conn) -> str:
                 dist[b] += 1
         total = len(articles)
 
+        # Build per-article year+bucket array for JS filtering
+        article_buckets = []
+        for a in articles:
+            yr = (a["publish_date"] or "")[:4]
+            b = a["bucket"] or "centre"
+            if yr and yr.isdigit():
+                article_buckets.append(dict(y=int(yr), b=b, s=round(a["median_score"] or 0, 3)))
+        import json as _json2
+        article_buckets_json = _json2.dumps(article_buckets)
+
         dist_bars = ""
         for bucket in BUCKET_ORDER:
             count = dist[bucket]
             pct = round((count / total) * 100) if total else 0
             color = BUCKET_COLORS[bucket]
+            bucket_id = bucket.replace("-", "_")
             dist_bars += f"""
                 <div class="dist-row">
                     <span class="dist-label">{bucket.title()}</span>
                     <div class="dist-bar-wrap">
-                        <div class="dist-bar" style="width:{pct}%;background:{color}"></div>
+                        <div class="dist-bar" id="dist-bar-{j['slug']}-{bucket_id}" style="width:{pct}%;background:{color}"></div>
                     </div>
-                    <span class="dist-count">{count} <span class="dist-pct">({pct}%)</span></span>
+                    <span class="dist-count" id="dist-count-{j['slug']}-{bucket_id}">{count} <span class="dist-pct">({pct}%)</span></span>
                 </div>"""
 
         # Topic profile
@@ -358,7 +369,7 @@ def generate_html(conn) -> str:
                 </div>
             </div>
             <div class="accordion-body" id="details-{j['slug']}">
-                <div class="dist-section">
+                <div class="dist-section" id="dist-section-{j['slug']}" data-articles='{article_buckets_json}'>
                     {dist_bars}
                 </div>
                 {f"""<div class="year-range-section" data-slug="{j['slug']}" data-years='{year_data_attr.replace("&quot;", chr(34))}'>
@@ -1052,26 +1063,52 @@ function updateYearRange(slug) {{
   else if (minVal >= 2017 && maxVal <= 2023) govBadge = '<span class="range-govt-badge range-govt-labour">Labour govt</span>';
   else govBadge = '<span class="range-govt-badge range-govt-mixed">Mixed</span>';
 
-  if (scores.length > 0 && marker && leanEl) {{
-    let weightedScore = scores.reduce((s, d) => s + d.median * d.count, 0) / totalCount;
-    let pos = ((weightedScore + 1) / 2) * 100;
-    marker.style.left = pos.toFixed(1) + '%';
-    marker.style.transition = 'left 0.3s ease';
-    let pct = Math.abs(Math.round(weightedScore * 100));
-    if (pct <= 2) {{
-      leanEl.textContent = 'Centre';
-      leanEl.style.color = '#6b7280';
-    }} else if (weightedScore < 0) {{
-      leanEl.textContent = pct + '% left leaning';
-      leanEl.style.color = '#d97706';
+  // Recompute distribution bars
+  const distSection = document.getElementById(`dist-section-${{slug}}`);
+  if (distSection) {{
+    const allArticles = JSON.parse(distSection.dataset.articles || '[]');
+    const filtered = allArticles.filter(a => a.y >= minVal && a.y <= maxVal);
+    const buckets = {{'left': 0, 'centre-left': 0, 'centre': 0, 'centre-right': 0, 'right': 0}};
+    let filteredScores = [];
+    filtered.forEach(a => {{ if (buckets.hasOwnProperty(a.b)) buckets[a.b]++; filteredScores.push(a.s); }});
+    const filteredTotal = filtered.length;
+
+    ['left', 'centre_left', 'centre', 'centre_right', 'right'].forEach(bk => {{
+      const bucket = bk.replace('_', '-');
+      const count = buckets[bucket] || 0;
+      const pct = filteredTotal > 0 ? Math.round((count / filteredTotal) * 100) : 0;
+      const bar = document.getElementById(`dist-bar-${{slug}}-${{bk}}`);
+      const countEl = document.getElementById(`dist-count-${{slug}}-${{bk}}`);
+      if (bar) {{ bar.style.width = pct + '%'; bar.style.transition = 'width 0.3s ease'; }}
+      if (countEl) countEl.innerHTML = `${{count}} <span class="dist-pct">(${{pct}}%)</span>`;
+    }});
+
+    // Compute median from filtered articles
+    filteredScores.sort((a, b) => a - b);
+    const n = filteredScores.length;
+    const weightedScore = n > 0 ? (n % 2 === 1 ? filteredScores[Math.floor(n/2)] : (filteredScores[n/2-1] + filteredScores[n/2]) / 2) : 0;
+    totalCount = n;
+
+    if (n > 0 && marker && leanEl) {{
+      let pos = ((weightedScore + 1) / 2) * 100;
+      marker.style.left = pos.toFixed(1) + '%';
+      marker.style.transition = 'left 0.3s ease';
+      let pct = Math.abs(Math.round(weightedScore * 100));
+      if (pct <= 2) {{
+        leanEl.textContent = 'Centre';
+        leanEl.style.color = '#6b7280';
+      }} else if (weightedScore < 0) {{
+        leanEl.textContent = pct + '% left leaning';
+        leanEl.style.color = '#d97706';
+      }} else {{
+        leanEl.textContent = pct + '% right leaning';
+        leanEl.style.color = '#3b82f6';
+      }}
+      if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} ${{govBadge}} · ${{totalCount}} articles`;
     }} else {{
-      leanEl.textContent = pct + '% right leaning';
-      leanEl.style.color = '#3b82f6';
+      if (leanEl) {{ leanEl.textContent = 'No data'; leanEl.style.color = '#ccc'; }}
+      if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} · No articles`;
     }}
-    if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} ${{govBadge}} · ${{totalCount}} articles`;
-  }} else {{
-    if (leanEl) {{ leanEl.textContent = 'No data'; leanEl.style.color = '#ccc'; }}
-    if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} · No articles`;
   }}
 }}
 
