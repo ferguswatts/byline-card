@@ -372,16 +372,17 @@ def generate_html(conn) -> str:
                 <div class="dist-section" id="dist-section-{j['slug']}" data-articles='{article_buckets_json}'>
                     {dist_bars}
                 </div>
-                {f"""<div class="year-range-section" data-slug="{j['slug']}" data-years='{year_data_attr.replace("&quot;", chr(34))}'>
+                {f"""<div class="year-range-section" data-slug="{j['slug']}" data-years='{year_data_attr.replace("&quot;", chr(34))}' data-min="{min(int(y) for y in year_data.keys())}" data-max="{max(int(y) for y in year_data.keys())}">
                     <div class="card-section-label">Filter by period</div>
                     <div class="range-slider-wrap">
-                        <span class="range-label range-label-min">{min(year_data.keys()) if year_data else '?'}</span>
+                        <span class="range-label range-label-min">{min(year_data.keys())}</span>
                         <div class="range-track" id="range-track-{j['slug']}">
-                            <div class="range-fill" id="range-fill-{j['slug']}"></div>
-                            <input type="range" class="range-input range-min" min="{min(int(y) for y in year_data.keys()) if year_data else 2010}" max="{max(int(y) for y in year_data.keys()) if year_data else 2026}" value="{min(int(y) for y in year_data.keys()) if year_data else 2010}" oninput="updateYearRange('{j['slug']}')">
-                            <input type="range" class="range-input range-max" min="{min(int(y) for y in year_data.keys()) if year_data else 2010}" max="{max(int(y) for y in year_data.keys()) if year_data else 2026}" value="{max(int(y) for y in year_data.keys()) if year_data else 2026}" oninput="updateYearRange('{j['slug']}')">
+                            <div class="range-rail"></div>
+                            <div class="range-fill" id="range-fill-{j['slug']}" style="left:0%;width:100%"></div>
+                            <div class="range-thumb" id="range-thumb-min-{j['slug']}" style="left:0%"></div>
+                            <div class="range-thumb" id="range-thumb-max-{j['slug']}" style="left:100%"></div>
                         </div>
-                        <span class="range-label range-label-max">{max(year_data.keys()) if year_data else '?'}</span>
+                        <span class="range-label range-label-max">{max(year_data.keys())}</span>
                     </div>
                     <div class="range-info" id="range-info-{j['slug']}">All years · {total} articles</div>
                 </div>""" if year_data and len(year_data) > 1 else ""}
@@ -507,22 +508,17 @@ def generate_html(conn) -> str:
   .topic-pill {{ font-size: 11px; padding: 3px 10px; border-radius: 12px; background: #f3f4f6; color: #555; font-weight: 500; white-space: nowrap; }}
   .topic-pct {{ color: #999; font-weight: 400; margin-left: 2px; }}
 
-  /* ── Year range slider ── */
+  /* ── Year range slider (custom) ── */
   .year-range-section {{ padding: 14px 18px; border-top: 1px solid #f3f4f6; }}
   .range-slider-wrap {{ display: flex; align-items: center; gap: 12px; margin-top: 8px; }}
   .range-label {{ font-size: 12px; font-weight: 700; color: #1a1a1a; min-width: 34px; font-variant-numeric: tabular-nums; }}
   .range-label-max {{ text-align: right; }}
-  .range-track {{ position: relative; flex: 1; height: 32px; }}
-  .range-track::before {{ content: ''; position: absolute; top: 13px; left: 0; right: 0; height: 6px; background: #e5e7eb; border-radius: 3px; z-index: 0; }}
-  .range-fill {{ position: absolute; top: 13px; height: 6px; background: linear-gradient(to right, #f97316, #6b7280, #3b82f6); border-radius: 3px; pointer-events: none; z-index: 1; }}
-  .range-input {{ position: absolute; top: 0; left: 0; width: 100%; height: 32px; -webkit-appearance: none; appearance: none; background: transparent; pointer-events: none; margin: 0; z-index: 3; }}
-  .range-input.range-min {{ z-index: 4; }}
-  .range-input::-webkit-slider-runnable-track {{ height: 6px; background: transparent; border-radius: 3px; margin-top: 13px; }}
-  .range-input::-webkit-slider-thumb {{ -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 2px solid #1a1a1a; box-shadow: 0 1px 4px rgba(0,0,0,0.15); cursor: pointer; pointer-events: all; margin-top: -7px; transition: box-shadow 0.15s, transform 0.15s; }}
-  .range-input::-webkit-slider-thumb:hover {{ box-shadow: 0 2px 8px rgba(0,0,0,0.25); transform: scale(1.15); }}
-  .range-input::-webkit-slider-thumb:active {{ box-shadow: 0 1px 6px rgba(0,0,0,0.3); transform: scale(1.05); background: #f9fafb; }}
-  .range-input::-moz-range-track {{ height: 6px; background: transparent; border-radius: 3px; border: none; }}
-  .range-input::-moz-range-thumb {{ width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 2px solid #1a1a1a; box-shadow: 0 1px 4px rgba(0,0,0,0.15); cursor: pointer; pointer-events: all; }}
+  .range-track {{ position: relative; flex: 1; height: 32px; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: none; }}
+  .range-rail {{ position: absolute; top: 13px; left: 0; right: 0; height: 6px; background: #e5e7eb; border-radius: 3px; }}
+  .range-fill {{ position: absolute; top: 13px; height: 6px; background: linear-gradient(to right, #f97316, #6b7280, #3b82f6); border-radius: 3px; pointer-events: none; }}
+  .range-thumb {{ position: absolute; top: 6px; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 2px solid #1a1a1a; box-shadow: 0 1px 4px rgba(0,0,0,0.15); cursor: grab; transform: translateX(-50%); z-index: 2; transition: box-shadow 0.15s; }}
+  .range-thumb:hover {{ box-shadow: 0 2px 8px rgba(0,0,0,0.25); }}
+  .range-thumb.dragging {{ cursor: grabbing; box-shadow: 0 2px 10px rgba(0,0,0,0.3); background: #f9fafb; }}
   .range-info {{ font-size: 11px; color: #888; margin-top: 6px; display: flex; align-items: center; gap: 6px; }}
   .range-govt-badge {{ display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 3px; }}
   .range-govt-labour {{ background: #fef2f2; color: #dc2626; }}
@@ -1011,108 +1007,124 @@ function applyFilters() {{
   }});
 }}
 
-/* ── Per-journalist year range slider ── */
-function updateYearRange(slug) {{
+/* ── Per-journalist year range slider (custom drag) ── */
+function initRangeSliders() {{
+  document.querySelectorAll('.year-range-section').forEach(section => {{
+    const slug = section.dataset.slug;
+    const rMin = parseInt(section.dataset.min);
+    const rMax = parseInt(section.dataset.max);
+    const track = document.getElementById(`range-track-${{slug}}`);
+    const thumbMin = document.getElementById(`range-thumb-min-${{slug}}`);
+    const thumbMax = document.getElementById(`range-thumb-max-${{slug}}`);
+    if (!track || !thumbMin || !thumbMax) return;
+
+    let curMin = rMin, curMax = rMax;
+
+    function valToPct(v) {{ return ((v - rMin) / (rMax - rMin || 1)) * 100; }}
+    function pctToVal(p) {{ return Math.round(rMin + (p / 100) * (rMax - rMin)); }}
+
+    function render() {{
+      const lp = valToPct(curMin), rp = valToPct(curMax);
+      thumbMin.style.left = lp + '%';
+      thumbMax.style.left = rp + '%';
+      const fill = document.getElementById(`range-fill-${{slug}}`);
+      if (fill) {{ fill.style.left = lp + '%'; fill.style.width = (rp - lp) + '%'; }}
+      section.querySelector('.range-label-min').textContent = curMin;
+      section.querySelector('.range-label-max').textContent = curMax;
+      updateDisplay(slug, curMin, curMax);
+    }}
+
+    function startDrag(thumb, isMin) {{
+      return function(e) {{
+        e.preventDefault();
+        thumb.classList.add('dragging');
+        const rect = track.getBoundingClientRect();
+
+        function onMove(e2) {{
+          const x = (e2.touches ? e2.touches[0].clientX : e2.clientX) - rect.left;
+          const pct = Math.max(0, Math.min(100, (x / rect.width) * 100));
+          const val = pctToVal(pct);
+          if (isMin) {{ curMin = Math.min(val, curMax); }}
+          else {{ curMax = Math.max(val, curMin); }}
+          render();
+        }}
+
+        function onUp() {{
+          thumb.classList.remove('dragging');
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          document.removeEventListener('touchmove', onMove);
+          document.removeEventListener('touchend', onUp);
+        }}
+
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+        document.addEventListener('touchmove', onMove, {{passive: false}});
+        document.addEventListener('touchend', onUp);
+      }};
+    }}
+
+    thumbMin.addEventListener('mousedown', startDrag(thumbMin, true));
+    thumbMin.addEventListener('touchstart', startDrag(thumbMin, true), {{passive: false}});
+    thumbMax.addEventListener('mousedown', startDrag(thumbMax, false));
+    thumbMax.addEventListener('touchstart', startDrag(thumbMax, false), {{passive: false}});
+  }});
+}}
+
+function updateDisplay(slug, minVal, maxVal) {{
+  const card = document.querySelector(`.journalist-card[data-years]`);
   const section = document.querySelector(`.year-range-section[data-slug="${{slug}}"]`);
   if (!section) return;
 
-  const minInput = section.querySelector('.range-min');
-  const maxInput = section.querySelector('.range-max');
-  let minVal = parseInt(minInput.value);
-  let maxVal = parseInt(maxInput.value);
-
-  // Ensure min <= max
-  if (minVal > maxVal) {{ minVal = maxVal; minInput.value = minVal; }}
-
-  // Update fill bar
-  const track = document.getElementById(`range-track-${{slug}}`);
-  const fill = document.getElementById(`range-fill-${{slug}}`);
-  const rangeMin = parseInt(minInput.min);
-  const rangeMax = parseInt(minInput.max);
-  const span = rangeMax - rangeMin || 1;
-  const leftPct = ((minVal - rangeMin) / span) * 100;
-  const rightPct = ((maxVal - rangeMin) / span) * 100;
-  fill.style.left = leftPct + '%';
-  fill.style.width = (rightPct - leftPct) + '%';
-
-  // Update labels
-  const minLabel = section.querySelector('.range-label-min');
-  const maxLabel = section.querySelector('.range-label-max');
-  minLabel.textContent = minVal;
-  maxLabel.textContent = maxVal;
-
-  // Compute filtered score
-  const yearData = JSON.parse(section.dataset.years || '{{}}');
-  let scores = [];
-  let totalCount = 0;
-  for (const [yr, data] of Object.entries(yearData)) {{
-    const y = parseInt(yr);
-    if (y >= minVal && y <= maxVal) {{
-      scores.push(data);
-      totalCount += data.count;
-    }}
-  }}
-
-  const card = section.closest('.journalist-card');
-  const marker = card.querySelector('.spectrum-marker');
-  const leanEl = card.querySelector('.lean-text');
+  const distSection = document.getElementById(`dist-section-${{slug}}`);
+  const marker = section.closest('.journalist-card').querySelector('.spectrum-marker');
+  const leanEl = section.closest('.journalist-card').querySelector('.lean-text');
   const infoEl = document.getElementById(`range-info-${{slug}}`);
 
-  // Government period badge
+  // Government badge
   let govBadge = '';
   if (minVal >= 2023) govBadge = '<span class="range-govt-badge range-govt-national">National govt</span>';
   else if (maxVal <= 2017) govBadge = '<span class="range-govt-badge range-govt-national">National govt</span>';
   else if (minVal >= 2017 && maxVal <= 2023) govBadge = '<span class="range-govt-badge range-govt-labour">Labour govt</span>';
   else govBadge = '<span class="range-govt-badge range-govt-mixed">Mixed</span>';
 
-  // Recompute distribution bars
-  const distSection = document.getElementById(`dist-section-${{slug}}`);
-  if (distSection) {{
-    const allArticles = JSON.parse(distSection.dataset.articles || '[]');
-    const filtered = allArticles.filter(a => a.y >= minVal && a.y <= maxVal);
-    const buckets = {{'left': 0, 'centre-left': 0, 'centre': 0, 'centre-right': 0, 'right': 0}};
-    let filteredScores = [];
-    filtered.forEach(a => {{ if (buckets.hasOwnProperty(a.b)) buckets[a.b]++; filteredScores.push(a.s); }});
-    const filteredTotal = filtered.length;
+  if (!distSection) return;
+  const allArticles = JSON.parse(distSection.dataset.articles || '[]');
+  const filtered = allArticles.filter(a => a.y >= minVal && a.y <= maxVal);
+  const buckets = {{'left': 0, 'centre-left': 0, 'centre': 0, 'centre-right': 0, 'right': 0}};
+  let filteredScores = [];
+  filtered.forEach(a => {{ if (buckets.hasOwnProperty(a.b)) buckets[a.b]++; filteredScores.push(a.s); }});
+  const total = filtered.length;
 
-    ['left', 'centre_left', 'centre', 'centre_right', 'right'].forEach(bk => {{
-      const bucket = bk.replace('_', '-');
-      const count = buckets[bucket] || 0;
-      const pct = filteredTotal > 0 ? Math.round((count / filteredTotal) * 100) : 0;
-      const bar = document.getElementById(`dist-bar-${{slug}}-${{bk}}`);
-      const countEl = document.getElementById(`dist-count-${{slug}}-${{bk}}`);
-      if (bar) {{ bar.style.width = pct + '%'; bar.style.transition = 'width 0.3s ease'; }}
-      if (countEl) countEl.innerHTML = `${{count}} <span class="dist-pct">(${{pct}}%)</span>`;
-    }});
+  ['left', 'centre_left', 'centre', 'centre_right', 'right'].forEach(bk => {{
+    const bucket = bk.replace('_', '-');
+    const count = buckets[bucket] || 0;
+    const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+    const bar = document.getElementById(`dist-bar-${{slug}}-${{bk}}`);
+    const countEl = document.getElementById(`dist-count-${{slug}}-${{bk}}`);
+    if (bar) {{ bar.style.width = pct + '%'; bar.style.transition = 'width 0.2s ease'; }}
+    if (countEl) countEl.innerHTML = `${{count}} <span class="dist-pct">(${{pct}}%)</span>`;
+  }});
 
-    // Compute median from filtered articles
-    filteredScores.sort((a, b) => a - b);
-    const n = filteredScores.length;
-    const weightedScore = n > 0 ? (n % 2 === 1 ? filteredScores[Math.floor(n/2)] : (filteredScores[n/2-1] + filteredScores[n/2]) / 2) : 0;
-    totalCount = n;
+  filteredScores.sort((a, b) => a - b);
+  const n = filteredScores.length;
+  const median = n > 0 ? (n % 2 === 1 ? filteredScores[Math.floor(n/2)] : (filteredScores[n/2-1] + filteredScores[n/2]) / 2) : 0;
 
-    if (n > 0 && marker && leanEl) {{
-      let pos = ((weightedScore + 1) / 2) * 100;
-      marker.style.left = pos.toFixed(1) + '%';
-      marker.style.transition = 'left 0.3s ease';
-      let pct = Math.abs(Math.round(weightedScore * 100));
-      if (pct <= 2) {{
-        leanEl.textContent = 'Centre';
-        leanEl.style.color = '#6b7280';
-      }} else if (weightedScore < 0) {{
-        leanEl.textContent = pct + '% left leaning';
-        leanEl.style.color = '#d97706';
-      }} else {{
-        leanEl.textContent = pct + '% right leaning';
-        leanEl.style.color = '#3b82f6';
-      }}
-      if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} ${{govBadge}} · ${{totalCount}} articles`;
-    }} else {{
-      if (leanEl) {{ leanEl.textContent = 'No data'; leanEl.style.color = '#ccc'; }}
-      if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} · No articles`;
-    }}
+  if (n > 0 && marker && leanEl) {{
+    marker.style.left = (((median + 1) / 2) * 100).toFixed(1) + '%';
+    marker.style.transition = 'left 0.2s ease';
+    const pct = Math.abs(Math.round(median * 100));
+    if (pct <= 2) {{ leanEl.textContent = 'Centre'; leanEl.style.color = '#6b7280'; }}
+    else if (median < 0) {{ leanEl.textContent = pct + '% left leaning'; leanEl.style.color = '#d97706'; }}
+    else {{ leanEl.textContent = pct + '% right leaning'; leanEl.style.color = '#3b82f6'; }}
+    if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} ${{govBadge}} · ${{total}} articles`;
+  }} else {{
+    if (leanEl) {{ leanEl.textContent = 'No data'; leanEl.style.color = '#ccc'; }}
+    if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} · No articles`;
   }}
 }}
+
+window.addEventListener('DOMContentLoaded', initRangeSliders);
 
 function filterCards(type, btn) {{
   btn.closest('.filter-bar').querySelectorAll('.filter-btn:not(.outlet-btn)').forEach(b => b.classList.remove('active'));
