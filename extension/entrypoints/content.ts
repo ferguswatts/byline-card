@@ -237,11 +237,19 @@ function buildCardHTML(slug: string, j: JournalistData, version: string): string
 
   // Spectrum
   const specPos = ((score + 1) / 2) * 100;
-  const leanPct = Math.abs(Math.round(score * 100));
-  let leanText = "Centre", leanColor = "#6b7280";
-  if (leanPct > 2) {
-    if (score < 0) { leanText = `${leanPct}% left leaning`; leanColor = "#d97706"; }
-    else { leanText = `${leanPct}% right leaning`; leanColor = "#3b82f6"; }
+  const leftArts = (j.articles_by_year || []).filter(a => a.s < -0.2).length;
+  const rightArts = (j.articles_by_year || []).filter(a => a.s > 0.2).length;
+  const artTotal = (j.articles_by_year || []).length || j.article_count;
+  const leftPctH = artTotal > 0 ? Math.round(leftArts / artTotal * 100) : 0;
+  const rightPctH = artTotal > 0 ? Math.round(rightArts / artTotal * 100) : 0;
+  const medStr = (score >= 0 ? "+" : "") + score.toFixed(2);
+  let leanText = `Centre · Median ${medStr}`, leanColor = "#6b7280";
+  if (leftPctH > rightPctH && leftPctH > 10) {
+    leanText = `${leftPctH}% of articles lean left · Median ${medStr}`;
+    leanColor = "#d97706";
+  } else if (rightPctH > leftPctH && rightPctH > 10) {
+    leanText = `${rightPctH}% of articles lean right · Median ${medStr}`;
+    leanColor = "#3b82f6";
   }
 
   // Avatar
@@ -441,10 +449,21 @@ function setupYearSlider(root: ShadowRoot, articles: Array<{y:number;b:string;s:
     const med = n > 0 ? (n%2===1 ? scores[Math.floor(n/2)] : (scores[Math.floor(n/2)-1]+scores[Math.floor(n/2)])/2) : 0;
     if (marker) marker.style.left = (((med+1)/2)*100).toFixed(1) + '%';
     if (leanEl) {
-      const pct = Math.abs(Math.round(med * 100));
-      if (pct <= 2) { leanEl.textContent = 'Centre'; leanEl.style.color = '#6b7280'; }
-      else if (med < 0) { leanEl.textContent = pct + '% left leaning'; leanEl.style.color = '#d97706'; }
-      else { leanEl.textContent = pct + '% right leaning'; leanEl.style.color = '#3b82f6'; }
+      const leftA = f.filter(a => a.s < -0.2).length;
+      const rightA = f.filter(a => a.s > 0.2).length;
+      const lPct = total > 0 ? Math.round(leftA / total * 100) : 0;
+      const rPct = total > 0 ? Math.round(rightA / total * 100) : 0;
+      const mStr = (med >= 0 ? '+' : '') + med.toFixed(2);
+      if (lPct > rPct && lPct > 10) {
+        leanEl.textContent = lPct + '% of articles lean left · Median ' + mStr;
+        leanEl.style.color = '#d97706';
+      } else if (rPct > lPct && rPct > 10) {
+        leanEl.textContent = rPct + '% of articles lean right · Median ' + mStr;
+        leanEl.style.color = '#3b82f6';
+      } else {
+        leanEl.textContent = 'Centre · Median ' + mStr;
+        leanEl.style.color = '#6b7280';
+      }
     }
 
     let gov = '<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;background:#f3f4f6;color:#555">Mixed</span>';

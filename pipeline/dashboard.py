@@ -266,13 +266,22 @@ def generate_html(conn) -> str:
         avg_score = sorted_scores[n // 2] if n % 2 == 1 else (sorted_scores[n // 2 - 1] + sorted_scores[n // 2]) / 2
         avg_color = score_to_color(avg_score)
         avg_label = score_to_label(avg_score)
-        lean_pct = abs(round(avg_score * 100))
-        if lean_pct <= 2:
-            lean_text = "Centre"
-        elif avg_score < 0:
-            lean_text = f"{lean_pct}% left leaning"
+        # Calculate percentage of articles leaning left vs right
+        left_articles = sum(1 for a in articles if (a["median_score"] or 0) < -0.2)
+        right_articles = sum(1 for a in articles if (a["median_score"] or 0) > 0.2)
+        centre_articles = total - left_articles - right_articles
+        left_pct = round(left_articles / total * 100) if total else 0
+        right_pct = round(right_articles / total * 100) if total else 0
+
+        if left_pct > right_pct and left_pct > 10:
+            lean_text = f"{left_pct}% of articles lean left · Median {avg_score:+.2f}"
+            avg_color = "#d97706"
+        elif right_pct > left_pct and right_pct > 10:
+            lean_text = f"{right_pct}% of articles lean right · Median {avg_score:+.2f}"
+            avg_color = "#3b82f6"
         else:
-            lean_text = f"{lean_pct}% right leaning"
+            lean_text = f"Centre · Median {avg_score:+.2f}"
+            avg_color = "#6b7280"
 
         # Article rows — grouped by year/month, most recent first
         from collections import OrderedDict
@@ -1166,10 +1175,21 @@ function updateDisplay(slug, minVal, maxVal) {{
   if (n > 0 && marker && leanEl) {{
     marker.style.left = (((median + 1) / 2) * 100).toFixed(1) + '%';
     marker.style.transition = 'left 0.2s ease';
-    const pct = Math.abs(Math.round(median * 100));
-    if (pct <= 2) {{ leanEl.textContent = 'Centre'; leanEl.style.color = '#6b7280'; }}
-    else if (median < 0) {{ leanEl.textContent = pct + '% left leaning'; leanEl.style.color = '#d97706'; }}
-    else {{ leanEl.textContent = pct + '% right leaning'; leanEl.style.color = '#3b82f6'; }}
+    const leftArts = filtered.filter(a => a.s < -0.2).length;
+    const rightArts = filtered.filter(a => a.s > 0.2).length;
+    const leftPct = Math.round(leftArts / total * 100);
+    const rightPct = Math.round(rightArts / total * 100);
+    const medStr = (median >= 0 ? '+' : '') + median.toFixed(2);
+    if (leftPct > rightPct && leftPct > 10) {{
+      leanEl.textContent = leftPct + '% of articles lean left · Median ' + medStr;
+      leanEl.style.color = '#d97706';
+    }} else if (rightPct > leftPct && rightPct > 10) {{
+      leanEl.textContent = rightPct + '% of articles lean right · Median ' + medStr;
+      leanEl.style.color = '#3b82f6';
+    }} else {{
+      leanEl.textContent = 'Centre · Median ' + medStr;
+      leanEl.style.color = '#6b7280';
+    }}
     if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} ${{govBadge}} · ${{total}} articles`;
   }} else {{
     if (leanEl) {{ leanEl.textContent = 'No data'; leanEl.style.color = '#ccc'; }}
