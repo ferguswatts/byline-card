@@ -23,8 +23,8 @@ def export_to_json(conn: sqlite3.Connection, output_path: Path) -> int:
 
     for j in journalists:
         dist = compute_distribution(conn, j["id"])
-        if dist["article_count"] == 0:
-            continue
+        # Include all journalists — even without scored articles, their
+        # connections, bio, and background are valuable in the hover card
 
         connections = get_connections_for_journalist(conn, j["id"])
         facts = get_facts_for_journalist(conn, j["id"])

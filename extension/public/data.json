@@ -935,6 +935,43 @@
         "environment": 10
       }
     },
+    "anna-fifield-stuff": {
+      "name": "Anna Fifield",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Editor-at-large",
+      "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Anna_Fifield%2C_Book_signing_at_The_Garden_Party.jpg/250px-Anna_Fifield%2C_Book_signing_at_The_Garden_Party.jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff Limited",
+          "role": "Formerly Fairfax NZ",
+          "source": "https://www.stuff.co.nz/authors/anna-fifield"
+        }
+      ],
+      "facts": [],
+      "bio": "Anna Fifield (born 1976, Hastings) is a New Zealand journalist with an extensive international career. She studied English at Victoria University of Wellington and completed a postgraduate journalism diploma at the University of Canterbury. At 25, she moved to London and joined the Financial Times, where she spent 13 years as a foreign correspondent covering the Middle East, Korea, and US politics. She joined The Washington Post in 2014 as Tokyo bureau chief, later becoming Beijing bureau chief. She won the 2018 Shorenstein Journalism Award from Stanford and authored \"The Great Successor\" (2019), a book on Kim Jong Un translated into 24 languages. She was also a Nieman Fellow at Harvard. Returning to New Zealand in 2020, she edited The Dominion Post/Stuff's Wellington newsroom until December 2022. She returned to the Washington Post as Asia-Pacific editor but was laid off in February 2026. In March 2026, she joined The Spinoff to write the World Bulletin newsletter.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/annafifield",
+        "linkedin": "https://linkedin.com/in/anna-fifield-baa4a047",
+        "bluesky": "https://bsky.app/profile/annafifield.bsky.social",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
     "anna-leask-nzherald": {
       "name": "Anna Leask",
       "aliases": [],
@@ -997,6 +1034,97 @@
         "crime": 100
       }
     },
+    "anna-whyte-stuff": {
+      "name": "Anna Whyte",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Politics",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Senior political journalist — Press Gallery",
+          "source": "https://www.stuff.co.nz/authors/anna-whyte"
+        },
+        {
+          "type": "employer",
+          "target": "TVNZ",
+          "role": "Former Senior Digital Political Producer at 1News",
+          "source": "https://www.1news.co.nz/reporter/anna-whyte/"
+        }
+      ],
+      "facts": [],
+      "bio": "Anna Whyte is a senior political journalist at Stuff / The Post based in the Parliamentary Press Gallery. She previously worked at TVNZ/1News as Senior Digital Political Producer. She is from Motueka and holds a PGDip Journalism from Massey University.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/annacwhyte",
+        "linkedin": "https://nz.linkedin.com/in/anna-whyte-62383871",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "anne-gibson-nzherald": {
+      "name": "Anne Gibson",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Property",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/DS66VYQARNGEDATFWOOKMWWFYM.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Property Editor since 2000",
+          "source": "https://www.nzherald.co.nz/author/anne-gibson/"
+        },
+        {
+          "type": "industry",
+          "target": "REINZ",
+          "role": "Three-time REINZ Property Media Awards supreme winner — deep property industry ties",
+          "source": "https://www.nzherald.co.nz/business/companies/media-marketing/herald-property-editor-wins-supreme-award/R6U6ZWUYZTZ32U223ALZMTQOVY/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Has covered property since 1985 — approximately 40 years on the same beat; founded NBR's property section; first female sub-editor at the Christchurch Star",
+          "source": "https://www.nzherald.co.nz/author/anne-gibson/"
+        }
+      ],
+      "bio": "Anne Gibson is the NZ Herald's long-serving Property Editor, covering real estate since 1985 and joining the Herald in 2000. She founded NBR's property section in the 1980s and was the first female sub-editor at the Christchurch Star. She has won the REINZ Property Media Awards supreme award three times and the Canon Media Awards Business Feature Writer Award (2016).",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/anneherald",
+        "linkedin": "https://www.linkedin.com/in/anne-gibson-174a0b23/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
     "audrey-young-nzherald": {
       "name": "Audrey Young",
       "aliases": [],
@@ -1047,6 +1175,91 @@
       "topics": {
         "politics": 100
       }
+    },
+    "barry-soper-newstalkzb": {
+      "name": "Barry Soper",
+      "aliases": [],
+      "outlet": "Newstalk ZB",
+      "formerly": "",
+      "beat": "Parliamentary politics",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/620a62db-3400-49d4-b1f6-5b4e04db456c.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "spouse",
+          "target": "Heather du Plessis-Allan",
+          "role": "Broadcaster Newstalk ZB",
+          "source": "https://en.wikipedia.org/wiki/Barry_Soper"
+        },
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Parent company of Newstalk ZB and NZ Herald",
+          "source": "https://www.nzherald.co.nz/author/barry-soper/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Named unfavourably in Jacinda Ardern's 2025 memoir for his coverage of her government",
+          "source": "https://en.wikipedia.org/wiki/Barry_Soper"
+        }
+      ],
+      "bio": "Barry Soper (born c. 1951, Gore) is the longest-serving member of New Zealand's Parliamentary Press Gallery, having joined in 1980. After briefly attending the Royal New Zealand Police College in 1969, he entered journalism at The Southland Times, progressing through the Mataura Ensign, Otago Daily Times, New Zealand Truth, and Waikato Times. He joined the press gallery working for APN before moving to Newstalk ZB, where he has served as political editor and senior political correspondent. He has covered eleven prime ministers, both Fijian coups (1987 and 2000), and Nelson Mandela's inauguration. He was named Individual Radio Journalist of the Year in 2001. In 1992, he was approached to stand as a Labour Party candidate in the Wellington Central by-election but declined. He married journalist and broadcaster Heather du Plessis-Allan in 2009. He was named unfavourably in Jacinda Ardern's 2025 memoir.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/barrysoper",
+        "linkedin": "https://linkedin.com/in/barry-soper-18998b21",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "belinda-feek-nzherald": {
+      "name": "Belinda Feek",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Crime and courts",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/72481af3-2759-4275-9a08-932e5d2554a4.JPG",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Open Justice reporter based in Hamilton",
+          "source": "https://www.nzherald.co.nz/author/belinda-feek/"
+        }
+      ],
+      "facts": [],
+      "bio": "Belinda Feek is an Open Justice multimedia journalist at the NZ Herald based in Hamilton, with 20+ years in journalism. She is of Ngati Kahungunu descent. She has covered major events including the Kaikoura earthquake and Whakaari/White Island eruption. She started her career in Oamaru before working in Whanganui and moving to Hamilton in 2007.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/ought2bee",
+        "linkedin": "https://www.linkedin.com/in/belinda-feek-0127021a/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
     },
     "bernard-hickey-thespinoff": {
       "name": "Bernard Hickey",
@@ -1598,6 +1811,91 @@
         "foreign-affairs": 50
       }
     },
+    "blair-ensor-stuff": {
+      "name": "Blair Ensor",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Investigative",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Senior journalist — investigative and national reporting",
+          "source": "https://interactives.stuff.co.nz/author-widget/blair-ensor.html"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Multiple Voyager awards for investigative journalism; led 'The Homicide Report' and 'Faces of Innocents' investigations; among first reporters at Al Noor mosque during 2019 Christchurch attack",
+          "source": "https://interactives.stuff.co.nz/author-widget/blair-ensor.html"
+        }
+      ],
+      "bio": "Blair Ensor is a senior investigative journalist at Stuff with over a decade of experience. He has won multiple Voyager Media Awards for crime and justice reporting. He led the 'Faces of Innocents' child homicide investigation and 'The Homicide Report'. He was among the first journalists at Al Noor mosque during the 2019 Christchurch attack.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/blairensor",
+        "linkedin": "https://www.linkedin.com/in/blair-ensor-4771b044/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "bridie-witton-stuff": {
+      "name": "Bridie Witton",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Politics",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Senior political reporter — Press Gallery (now at Sky News Australia)",
+          "source": "https://www.stuff.co.nz/authors/bridie-witton"
+        },
+        {
+          "type": "employer",
+          "target": "Sky News Australia",
+          "role": "NZ Correspondent (from 2025)",
+          "source": "https://www.linkedin.com/in/bridiewitton/"
+        }
+      ],
+      "facts": [],
+      "bio": "Bridie Witton is a political journalist who served as senior political reporter for Stuff in the Parliamentary Press Gallery. She started at the Rotorua Daily Post and worked for the BBC in London. She is now Sky News Australia's NZ correspondent.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/bridiewitton",
+        "linkedin": "https://www.linkedin.com/in/bridiewitton/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
     "bruce-cotterill-newstalkzb": {
       "name": "Bruce Cotterill",
       "aliases": [],
@@ -1769,6 +2067,177 @@
         "foreign-affairs": 4,
         "education": 4
       }
+    },
+    "bryce-edwards-stuff": {
+      "name": "Bryce Edwards",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Political analysis",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/5e9e0ba0-95e0-478c-bce7-f367d263154b.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Political analyst",
+          "source": "https://www.nzherald.co.nz/author/bryce-edwards/"
+        },
+        {
+          "type": "political",
+          "target": "Integrity Institute",
+          "role": "Director and trustee - collapsed 2025 amid accusations of funding pre-determined journalism targeting right-leaning organisations",
+          "source": "https://www.thepost.co.nz/politics/360899842/transparency-project-went-dark-inside-collapse-bryce-edwards-integrity-institute"
+        },
+        {
+          "type": "political",
+          "target": "Alliance Party / Workers Party",
+          "role": "Alliance electoral liaison executive assistant (2001); Workers Party member; spoke at Marxism 2007 conference",
+          "source": "https://en.wikipedia.org/wiki/Bryce_Edwards"
+        },
+        {
+          "type": "political",
+          "target": "Gama Foundation",
+          "role": "Received $487,000 in philanthropic funding for Democracy Project research",
+          "source": "https://www.rnz.co.nz/programmes/the-detail/story/2018890560/the-stand-off-between-a-philanthropist-and-victoria-university"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Founded the Integrity Institute trust to fund investigative journalism, but it collapsed in 2025 after critics accused it of dirty politics - its trust deed targeted only right-leaning organisations and authorised media sting operations",
+          "source": "https://www.politik.co.nz/dirty-politics-and-the-integrity-institute-and-the-media/"
+        }
+      ],
+      "bio": "Bryce Edwards is a political commentator and academic based at Victoria University of Wellington, where he is a Research Associate in the Institute of Governance and Policy Studies and Director of the Democracy Project. He holds a PhD in political sociology (2004) and previously lectured in Political Studies at Otago University. Edwards has a well-documented history on the political left. He helped found the Canterbury University Progressive Left Club in 1993 and was a contact for the Canterbury University Marxist Society in 1995. He worked in the Alliance Party's electoral liaison unit in 2001 as an executive assistant. In 2007, he was identified as a member of the Workers Party and spoke at the Marxism 2007 conference. Despite this left-wing background, he has built a mainstream media career as a political analyst, writing regular columns for the NZ Herald, The Guardian, and other outlets. In 2025, his Integrity Institute collapsed amid accusations of funding journalists to produce pre-determined investigative stories targeting right-leaning organisations, with critics calling it the very 'dirty politics' it claimed to oppose.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/bryce_edwards",
+        "linkedin": "https://linkedin.com/in/bryce-edwards-3939513",
+        "bluesky": "",
+        "facebook": "https://www.facebook.com/edwards.bryce/"
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "catrin-owen-stuff": {
+      "name": "Catrin Owen",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Courts and crime",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Senior journalist — courts and crime since 2015",
+          "source": "https://www.stuff.co.nz/authors/catrin-owen"
+        }
+      ],
+      "facts": [],
+      "bio": "Catrin Owen is a senior journalist at Stuff covering courts, crime, and justice in Auckland. Originally from Wales, she joined Stuff in 2015. She is a regular contributor to BBC Radio Cymru.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/catrinowen_",
+        "linkedin": "https://www.linkedin.com/in/catrin-owen-a31ab3a2/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "cherie-howie-nzherald": {
+      "name": "Cherie Howie",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "General news and features",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/4a6b54d4-9289-431b-9e57-2e89d9a91aed.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Senior reporter since 2011",
+          "source": "https://www.nzherald.co.nz/author/cherie-howie/"
+        }
+      ],
+      "facts": [],
+      "bio": "Cherie Howie has been a NZ Herald reporter since 2011. She is from Motueka and previously worked at the Southland Times and Marlborough Express.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/CherieHowie",
+        "linkedin": "https://www.linkedin.com/in/cherie-howie-17985842/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "chris-keall-nzherald": {
+      "name": "Chris Keall",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Technology and business",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/9c36db5b-77f8-41e1-8b20-0f64c76f7992.jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Technology Editor and Senior Business Writer",
+          "source": "https://www.nzherald.co.nz/author/chris-keall/"
+        }
+      ],
+      "facts": [],
+      "bio": "Chris Keall is the Technology Editor and Senior Business Writer at the NZ Herald with 20+ years covering tech and business. He previously edited NZ PC World, Internet Magazine, and was technology editor at NBR. He has won two Qantas Media Awards for feature writing and authored 'Download: The Internet Made Easy' (HarperCollins).",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/ChrisKeall",
+        "linkedin": "https://www.linkedin.com/in/chriskeall/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
     },
     "chris-trotter-newstalkzb": {
       "name": "Chris Trotter",
@@ -2047,6 +2516,166 @@
         "politics": 50,
         "foreign-affairs": 50
       }
+    },
+    "david-farrar-nzherald": {
+      "name": "David Farrar",
+      "aliases": [
+        "DPF"
+      ],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Political commentary",
+      "photo_url": "https://upload.wikimedia.org/wikipedia/commons/5/59/David_Farrar_at_the_New_Zealand_Open_Source_Awards.jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Kiwiblog",
+          "role": "Political commentator and pollster",
+          "source": "https://www.kiwiblog.co.nz/author/david-farrar"
+        }
+      ],
+      "facts": [],
+      "bio": "David Farrar (born 1967) is a New Zealand political blogger, pollster, and activist with deep ties to the National Party. He worked in Parliament for four National leaders, including in the Prime Minister's Office under Jim Bolger (1996-97) and Jenny Shipley (1997-99). He was national secretary of the Young Nationals. In 2003 he founded Kiwiblog, which became New Zealand's most widely read political blog. In 2004 he founded Curia Market Research, which serves as the National Party's internal pollster. In 2013 he co-founded the New Zealand Taxpayers' Union with Jordan Williams. He writes a regular column for the NZ Herald. The 2009 NZ Listener Power List ranked him the fourth most powerful person in New Zealand media.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/dpfdpf",
+        "linkedin": "https://linkedin.com/in/dpfdpf",
+        "bluesky": "",
+        "facebook": "https://www.facebook.com/davidpfarrar/"
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "david-fisher-nzherald": {
+      "name": "David Fisher",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Investigative",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/4616d6fd-a72a-4272-897f-20571ed0239b.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Senior investigative journalist since 2004",
+          "source": "https://www.nzherald.co.nz/author/david-fisher/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Twice named NZ Reporter of the Year; Wolfson Press Fellow at Cambridge; extensive investigative work on NZSAS raid in Afghanistan (Operation Burnham)",
+          "source": "https://www.nzherald.co.nz/author/david-fisher/"
+        }
+      ],
+      "bio": "David Fisher is a senior investigative journalist at the NZ Herald with over 30 years' experience. He has twice been named NZ Reporter of the Year and was a Wolfson Press Fellow at Cambridge. He is known for investigating NZSAS operations in Afghanistan and the true crime podcast 'Chasing Ghosts'.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "",
+        "linkedin": "https://www.linkedin.com/in/david-fisher-2213073b/",
+        "bluesky": "",
+        "facebook": "https://www.facebook.com/David.Fisher.Journalist/"
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "derek-cheng-nzherald": {
+      "name": "Derek Cheng",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Political journalism",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/170d6f3c-093e-4a92-8203-b91546a98a4d.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Political journalist NZ Herald",
+          "source": "https://www.nzherald.co.nz/author/derek-cheng/"
+        }
+      ],
+      "facts": [],
+      "bio": "Derek Cheng is a senior political journalist at the New Zealand Herald. He graduated with a journalism diploma from Massey University in 2004 and joined the Herald shortly after, where he has worked for two decades. He has served multiple stints in the parliamentary press gallery and held the role of deputy political editor. His political reporting career spans the Helen Clark, John Key, and Jacinda Ardern eras. He is known for evidence-based political analysis. Outside journalism, Cheng is an accomplished mountaineer and adventure writer.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/dchengnz",
+        "linkedin": "https://linkedin.com/in/chengderek",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "duncan-garner-newshub": {
+      "name": "Duncan Garner",
+      "aliases": [],
+      "outlet": "Newshub",
+      "formerly": "",
+      "beat": "Political commentary",
+      "photo_url": "https://cdn.blutui.com/uploads/essential_ta/duncan-garner-photoc.webp",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "political",
+          "target": "Guyon Espiner",
+          "role": "RNZ journalist — served as best man at Espiner's 2012 wedding to Emma Wehipeihana",
+          "source": "https://www.nzherald.co.nz/nz/tv-stars-politicians-mix-at-espiner-wedding/62QKADTMEEXFYPUCX42DT2Z5SM/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Served as best man at Guyon Espiner's 2012 wedding to Emma Wehipeihana; co-hosted AM Show on Three (Newshub) 2018-2021; left Newshub before its 2024 closure",
+          "source": "https://en.wikipedia.org/wiki/Duncan_Garner"
+        }
+      ],
+      "bio": "Duncan Garner (born 8 March 1974) is a New Zealand broadcaster and journalist. He joined TVNV in the mid-1990s, then moved to TV3 in 2003. He won the 2004 Television Political News Reporter award for exposing a golden handshake to Labour MP John Tamihere. He served as Newshub's political editor before hosting The AM Show (2017-2021). He briefly presented on Today FM (2022-2023). He has attracted controversy over race: a 2017 column was found by the Press Council to constitute \"gratuitous racism.\"",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/duncangarnernz",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
     },
     "duncan-greive-thespinoff": {
       "name": "Duncan Greive",
@@ -4146,6 +4775,43 @@
         "housing": 3
       }
     },
+    "edward-gay-stuff": {
+      "name": "Edward Gay",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Crime and courts",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Reporter — crime and courts",
+          "source": "https://www.stuff.co.nz/authors/edward-gay"
+        }
+      ],
+      "facts": [],
+      "bio": "Edward Gay is a reporter at Stuff covering crime, courts, and justice in Auckland. He has previously worked at RNZ, NZ Herald, and APNZ.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/edwardgay",
+        "linkedin": "https://www.linkedin.com/in/edward-gay-39a1a569/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
     "fran-osullivan-nzherald": {
       "name": "Fran O'Sullivan",
       "aliases": [
@@ -4263,6 +4929,235 @@
       "topics": {
         "politics": 100
       }
+    },
+    "georgina-campbell-nzherald": {
+      "name": "Georgina Campbell",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Wellington local government",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/c57aac85-a5eb-485b-8cf2-dda35cabbd6f.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Wellington senior journalist covering local government (2016-2025)",
+          "source": "https://www.nzherald.co.nz/author/georgina-campbell/"
+        },
+        {
+          "type": "employer",
+          "target": "Hutt City Council",
+          "role": "Left journalism for local government role in 2025 — poacher turned gamekeeper",
+          "source": "https://www.newstalkzb.co.nz/on-air/wellington/wellington-mornings-with-nick-mills/audio/georgina-campbell-reflects-on-nine-years-at-newstalk-zb-nz-herald/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Left journalism in early 2025 after nine years at NZME to work in local government — a revolving door from journalist covering councils to working for one",
+          "source": "https://www.linkedin.com/in/georgina-campbell-0a2251102/"
+        }
+      ],
+      "bio": "Georgina Campbell was a Wellington-based senior journalist for NZME (NZ Herald and Newstalk ZB) for nine years, covering local government, transport, and seismic resilience. She wrote the 'Capital Letter' column on Wellington affairs and produced the award-winning 'Speaking Secrets' podcast on NZ's MeToo movement. She left journalism in early 2025 to work in local government.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/GeorgeKCampbell",
+        "linkedin": "https://www.linkedin.com/in/georgina-campbell-0a2251102/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "glenn-mcconnell-stuff": {
+      "name": "Glenn McConnell",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Politics and te ao Maori",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Political reporter — Pou Tiaki team since 2016",
+          "source": "https://www.stuff.co.nz/authors/glenn-mcconnell"
+        }
+      ],
+      "facts": [
+        {
+          "text": "INMA 30 Under 30 honouree (2022); created award-winning podcast 'He'll Be Right' exploring masculinity; whakapapa to Te Atiawa and Ngati Tama",
+          "source": "https://www.inma.org/blogs/Editors-Inbox/post.cfm/inma-30-under-30-glenn-mcconnell-of-stuff"
+        }
+      ],
+      "bio": "Glenn McConnell is a Wellington-based political reporter for Stuff's Pou Tiaki team since 2016. He has whakapapa to Te Atiawa and Ngati Tama. He was an INMA 30 Under 30 honouree in 2022 and created the award-winning podcast 'He'll Be Right'. His work has appeared in The Guardian, Sydney Morning Herald, and RNZ.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/glennmccnz",
+        "linkedin": "https://www.linkedin.com/in/theglennmcconnell/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "gordon-campbell-scoop": {
+      "name": "Gordon Campbell",
+      "aliases": [],
+      "outlet": "Scoop",
+      "formerly": "",
+      "beat": "Political commentary",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Scoop Media",
+          "role": "Political Editor since 2014",
+          "source": "https://info.scoop.co.nz/Gordon_Campbell"
+        },
+        {
+          "type": "employer",
+          "target": "Werewolf",
+          "role": "Editor and co-writer of monthly longform politics/culture journal",
+          "source": "https://werewolf.co.nz/category/gordon-campbell/"
+        }
+      ],
+      "facts": [],
+      "bio": "Gordon Campbell is the Political Editor at Scoop and editor of Werewolf, a monthly digital journal of longform journalism on politics, art, and culture. He was previously a highly regarded feature writer and rock music critic at the NZ Listener. He has published 3-4 political commentary columns per week since 2008 and is a regular attendee at the Prime Minister's weekly press conference.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "guyon-espiner-rnz": {
+      "name": "Guyon Espiner",
+      "aliases": [],
+      "outlet": "RNZ",
+      "formerly": "",
+      "beat": "Investigative",
+      "photo_url": "https://media.rnztools.nz/rnz/image/upload/s--rNdz9vFZ--/c_scale,f_auto,q_auto,w_576/v1765844621/4JXDTR0_Guyon_Espiner_headshot_square_Nov25_jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "RNZ",
+          "role": "Public broadcaster funded by NZ Government",
+          "source": "https://www.rnz.co.nz/authors/guyon-espiner"
+        },
+        {
+          "type": "spouse",
+          "target": "Emma Wehipeihana",
+          "role": "Former personal assistant to Labour MP Darren Hughes (married 2012 separated 2023)",
+          "source": "https://en.wikipedia.org/wiki/Guyon_Espiner"
+        },
+        {
+          "type": "political",
+          "target": "Darren Hughes",
+          "role": "Labour MP — Espiner's wife Emma Wehipeihana was his personal assistant",
+          "source": "https://www.nzherald.co.nz/nz/tv-stars-politicians-mix-at-espiner-wedding/62QKADTMEEXFYPUCX42DT2Z5SM/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Political journalist Duncan Garner served as best man at Espiner's 2012 wedding to Emma Wehipeihana",
+          "source": "https://www.nzherald.co.nz/nz/tv-stars-politicians-mix-at-espiner-wedding/62QKADTMEEXFYPUCX42DT2Z5SM/"
+        }
+      ],
+      "bio": "Guyon Espiner (born 31 December 1970, Christchurch) is an investigative journalist at Radio New Zealand with over 30 years in print, television, and radio. After a decade in newspapers, including as political editor of the Sunday Star-Times, he joined TVNZ in 2003, becoming political editor in 2006 and anchoring Q+A, Agenda, and Breakfast. He moved to TV3's 60 Minutes in 2011, then joined RNZ in 2014 as co-host of Morning Report. Since 2019 he has produced podcasts (The Ninth Floor, The Service, Red Line) and documentaries. He authored The Drinking Game. Espiner married Emma Wehipeihana in 2012; they separated in 2023. Wehipeihana had previously worked as a personal assistant to Labour MP Darren Hughes, who served as MC at their wedding.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/GuyonEspiner",
+        "linkedin": "https://linkedin.com/in/guyon-espiner-176aa438",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "hamish-mcneilly-stuff": {
+      "name": "Hamish McNeilly",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Crime and justice",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Senior reporter — sole Stuff reporter in Dunedin",
+          "source": "https://interactives.stuff.co.nz/author-widget/Hamish-McNeilly.html"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Two-time Voyager Media Awards Regional Reporter of the Year (2019 and 2020); sole Stuff reporter in Dunedin covering 15+ years of southern NZ news",
+          "source": "https://www.stuff.co.nz/national/112648247/stuff-claims-swag-of-top-honours-at-2019-voyager-media-awards"
+        }
+      ],
+      "bio": "Hamish McNeilly is Stuff's senior reporter in Dunedin with over 15 years' experience. He won Voyager Media Awards Regional Reporter of the Year in both 2019 and 2020. He previously worked at the Otago Daily Times and runs 'The Mish' Substack newsletter.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/southernscoop",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
     },
     "heather-du-plessis-allan-newstalkzb": {
       "name": "Heather du Plessis-Allan",
@@ -4851,6 +5746,54 @@
         "crime": 8
       }
     },
+    "jamie-ensor-nzherald": {
+      "name": "Jamie Ensor",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Politics",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/GE3CQ4SKSZHJBPZESKNADHL2Q4.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Chief Political Reporter — Press Gallery Wellington",
+          "source": "https://www.nzherald.co.nz/author/jamie-ensor/"
+        },
+        {
+          "type": "employer",
+          "target": "Newshub",
+          "role": "Political reporter at Three/Newshub 2017-2024 (left after Newshub closure)",
+          "source": "https://jamieensor.journoportfolio.com/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Joined NZ Herald in 2024 after Newshub's closure; finalist for Political Journalist of the Year at 2025 Voyager Media Awards",
+          "source": "https://jamieensor.journoportfolio.com/"
+        }
+      ],
+      "bio": "Jamie Ensor is the Chief Political Reporter for the NZ Herald, based in the Parliamentary Press Gallery. He joined from Newshub in 2024 following its closure. He was a finalist for Political Journalist of the Year at the 2025 Voyager Media Awards.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/jamieensor",
+        "linkedin": "https://www.linkedin.com/in/jamie-ensor-6a1a4b146/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
     "jamie-morton-nzherald": {
       "name": "Jamie Morton",
       "aliases": [],
@@ -4858,13 +5801,13 @@
       "formerly": "",
       "beat": "Science and environment",
       "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/1a606027-89b8-458f-b47c-6c8334cd13fb.png",
-      "article_count": 30,
+      "article_count": 40,
       "confidence": "medium",
-      "bias_score": -0.175,
+      "bias_score": -0.15,
       "distribution": {
         "left": 0,
-        "centre_left": 43,
-        "centre": 57,
+        "centre_left": 40,
+        "centre": 60,
         "centre_right": 0,
         "right": 0
       },
@@ -4889,7 +5832,7 @@
         }
       ],
       "bio": "Jamie Morton is a science and environment journalist with 20+ years' experience. He spent 14 years at the NZ Herald (2011-2025) before joining The Conversation New Zealand as Deputy Editor. He has reported from Antarctica and global climate summits. He has been named Science Reporter of the Year four times (2013, 2016, 2022, 2023).",
-      "methodology": "Based on 30 articles scored by AI",
+      "methodology": "Based on 40 articles scored by AI",
       "social": {
         "twitter": "https://x.com/JamieMortonNZ",
         "linkedin": "https://www.linkedin.com/in/jamie-morton-a8598438/",
@@ -4902,8 +5845,8 @@
           "median": -0.15
         },
         "2025": {
-          "count": 29,
-          "median": -0.2
+          "count": 39,
+          "median": -0.15
         }
       },
       "articles_by_year": [
@@ -5056,15 +5999,118 @@
           "y": 2025,
           "b": "centre-left",
           "s": -0.45
+        },
+        {
+          "y": 2025,
+          "b": "centre",
+          "s": 0.0
+        },
+        {
+          "y": 2025,
+          "b": "centre",
+          "s": 0.0
+        },
+        {
+          "y": 2025,
+          "b": "centre",
+          "s": 0.0
+        },
+        {
+          "y": 2025,
+          "b": "centre",
+          "s": 0.0
+        },
+        {
+          "y": 2025,
+          "b": "centre",
+          "s": 0.0
+        },
+        {
+          "y": 2025,
+          "b": "centre-left",
+          "s": -0.3
+        },
+        {
+          "y": 2025,
+          "b": "centre",
+          "s": -0.2
+        },
+        {
+          "y": 2025,
+          "b": "centre-left",
+          "s": -0.4
+        },
+        {
+          "y": 2025,
+          "b": "centre",
+          "s": 0.0
+        },
+        {
+          "y": 2025,
+          "b": "centre-left",
+          "s": -0.3
         }
       ],
       "topics": {
-        "science": 53,
+        "science": 48,
         "environment": 30,
-        "health": 10,
-        "social-issues": 3,
-        "education": 3
+        "health": 12,
+        "education": 5
       }
+    },
+    "jane-clifton-newsroom": {
+      "name": "Jane Clifton",
+      "aliases": [],
+      "outlet": "Newsroom",
+      "formerly": "",
+      "beat": "Political commentary",
+      "photo_url": "https://media.businessdesk.co.nz/file/w_400,h_400,c_fill/Jane-Clifton-optimised.webp",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Newsroom",
+          "role": "Political columnist",
+          "source": "https://www.newsroom.co.nz/"
+        },
+        {
+          "type": "spouse",
+          "target": "Trevor Mallard",
+          "role": "Labour MP and Speaker of the House (married Dec 2014); served as NZ Ambassador to Ireland 2022-2024",
+          "source": "https://en.wikipedia.org/wiki/Trevor_Mallard"
+        },
+        {
+          "type": "political",
+          "target": "Murray McCully",
+          "role": "National MP and Foreign Minister — Clifton was in a relationship with McCully for approximately 20 years before her marriage to Mallard",
+          "source": "https://en.wikipedia.org/wiki/Murray_McCully"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Married Labour MP and Speaker of the House Trevor Mallard in December 2014; Mallard served as NZ Ambassador to Ireland 2022-2024; Clifton had previously been in a relationship with National MP and Foreign Minister Murray McCully for approximately 20 years",
+          "source": "https://en.wikipedia.org/wiki/Jane_Clifton"
+        }
+      ],
+      "bio": "Jane Clifton is one of New Zealand's most experienced political commentators. She began journalism at age 16 in 1978 and spent roughly 20 years in Parliament's press gallery. She is best known for her political column in the NZ Listener, which she wrote for approximately 30 years. She married Labour MP (later Speaker of the House) Trevor Mallard in December 2014. She had previously been in a long relationship with National MP Murray McCully. Her writing is noted for its cross-partisan independence.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/rumpole3",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
     },
     "jane-patterson-rnz": {
       "name": "Jane Patterson",
@@ -6018,6 +7064,54 @@
         "media": 4
       }
     },
+    "jared-savage-nzherald": {
+      "name": "Jared Savage",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Crime and justice",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/427bce7b-825e-4ecd-aa10-dc0291682ab9.jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Senior investigative reporter — crime and organised crime",
+          "source": "https://www.nzherald.co.nz/author/jared-savage/"
+        },
+        {
+          "type": "employer",
+          "target": "HarperCollins NZ",
+          "role": "Author of Gangland; Gangster's Paradise; and Underworld",
+          "source": "https://www.harpercollins.co.nz/9781775541622/gangland/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Twice named Reporter of the Year; author of three bestselling organised crime books (Gangland; Gangster's Paradise; Underworld) published by HarperCollins",
+          "source": "https://www.nzherald.co.nz/nz/meet-our-journalists-jared-savage/YER5V6RNYT43IOV2TTSQMVLSBM/"
+        }
+      ],
+      "bio": "Jared Savage is an award-winning NZ Herald investigative reporter specialising in crime and organised crime. Twice named Reporter of the Year. Author of three bestselling books: Gangland, Gangster's Paradise, and Underworld.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/jaredsavageNZH",
+        "linkedin": "https://www.linkedin.com/in/jared-savage-890a3620/",
+        "bluesky": "",
+        "facebook": "https://www.facebook.com/jaredsavageNZH/"
+      },
+      "years": {},
+      "articles_by_year": []
+    },
     "jason-walls-nzherald": {
       "name": "Jason Walls",
       "aliases": [],
@@ -6526,6 +7620,56 @@
         "health": 8,
         "economy": 8
       }
+    },
+    "jessica-mutch-mckay-1news": {
+      "name": "Jessica Mutch McKay",
+      "aliases": [
+        "Jessica Mutch-McKay"
+      ],
+      "outlet": "1News",
+      "formerly": "",
+      "beat": "Political editor",
+      "photo_url": "https://www.nzonscreen.com/content/images/0028/9668/Jessica_Mutch_Thumbnail.KEY.jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "spouse",
+          "target": "Iain McKay",
+          "role": "Diplomatic Protection Squad officer (provided security for PMs Key English and Ardern)",
+          "source": "https://en.wikipedia.org/wiki/Jessica_Mutch_McKay"
+        },
+        {
+          "type": "employer",
+          "target": "ANZ Bank",
+          "role": "Head of Government Relations and Corporate Responsibility (from early 2024 — revolving door from TVNZ Political Editor)",
+          "source": "https://www.nzherald.co.nz/business/media-insider/political-editor-jessica-mutch-mckay-quits-tvnz-for-top-anz-bank-corporate-role-media-insider/GUOWYFRQIRGYDMARNGFXD2S4WA/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Left TVNZ/1News in early 2024 to join ANZ Bank as Head of Government Relations and Corporate Responsibility after serving as Political Editor and Press Gallery Chair/Deputy Chair",
+          "source": "https://en.wikipedia.org/wiki/Jessica_Mutch_McKay"
+        }
+      ],
+      "bio": "Jessica Mutch McKay is a former New Zealand television political journalist who served as TVNZ's 1News political editor. She joined Sky News in 2006 before moving to TVNZ in 2008. She hosted Q+A before becoming political editor in 2018, leading coverage of the COVID-19 pandemic and the 2023 general election. In early 2024, she departed TVNZ to become Head of Government Relations and Corporate Responsibility at ANZ Bank. Her husband, Iain McKay, is a Diplomatic Protection Service bodyguard who served on the personal protection detail of Prime Minister Ardern.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/MutchJessica",
+        "linkedin": "https://linkedin.com/in/jessica-mutch-mckay-45610984",
+        "bluesky": "",
+        "facebook": "https://www.facebook.com/JessicaMutchTVNZ/"
+      },
+      "years": {},
+      "articles_by_year": []
     },
     "jo-moir": {
       "name": "Jo Moir",
@@ -7540,6 +8684,264 @@
         "transport": 4
       }
     },
+    "john-campbell": {
+      "name": "John Campbell",
+      "aliases": [],
+      "outlet": "RNZ",
+      "formerly": "",
+      "beat": "Morning Report",
+      "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/John_Campbell_in_2019_%28cropped%29.jpg/330px-John_Campbell_in_2019_%28cropped%29.jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "RNZ",
+          "role": "Public broadcaster funded by NZ Government",
+          "source": "https://www.rnz.co.nz/authors/john-campbell"
+        },
+        {
+          "type": "spouse",
+          "target": "Emma Patterson",
+          "role": "Documentary editor",
+          "source": "https://en.wikipedia.org/wiki/John_Campbell_(broadcaster)"
+        },
+        {
+          "type": "employer",
+          "target": "TVNZ",
+          "role": "Chief Correspondent at TVNZ/1News",
+          "source": "https://www.tvnz.co.nz/"
+        }
+      ],
+      "facts": [],
+      "bio": "John Campbell (born 10 February 1964) is one of New Zealand's most recognised broadcast journalists. He began at Radio New Zealand as a business reporter in 1989. He moved to TV3 in 1991, co-anchoring 3 News (1998-2005). He fronted Campbell Live (2005-2015), whose cancellation prompted significant public debate. He returned to RNZ in 2016 to host Checkpoint, then joined TVNZ in 2018. In December 2025 he was announced as co-host of RNZ's Morning Report from April 2026. He is married to documentary editor Emma Patterson.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/JohnJCampbell",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "julia-gabel-nzherald": {
+      "name": "Julia Gabel",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Data journalism and politics",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/57fdf3d7-f1e5-4d08-8eeb-49efcf08f139.jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Multimedia journalist — data journalism and political reporting",
+          "source": "https://www.nzherald.co.nz/author/julia-gabel/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Won 2025 Voyager Media Award for Best Innovation in Digital Storytelling for 'Whenua: Our Land Our History'; lived in Beijing for two years before entering journalism",
+          "source": "https://npa.co.nz/voyager-media-awards/2025-winners/"
+        }
+      ],
+      "bio": "Julia Gabel is a multimedia data journalist at the NZ Herald, where she has worked since 2020. She holds a Postgraduate Diploma in Journalism from AUT and lived in Beijing for two years before entering journalism. She won the 2025 Voyager Media Award for Best Innovation in Digital Storytelling for 'Whenua: Our Land, Our History'. She also contributes to Kahu, the Herald's Maori news platform.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/juliagabel",
+        "linkedin": "https://nz.linkedin.com/in/julia-gabel-b97063112",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "karanama-ruru-stuff": {
+      "name": "Karanama Ruru",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Te ao Maori and politics",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Te ao Maori and politics reporter since 2022",
+          "source": "https://www.stuff.co.nz/authors/karanama-ruru"
+        }
+      ],
+      "facts": [],
+      "bio": "Karanama Ruru is a Stuff reporter covering te ao Maori, politics, health, and culture. He affiliates to Ngati Raukawa and Ngati Maniapoto. He entered journalism via 95bFM student radio and joined Stuff permanently in 2022. His work has been cited in Waitangi Tribunal proceedings.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/cacaruru",
+        "linkedin": "https://www.linkedin.com/in/karanama-ruru-651403232/",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "kate-hawkesby-newstalkzb": {
+      "name": "Kate Hawkesby",
+      "aliases": [],
+      "outlet": "Newstalk ZB",
+      "formerly": "",
+      "beat": "Current affairs",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/70b82b69-80cf-4407-bf2b-db84a404a2bd.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Newstalk ZB broadcaster",
+          "source": "https://www.nzherald.co.nz/author/kate-hawkesby/"
+        }
+      ],
+      "facts": [],
+      "bio": "Kate Hawkesby (born 1 April 1973) is a New Zealand broadcaster, columnist and former television presenter. She holds a Political Studies degree and worked at London's Daily Express before returning to NZ. At TVNZ (1995-2007), she became the youngest person to present a One News at Six bulletin and co-anchored Breakfast with Mike Hosking in 2002. She hosted Newstalk ZB's Early Edition (5-6am weekdays) from 2017 until departing in November 2023. She is married to Mike Hosking. She is now an NZ Herald columnist and regular Friday panellist on The Mike Hosking Breakfast.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/katehawkesby",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "katie-bradford-1news": {
+      "name": "Katie Bradford",
+      "aliases": [],
+      "outlet": "1News",
+      "formerly": "",
+      "beat": "Parliamentary politics",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/tvnz/9942a886-eba2-4da2-b455-8c1ae017fdde.jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "family",
+          "target": "Sue Bradford",
+          "role": "Former Green MP",
+          "source": "https://www.stuff.co.nz/entertainment/tv-radio/tv-guide/120532362/katie-bradford-i-cant-think-of-anything-worse-than-being-a-politician"
+        },
+        {
+          "type": "political",
+          "target": "Judith Collins",
+          "role": "National MP who publicly attacked Bradford on social media in May 2014 and later apologised",
+          "source": "https://www.nzherald.co.nz/nz/news/article.cfm?c_id=1&objectid=11249346"
+        },
+        {
+          "type": "employer",
+          "target": "Infrastructure New Zealand",
+          "role": "Director of Advocacy and Policy (from April 2025 — revolving door from TVNZ)",
+          "source": "https://www.nzherald.co.nz/business/media-insider/media-insider-katie-bradford-resigns-from-tvnz-as-1news-business-correspondent/HQ3WR3O33VGQHPJJJHFOCKKBXY/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Left TVNZ in April 2025 to join Infrastructure New Zealand as Director of Advocacy and Policy after more than two decades in journalism",
+          "source": "https://www.infrastructure.org.nz/"
+        }
+      ],
+      "bio": "Katie Bradford is a veteran New Zealand political and business journalist with over 20 years' experience. She is the daughter of former Green Party MP and activist Sue Bradford and activist Jim Bradford. She spent more than a decade at TVNZ, working primarily as 1News business correspondent. In April 2025, Bradford left TVNZ to join Infrastructure New Zealand as strategy and engagement manager.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/katieabradford",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": "https://www.facebook.com/KatieBradfordTVNZ/"
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "kerre-woodham-newstalkzb": {
+      "name": "Kerre Woodham",
+      "aliases": [
+        "Kerre McIvor"
+      ],
+      "outlet": "Newstalk ZB",
+      "formerly": "",
+      "beat": "Current affairs",
+      "photo_url": "https://www.newstalkzb.co.nz/media/apee0cbg/zb2021_km_talentimage_880x495.png?rmode=crop&v=1d84aca0ff281b0&width=674&quality=95&scale=both",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Newstalk ZB broadcaster (publishes as Kerre McIvor)",
+          "source": "https://www.nzherald.co.nz/author/kerre-mcivor/"
+        }
+      ],
+      "facts": [],
+      "bio": "Kerre Woodham (born c. 1964) is a veteran New Zealand journalist, radio host, author and columnist. She studied journalism at Wellington Polytechnic and began her career at Radio New Zealand before moving into television as a reporter on Fair Go (1986-1990). She hosted Ready Steady Cook (1998-2005) and presented Heartland (1994-1997). An author of several books including Short Fat Chick to Marathon Runner, she is one of New Zealand's most recognisable broadcasters with over 35 years in media. She hosts Kerre Woodham Mornings (9am-12pm weekdays) on Newstalk ZB.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/kerremcivor",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
     "kurt-bayer-nzherald": {
       "name": "Kurt Bayer",
       "aliases": [],
@@ -7770,6 +9172,84 @@
       "topics": {
         "politics": 100
       }
+    },
+    "lisa-owen-newsroom": {
+      "name": "Lisa Owen",
+      "aliases": [],
+      "outlet": "Newsroom",
+      "formerly": "",
+      "beat": "Political interviews",
+      "photo_url": "https://upload.wikimedia.org/wikipedia/commons/9/98/Lisa_Owen.jpg",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [],
+      "facts": [],
+      "bio": "Lisa Owen is one of New Zealand's most experienced political broadcasters. She spent 14 years at TVNZ before moving to TV3/MediaWorks, where she hosted The Nation, the network's flagship weekend political programme. She hosted the Drive show on RadioLive before being appointed presenter of RNZ's Checkpoint in late 2018, replacing John Campbell. Owen won Best Talk Presenter at the 2021 NZ Radio Awards. She is widely regarded as one of New Zealand's sharpest political interviewers.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/lisaowennz",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "mani-dunlop-rnz": {
+      "name": "Mani Dunlop",
+      "aliases": [],
+      "outlet": "RNZ",
+      "formerly": "",
+      "beat": "Political journalism",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/whakaatamaori/b02497dd-10ae-411b-b00b-0e1339d24324.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "RNZ",
+          "role": "Public broadcaster funded by NZ Government",
+          "source": "https://www.rnz.co.nz/authors/mani-dunlop-1"
+        },
+        {
+          "type": "political",
+          "target": "Kiri Allan",
+          "role": "Labour Cabinet Minister (Justice/Conservation) — former fiancée; couple separated mid-2023 after Allan's drunk-driving arrest; Allan gave speech at Dunlop's RNZ farewell criticising RNZ management",
+          "source": "https://en.wikipedia.org/wiki/Kiri_Allan"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Was engaged to Labour Cabinet Minister Kiri Allan; couple separated mid-2023 after Allan's drunk-driving arrest; Allan gave an emotional speech at Dunlop's RNZ farewell in 2023 criticising RNZ management over treatment of Māori journalists",
+          "source": "https://en.wikipedia.org/wiki/Kiri_Allan"
+        }
+      ],
+      "bio": "Mani Dunlop (Ngapuhi, Scottish descent) is a Wellington-born journalist who began her career as an RNZ intern in 2011. She became the first Maori journalist to host a regular weekday programme on RNZ when she took over the Midday Report in 2020. She departed RNZ in March 2023 after being passed over for the Morning Report co-host role. She subsequently joined Whakaata Maori as a senior political editor at Te Ao Maori News.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
     },
     "matthew-hooton-nzherald": {
       "name": "Matthew Hooton",
@@ -8055,6 +9535,80 @@
         "education": 7,
         "health": 3
       }
+    },
+    "michael-daly-stuff": {
+      "name": "Michael Daly",
+      "aliases": [],
+      "outlet": "Stuff",
+      "formerly": "",
+      "beat": "Climate and environment",
+      "photo_url": "",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "Stuff",
+          "role": "Senior journalist — climate and environment",
+          "source": "https://www.stuff.co.nz/authors/michael-daly"
+        }
+      ],
+      "facts": [],
+      "bio": "Michael Daly is a senior journalist at Stuff based in Wellington covering climate, environment, and weather. He has an extensive body of work on climate science and government environmental policy.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "",
+        "linkedin": "https://nz.linkedin.com/in/michael-daly-3a2945126",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
+    "michael-neilson-nzherald": {
+      "name": "Michael Neilson",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Social issues",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/be8d9135-31dc-479b-8035-ffc3484d19e6.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Social issues reporter",
+          "source": "https://www.nzherald.co.nz/author/michael-neilson/"
+        }
+      ],
+      "facts": [],
+      "bio": "Michael Neilson is a New Zealand journalist from Christchurch who studied politics at the University of Otago before completing a journalism diploma at AUT in 2015. He joined the NZ Herald in 2018, covering social issues, the environment, and Maori affairs, later becoming a senior political reporter in the press gallery. He has since transitioned to freelance journalism and photography and is currently based in Indonesia.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/mr_neilson_",
+        "linkedin": "https://linkedin.com/in/michael-neilson-643ba8b8",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
     },
     "mike-hosking-newstalkzb": {
       "name": "Mike Hosking",
@@ -11208,6 +12762,48 @@
         "housing": 3
       }
     },
+    "simon-collins-nzherald": {
+      "name": "Simon Collins",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Education and social issues",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/a84e232b-8934-4674-81f3-983f8b1e99d9.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Education and social issues reporter (~30 years at Herald — now retired)",
+          "source": "https://www.nzherald.co.nz/author/simon-collins/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "45+ year career from 1976; co-founded Wellington community newspaper City Voice in 1993; led onstage protest at 2006 Qantas Media Awards against editorial cuts",
+          "source": "https://www.rnz.co.nz/national/programmes/mediawatch/audio/2018790029/simon-collins-a-lifetime-in-journalism"
+        }
+      ],
+      "bio": "Simon Collins was a long-serving NZ Herald reporter for ~30 years, covering education and social issues. His 45+ year career began in 1976. He co-founded community newspaper City Voice in 1993. Now retired.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "",
+        "linkedin": "https://nz.linkedin.com/in/simon-collins-048a8015",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
+    },
     "simon-wilson-nzherald": {
       "name": "Simon Wilson",
       "aliases": [],
@@ -12079,6 +13675,54 @@
         "environment": 4,
         "sport": 3
       }
+    },
+    "steve-braunias-nzherald": {
+      "name": "Steve Braunias",
+      "aliases": [],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Features and culture",
+      "photo_url": "https://author-service-images-prod-us-east-1.publishing.aws.arc.pub/nzme/aff50130-33a3-42cc-ad1f-88792645f53d.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Staff writer at NZ Herald",
+          "source": "https://www.nzherald.co.nz/author/steve-braunias/"
+        },
+        {
+          "type": "employer",
+          "target": "Newsroom",
+          "role": "Literary editor",
+          "source": "https://newsroom.co.nz/author/steve-braunias/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Author of 14 books; won 40+ national writing awards; three-time Cathay Pacific Travel Writer of the Year",
+          "source": "https://en.wikipedia.org/wiki/Steve_Braunias"
+        }
+      ],
+      "bio": "Steve Braunias is a NZ Herald staff writer, Newsroom literary editor, and author of 14 books. He has won over 40 national writing awards. Three-time Cathay Pacific Travel Writer of the Year.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "https://x.com/SteveBraunias",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
     },
     "thomas-coughlan-nzherald": {
       "name": "Thomas Coughlan",
@@ -15552,6 +17196,50 @@
         "foreign-affairs": 7,
         "economy": 6
       }
+    },
+    "vaimoana-tapaleao-nzherald": {
+      "name": "Vaimoana Tapaleao",
+      "aliases": [
+        "Moana Tapaleao"
+      ],
+      "outlet": "NZ Herald",
+      "formerly": "",
+      "beat": "Pacific affairs",
+      "photo_url": "https://s3.amazonaws.com/arc-authors/nzme/de33c5d6-1665-4792-afaf-3a39b97cc032.png",
+      "article_count": 0,
+      "confidence": "low",
+      "bias_score": 0.0,
+      "distribution": {
+        "left": 0,
+        "centre_left": 0,
+        "centre": 0,
+        "centre_right": 0,
+        "right": 0
+      },
+      "connections": [
+        {
+          "type": "employer",
+          "target": "NZME",
+          "role": "Pasifika editor — launched Herald's Talanoa section",
+          "source": "https://www.nzherald.co.nz/author/moana-tapaleao/"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Named Junior Reporter of the Year at 2010 Qantas Media Awards for Samoan tsunami coverage; recognised by Human Rights Commission for Princess Ashika ferry reporting",
+          "source": "https://pmcarchive.aut.ac.nz/pmc-blog/congratulations-aut-grad-vaimoana-tapaleao-qantas-junior-reporter-year-180.html"
+        }
+      ],
+      "bio": "Vaimoana Tapaleao is the NZ Herald's Pasifika editor. She was named Junior Reporter of the Year at the 2010 Qantas Media Awards for Samoan tsunami coverage. She launched the Herald's Talanoa Pasifika section.",
+      "methodology": "Based on 0 articles scored by AI",
+      "social": {
+        "twitter": "",
+        "linkedin": "",
+        "bluesky": "",
+        "facebook": ""
+      },
+      "years": {},
+      "articles_by_year": []
     }
   },
   "sites": {
