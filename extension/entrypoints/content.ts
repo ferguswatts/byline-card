@@ -243,12 +243,12 @@ function buildCardHTML(slug: string, j: JournalistData, version: string): string
   const leftPctH = artTotal > 0 ? Math.round(leftArts / artTotal * 100) : 0;
   const rightPctH = artTotal > 0 ? Math.round(rightArts / artTotal * 100) : 0;
   const medStr = (score >= 0 ? "+" : "") + score.toFixed(2);
-  let leanText = `Centre · Median ${medStr}`, leanColor = "#6b7280";
+  let leanText = `Centre`, leanColor = "#6b7280";
   if (leftPctH > rightPctH && leftPctH > 10) {
-    leanText = `${leftPctH}% of articles lean left · Median ${medStr}`;
+    leanText = `${leftPctH}% of articles lean left`;
     leanColor = "#d97706";
   } else if (rightPctH > leftPctH && rightPctH > 10) {
-    leanText = `${rightPctH}% of articles lean right · Median ${medStr}`;
+    leanText = `${rightPctH}% of articles lean right`;
     leanColor = "#3b82f6";
   }
 
@@ -455,13 +455,13 @@ function setupYearSlider(root: ShadowRoot, articles: Array<{y:number;b:string;s:
       const rPct = total > 0 ? Math.round(rightA / total * 100) : 0;
       const mStr = (med >= 0 ? '+' : '') + med.toFixed(2);
       if (lPct > rPct && lPct > 10) {
-        leanEl.textContent = lPct + '% of articles lean left · Median ' + mStr;
+        leanEl.textContent = lPct + '% of articles lean left';
         leanEl.style.color = '#d97706';
       } else if (rPct > lPct && rPct > 10) {
-        leanEl.textContent = rPct + '% of articles lean right · Median ' + mStr;
+        leanEl.textContent = rPct + '% of articles lean right';
         leanEl.style.color = '#3b82f6';
       } else {
-        leanEl.textContent = 'Centre · Median ' + mStr;
+        leanEl.textContent = 'Centre';
         leanEl.style.color = '#6b7280';
       }
     }

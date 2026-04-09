@@ -274,13 +274,13 @@ def generate_html(conn) -> str:
         right_pct = round(right_articles / total * 100) if total else 0
 
         if left_pct > right_pct and left_pct > 10:
-            lean_text = f"{left_pct}% of articles lean left · Median {avg_score:+.2f}"
+            lean_text = f"{left_pct}% of articles lean left"
             avg_color = "#d97706"
         elif right_pct > left_pct and right_pct > 10:
-            lean_text = f"{right_pct}% of articles lean right · Median {avg_score:+.2f}"
+            lean_text = f"{right_pct}% of articles lean right"
             avg_color = "#3b82f6"
         else:
-            lean_text = f"Centre · Median {avg_score:+.2f}"
+            lean_text = f"Centre"
             avg_color = "#6b7280"
 
         # Article rows — grouped by year/month, most recent first
@@ -1181,13 +1181,13 @@ function updateDisplay(slug, minVal, maxVal) {{
     const rightPct = Math.round(rightArts / total * 100);
     const medStr = (median >= 0 ? '+' : '') + median.toFixed(2);
     if (leftPct > rightPct && leftPct > 10) {{
-      leanEl.textContent = leftPct + '% of articles lean left · Median ' + medStr;
+      leanEl.textContent = leftPct + '% of articles lean left;
       leanEl.style.color = '#d97706';
     }} else if (rightPct > leftPct && rightPct > 10) {{
-      leanEl.textContent = rightPct + '% of articles lean right · Median ' + medStr;
+      leanEl.textContent = rightPct + '% of articles lean right;
       leanEl.style.color = '#3b82f6';
     }} else {{
-      leanEl.textContent = 'Centre · Median ' + medStr;
+      leanEl.textContent = 'Centre;
       leanEl.style.color = '#6b7280';
     }}
     if (infoEl) infoEl.innerHTML = `${{minVal}}–${{maxVal}} ${{govBadge}} · ${{total}} articles`;
