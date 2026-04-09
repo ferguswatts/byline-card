@@ -380,7 +380,7 @@ def generate_html(conn) -> str:
                 </div>
             </div>
             <div class="accordion-body" id="details-{j['slug']}">
-                <div class="dist-section" id="dist-section-{j['slug']}"
+                <div class="dist-section" id="dist-section-{j['slug']}">
                     {dist_bars}
                 </div>
                 {f"""<div class="year-range-section" data-slug="{j['slug']}" data-years='{year_data_attr.replace("&quot;", chr(34))}' data-min="{min(int(y) for y in year_data.keys())}" data-max="{max(int(y) for y in year_data.keys())}">
