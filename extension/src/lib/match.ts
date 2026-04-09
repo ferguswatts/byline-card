@@ -31,6 +31,15 @@ export interface JournalistData {
   }>;
   bio?: string;
   methodology: string;
+  social?: {
+    twitter?: string;
+    linkedin?: string;
+    bluesky?: string;
+    facebook?: string;
+  };
+  years?: Record<string, { count: number; median: number }>;
+  articles_by_year?: Array<{ y: number; b: string; s: number }>;
+  topics?: Record<string, number>;
 }
 
 export interface DataFile {

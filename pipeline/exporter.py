@@ -75,7 +75,51 @@ def export_to_json(conn: sqlite3.Connection, output_path: Path) -> int:
             ],
             "bio": j["bio"] or "",
             "methodology": f"Based on {dist['article_count']} articles scored by AI",
+            "social": {
+                "twitter": j["twitter_url"] or "",
+                "linkedin": j["linkedin_url"] or "",
+                "bluesky": j["bluesky_url"] or "" if "bluesky_url" in j.keys() else "",
+                "facebook": j["facebook_url"] or "" if "facebook_url" in j.keys() else "",
+            },
         }
+
+        # Add per-year score data for year slider
+        year_rows = conn.execute(
+            """SELECT substr(publish_date, 1, 4) as yr, bucket, median_score
+               FROM articles WHERE journalist_id = ? AND publish_date IS NOT NULL AND bucket IS NOT NULL""",
+            (j["id"],),
+        ).fetchall()
+
+        year_data = {}
+        year_articles = []
+        for r in year_rows:
+            yr = r[0]
+            if yr and yr.isdigit():
+                year_data.setdefault(yr, {"count": 0, "scores": []})
+                year_data[yr]["count"] += 1
+                year_data[yr]["scores"].append(r[2])
+                year_articles.append({"y": int(yr), "b": r[1], "s": round(r[2], 3)})
+
+        year_summary = {}
+        for yr, yd in sorted(year_data.items()):
+            scores = sorted(yd["scores"])
+            n = len(scores)
+            median = scores[n // 2] if n % 2 == 1 else (scores[n // 2 - 1] + scores[n // 2]) / 2
+            year_summary[yr] = {"count": n, "median": round(median, 3)}
+
+        data["journalists"][j["slug"]]["years"] = year_summary
+        data["journalists"][j["slug"]]["articles_by_year"] = year_articles
+
+        # Add topic profile
+        topic_rows = conn.execute(
+            "SELECT topic, COUNT(*) FROM articles WHERE journalist_id = ? AND topic IS NOT NULL AND topic != '' GROUP BY topic ORDER BY COUNT(*) DESC",
+            (j["id"],),
+        ).fetchall()
+        if topic_rows:
+            topic_total = sum(r[1] for r in topic_rows)
+            data["journalists"][j["slug"]]["topics"] = {
+                r[0]: round(r[1] / topic_total * 100) for r in topic_rows if round(r[1] / topic_total * 100) >= 3
+            }
 
     # Load site selectors
     sites_path = Path(__file__).parent.parent / "data" / "sites.json"

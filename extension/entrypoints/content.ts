@@ -212,65 +212,96 @@ function waitForByline(
 function buildCardHTML(slug: string, j: JournalistData, version: string): string {
   const dist = j.distribution;
   const score = j.bias_score || 0;
-
-  const bucketColors: Record<string, string> = {
+  const bc: Record<string, string> = {
     left: "#ef4444", centre_left: "#f97316", centre: "#6b7280",
     centre_right: "#3b82f6", right: "#1d4ed8",
   };
 
-  const barRow = (label: string, pct: number, key: string) =>
-    `<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
-      <span style="width:80px;font-size:11px;font-weight:500;color:#555;text-align:right;flex-shrink:0">${label}</span>
-      <div style="flex:1;height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden">
-        <div style="width:${pct}%;height:100%;background:${bucketColors[key]};border-radius:3px;min-width:2px"></div>
+  const barRow = (label: string, pct: number, key: string, id: string) =>
+    `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <span style="width:76px;font-size:11px;font-weight:500;color:#555;text-align:right;flex-shrink:0">${label}</span>
+      <div style="flex:1;height:5px;background:#f3f4f6;border-radius:3px;overflow:hidden">
+        <div id="${id}" style="width:${pct}%;height:100%;background:${bc[key]};border-radius:3px;min-width:1px;transition:width 0.2s ease"></div>
       </div>
-      <span style="width:52px;font-size:11px;color:#555;flex-shrink:0">${pct}%</span>
+      <span id="${id}-n" style="width:40px;font-size:10px;color:#888;flex-shrink:0">${pct}%</span>
     </div>`;
 
-  // Spectrum position & lean text
-  const spectrumPos = ((score + 1) / 2) * 100;
+  // Spectrum
+  const specPos = ((score + 1) / 2) * 100;
   const leanPct = Math.abs(Math.round(score * 100));
-  let leanText: string;
-  let leanColor: string;
-  if (leanPct <= 2) {
-    leanText = "Centre";
-    leanColor = "#6b7280";
-  } else if (score < 0) {
-    leanText = `${leanPct}% left leaning`;
-    leanColor = "#d97706";
-  } else {
-    leanText = `${leanPct}% right leaning`;
-    leanColor = "#3b82f6";
+  let leanText = "Centre", leanColor = "#6b7280";
+  if (leanPct > 2) {
+    if (score < 0) { leanText = `${leanPct}% left leaning`; leanColor = "#d97706"; }
+    else { leanText = `${leanPct}% right leaning`; leanColor = "#3b82f6"; }
   }
 
   // Avatar
   const initials = j.name.split(" ").map(p => p[0]).join("").slice(0, 2).toUpperCase();
   const hue = j.name.split("").reduce((s, c) => s + c.charCodeAt(0), 0) % 360;
-  const avatarHTML = j.photo_url
-    ? `<img src="${j.photo_url}" alt="${j.name}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0">`
-    : `<div style="width:42px;height:42px;border-radius:50%;background:hsl(${hue},45%,62%);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:600;font-size:15px">${initials}</div>`;
+  const avatar = j.photo_url
+    ? `<img src="${j.photo_url}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0">`
+    : `<div style="width:40px;height:40px;border-radius:50%;background:hsl(${hue},45%,62%);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:600;font-size:14px">${initials}</div>`;
 
-  const connectionsHTML = (j.connections.length > 0 || j.facts.length > 0)
-    ? `<div style="padding:10px 16px;border-top:1px solid #f3f4f6">
-        <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px">Connections</div>
-        ${j.connections.map((c) =>
-          `<div style="font-size:12px;color:#444;margin-bottom:4px;line-height:1.4">
-            <span style="color:#888;font-size:11px;font-weight:500;text-transform:capitalize">${c.type}</span>
-            <span style="font-weight:600;color:#1a1a1a">${c.target}</span>${c.role ? ` — ${c.role}` : ""}
-            ${c.source ? `<a href="${c.source}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none;font-size:11px;margin-left:6px">source</a>` : ""}
-          </div>`
-        ).join("")}
-        ${j.facts.length > 0 ? `
-          <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin:8px 0 6px">Key facts</div>
-          ${j.facts.map((f) =>
-            `<div style="font-size:12px;color:#444;margin-bottom:4px;line-height:1.4">
-              ${f.text}
-              ${f.source ? `<a href="${f.source}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none;font-size:11px;margin-left:6px">source</a>` : ""}
-            </div>`
-          ).join("")}
-        ` : ""}
-      </div>`
-    : "";
+  // Social links
+  const socialLinks: string[] = [];
+  if (j.social?.twitter) socialLinks.push(`<a href="${j.social.twitter}" target="_blank" rel="noopener" style="font-size:10px;padding:2px 8px;border-radius:4px;background:#1a1a1a;color:#fff;text-decoration:none;font-weight:600">X</a>`);
+  if (j.social?.linkedin) socialLinks.push(`<a href="${j.social.linkedin}" target="_blank" rel="noopener" style="font-size:10px;padding:2px 8px;border-radius:4px;background:#0077b5;color:#fff;text-decoration:none;font-weight:600">LinkedIn</a>`);
+  const socialHTML = socialLinks.length ? `<div style="display:flex;gap:4px;margin-top:4px">${socialLinks.join("")}</div>` : "";
+
+  // Topic pills
+  let topicHTML = "";
+  if (j.topics && Object.keys(j.topics).length > 0) {
+    const pills = Object.entries(j.topics)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([t, p]) => `<span style="font-size:10px;padding:2px 8px;border-radius:10px;background:#f3f4f6;color:#555;white-space:nowrap">${t.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())} ${p}%</span>`)
+      .join("");
+    topicHTML = `<div style="padding:8px 16px;border-top:1px solid #f3f4f6">
+      <div style="font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:5px">Topic Profile</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">${pills}</div>
+    </div>`;
+  }
+
+  // Year slider data
+  const years = j.years || {};
+  const yearKeys = Object.keys(years).map(Number).sort();
+  const minYear = yearKeys[0] || 2020;
+  const maxYear = yearKeys[yearKeys.length - 1] || 2026;
+  const articlesData = JSON.stringify(j.articles_by_year || []);
+  const hasYearRange = yearKeys.length > 1;
+
+  const yearSliderHTML = hasYearRange ? `
+    <div style="padding:10px 16px;border-top:1px solid #f3f4f6" id="yr-section">
+      <div style="font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px">Filter by period</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:10px;color:#999">${minYear}</span>
+        <div id="yr-track" style="flex:1;position:relative;height:28px;cursor:pointer;user-select:none;touch-action:none">
+          <div style="position:absolute;top:12px;left:0;right:0;height:4px;background:#e5e7eb;border-radius:2px"></div>
+          <div id="yr-fill" style="position:absolute;top:12px;height:4px;background:linear-gradient(to right,#f97316,#6b7280,#3b82f6);border-radius:2px;left:0;width:100%"></div>
+          <div id="yr-tmin" style="position:absolute;top:2px;width:24px;height:24px;border-radius:12px;background:#1a1a1a;cursor:grab;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;left:0%;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,0.2)"><span style="font-size:8px;font-weight:700;color:#fff;pointer-events:none" id="yr-lmin">'${String(minYear).slice(-2)}</span></div>
+          <div id="yr-tmax" style="position:absolute;top:2px;width:24px;height:24px;border-radius:12px;background:#1a1a1a;cursor:grab;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;left:100%;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,0.2)"><span style="font-size:8px;font-weight:700;color:#fff;pointer-events:none" id="yr-lmax">'${String(maxYear).slice(-2)}</span></div>
+        </div>
+        <span style="font-size:10px;color:#999">${maxYear}</span>
+      </div>
+      <div id="yr-info" style="font-size:10px;color:#888;margin-top:3px">All years · ${j.article_count} articles</div>
+    </div>` : "";
+
+  // Connections
+  const connHTML = (j.connections.length > 0 || j.facts.length > 0) ? `
+    <div style="padding:8px 16px;border-top:1px solid #f3f4f6">
+      <div style="font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:5px">Connections</div>
+      ${socialHTML}
+      ${j.connections.map(c => `<div style="font-size:11px;color:#444;margin-bottom:3px;line-height:1.4">
+        <span style="color:#888;font-size:10px;font-weight:500;text-transform:capitalize">${c.type}</span>
+        <span style="font-weight:600;color:#1a1a1a">${c.target}</span>${c.role ? ` — ${c.role}` : ""}
+        ${c.source ? `<a href="${c.source}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none;font-size:10px;margin-left:4px">source</a>` : ""}
+      </div>`).join("")}
+      ${j.facts.length > 0 ? `
+        <div style="font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.3px;margin:6px 0 4px">Key facts</div>
+        ${j.facts.map(f => `<div style="font-size:11px;color:#444;margin-bottom:3px;line-height:1.4">${f.text}
+          ${f.source ? `<a href="${f.source}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none;font-size:10px;margin-left:4px">source</a>` : ""}
+        </div>`).join("")}` : ""}
+    </div>` : "";
 
   return `
     <style>
@@ -278,73 +309,181 @@ function buildCardHTML(slug: string, j: JournalistData, version: string): string
       @keyframes fadein { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
       @media (prefers-reduced-motion: reduce) { @keyframes fadein { from { opacity:1; } to { opacity:1; } } }
       a:hover { text-decoration: underline !important; }
+      *::-webkit-scrollbar { width: 6px; }
+      *::-webkit-scrollbar-track { background: transparent; }
+      *::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
     </style>
     <div role="dialog" aria-label="Journalist profile: ${j.name}" style="
-      width:380px;max-height:520px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;
-      border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.04);
+      width:400px;max-height:580px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;
+      border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,0.12),0 2px 8px rgba(0,0,0,0.06);
       animation:fadein 150ms ease-out;
     ">
       <!-- Header -->
-      <div style="padding:14px 16px;display:flex;align-items:center;gap:12px">
-        ${avatarHTML}
+      <div style="padding:14px 16px;display:flex;align-items:center;gap:10px">
+        ${avatar}
         <div style="flex:1;min-width:0">
-          <div style="font-size:15px;font-weight:600;color:#1a1a1a">${j.name}</div>
-          <div style="font-size:12px;color:#888;margin-top:2px">${j.outlet} · ${j.beat || "Politics"}</div>
-          ${j.formerly ? `<div style="font-size:11px;color:#aaa;margin-top:1px">Formerly: ${j.formerly}</div>` : ""}
+          <div style="font-size:14px;font-weight:600;color:#1a1a1a">${j.name}</div>
+          <div style="font-size:11px;color:#888;margin-top:1px">${j.outlet} · ${j.beat || "Politics"}</div>
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:28px;height:28px;flex-shrink:0">
-          <rect width="512" height="512" rx="80" fill="#1a1a2e"/>
-          <text x="80" y="390" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="420" font-weight="700" fill="white">B</text>
-          <line x1="340" y1="60" x2="280" y2="450" stroke="#e63946" stroke-width="36" stroke-linecap="round"/>
-          <line x1="60" y1="440" x2="452" y2="440" stroke="#e63946" stroke-width="10" stroke-linecap="round"/>
-        </svg>
+        <span style="font-size:9px;color:#999;font-weight:500">Bias</span>
       </div>
 
-      <!-- Spectrum bar -->
-      <div style="padding:4px 16px 10px;display:flex;align-items:center;gap:8px">
-        <span style="font-size:10px;font-weight:700;color:#dc2626">Left</span>
-        <div style="flex:1;position:relative;height:24px">
-          <div style="position:absolute;top:8px;left:0;right:0;height:8px;border-radius:4px;background:linear-gradient(to right,#dc2626,#f97316 25%,#d1d5db 50%,#3b82f6 75%,#1d4ed8)"></div>
-          <div style="position:absolute;top:1px;width:4px;height:22px;border-radius:2px;background:#1a1a1a;box-shadow:0 1px 4px rgba(0,0,0,0.4);left:${spectrumPos.toFixed(1)}%;transform:translateX(-50%)"></div>
+      <!-- Spectrum -->
+      <div style="padding:2px 16px 8px;display:flex;align-items:center;gap:6px">
+        <span style="font-size:9px;font-weight:700;color:#dc2626">Left</span>
+        <div style="flex:1;position:relative;height:20px">
+          <div style="position:absolute;top:7px;left:0;right:0;height:6px;border-radius:3px;background:linear-gradient(to right,#dc2626,#f97316 25%,#d1d5db 50%,#3b82f6 75%,#1d4ed8)"></div>
+          <div id="spec-marker" style="position:absolute;top:1px;width:4px;height:18px;border-radius:2px;background:#1a1a1a;box-shadow:0 1px 4px rgba(0,0,0,0.4);left:${specPos.toFixed(1)}%;transform:translateX(-50%);transition:left 0.2s ease"></div>
         </div>
-        <span style="font-size:10px;font-weight:700;color:#1d4ed8">Right</span>
-        <span style="font-size:12px;font-weight:600;color:${leanColor};white-space:nowrap;margin-left:4px">${leanText}</span>
+        <span style="font-size:9px;font-weight:700;color:#1d4ed8">Right</span>
+        <span id="lean-text" style="font-size:11px;font-weight:600;color:${leanColor};white-space:nowrap;margin-left:2px">${leanText}</span>
       </div>
 
       <!-- Article count -->
-      <div style="padding:0 16px 10px;font-size:12px;color:#888">${j.article_count} articles</div>
+      <div style="padding:0 16px 8px;font-size:11px;color:#888">${j.article_count} articles</div>
 
-      <!-- Distribution chart -->
-      <div style="padding:10px 16px;border-top:1px solid #f3f4f6">
-        ${barRow("Left", dist.left, "left")}
-        ${barRow("Centre-Left", dist.centre_left, "centre_left")}
-        ${barRow("Centre", dist.centre, "centre")}
-        ${barRow("Centre-Right", dist.centre_right, "centre_right")}
-        ${barRow("Right", dist.right, "right")}
+      <!-- Distribution -->
+      <div style="padding:8px 16px;border-top:1px solid #f3f4f6" id="dist-section">
+        ${barRow("Left", dist.left, "left", "db-l")}
+        ${barRow("Centre-Left", dist.centre_left, "centre_left", "db-cl")}
+        ${barRow("Centre", dist.centre, "centre", "db-c")}
+        ${barRow("Centre-Right", dist.centre_right, "centre_right", "db-cr")}
+        ${barRow("Right", dist.right, "right", "db-r")}
       </div>
+
+      <!-- Year slider -->
+      ${yearSliderHTML}
+
+      <!-- Topics -->
+      ${topicHTML}
 
       <!-- Connections -->
-      ${connectionsHTML}
+      ${connHTML}
 
-      <!-- Background -->
+      <!-- Bio -->
       ${j.bio ? `
-      <div style="padding:10px 16px;border-top:1px solid #f3f4f6">
-        <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px">Background</div>
-        <div style="font-size:12px;color:#555;line-height:1.6">${j.bio.length > 300 ? j.bio.slice(0, 300) + "…" : j.bio}</div>
-      </div>
-      ` : ""}
+      <div style="padding:8px 16px;border-top:1px solid #f3f4f6">
+        <div style="font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Background</div>
+        <div style="font-size:11px;color:#555;line-height:1.5">${j.bio.length > 350 ? j.bio.slice(0, 350) + "…" : j.bio}</div>
+      </div>` : ""}
 
       <!-- Footer -->
-      <div style="padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#999;border-top:1px solid #f3f4f6">
-        <span>AI-scored · Updated ${version}</span>
-        <div style="display:flex;gap:12px">
-          <a href="https://ferguswatts.github.io/Bias./#${slug}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none">View articles</a>
+      <div style="padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#999;border-top:1px solid #f3f4f6">
+        <span>AI-scored · ${version}</span>
+        <div style="display:flex;gap:10px">
+          <a href="https://ferguswatts.github.io/Bias./#${slug}" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none">Full profile</a>
           <a href="https://ferguswatts.github.io/Bias./" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none">All journalists</a>
         </div>
       </div>
     </div>
+
+    ${hasYearRange ? `<script>
+      (function() {
+        const root = document.currentScript.getRootNode();
+        const track = root.getElementById('yr-track');
+        const fill = root.getElementById('yr-fill');
+        const tmin = root.getElementById('yr-tmin');
+        const tmax = root.getElementById('yr-tmax');
+        const lmin = root.getElementById('yr-lmin');
+        const lmax = root.getElementById('yr-lmax');
+        const info = root.getElementById('yr-info');
+        const marker = root.getElementById('spec-marker');
+        const leanEl = root.getElementById('lean-text');
+        const articles = ${articlesData};
+        const rMin = ${minYear}, rMax = ${maxYear};
+        let curMin = rMin, curMax = rMax;
+
+        function v2p(v) { return ((v - rMin) / (rMax - rMin || 1)) * 100; }
+        function p2v(p) { return Math.round(rMin + (p / 100) * (rMax - rMin)); }
+
+        function render() {
+          const lp = v2p(curMin), rp = v2p(curMax);
+          tmin.style.left = lp + '%';
+          tmax.style.left = rp + '%';
+          fill.style.left = lp + '%';
+          fill.style.width = (rp - lp) + '%';
+          lmin.textContent = "'" + String(curMin).slice(-2);
+          lmax.textContent = "'" + String(curMax).slice(-2);
+
+          // Filter articles
+          const f = articles.filter(a => a.y >= curMin && a.y <= curMax);
+          const bk = {left:0,'centre-left':0,centre:0,'centre-right':0,right:0};
+          const scores = [];
+          f.forEach(a => { if (bk.hasOwnProperty(a.b)) bk[a.b]++; scores.push(a.s); });
+          const total = f.length;
+
+          // Update dist bars
+          [['l','left'],['cl','centre-left'],['c','centre'],['cr','centre-right'],['r','right']].forEach(([id,b]) => {
+            const bar = root.getElementById('db-' + id);
+            const num = root.getElementById('db-' + id + '-n');
+            const count = bk[b] || 0;
+            const pct = total > 0 ? Math.round((count/total)*100) : 0;
+            if (bar) bar.style.width = pct + '%';
+            if (num) num.textContent = pct + '%';
+          });
+
+          // Update spectrum
+          scores.sort((a,b) => a - b);
+          const n = scores.length;
+          const med = n > 0 ? (n%2===1 ? scores[Math.floor(n/2)] : (scores[n/2-1]+scores[n/2])/2) : 0;
+          if (marker) marker.style.left = (((med+1)/2)*100).toFixed(1) + '%';
+          const pct = Math.abs(Math.round(med * 100));
+          if (leanEl) {
+            if (pct <= 2) { leanEl.textContent = 'Centre'; leanEl.style.color = '#6b7280'; }
+            else if (med < 0) { leanEl.textContent = pct + '% left leaning'; leanEl.style.color = '#d97706'; }
+            else { leanEl.textContent = pct + '% right leaning'; leanEl.style.color = '#3b82f6'; }
+          }
+
+          // Govt badge
+          let gov = '<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;background:#f3f4f6;color:#555">Mixed</span>';
+          if (curMin >= 2023) gov = '<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8">National</span>';
+          else if (curMax <= 2017) gov = '<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8">National</span>';
+          else if (curMin >= 2017 && curMax <= 2023) gov = '<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;background:#fef2f2;color:#dc2626">Labour</span>';
+          if (info) info.innerHTML = curMin + '–' + curMax + ' ' + gov + ' · ' + total + ' articles';
+        }
+
+        function drag(thumb, isMin) {
+          return function(e) {
+            e.preventDefault();
+            thumb.style.cursor = 'grabbing';
+            const rect = track.getBoundingClientRect();
+            function onMove(e2) {
+              const x = (e2.touches ? e2.touches[0].clientX : e2.clientX) - rect.left;
+              const pct = Math.max(0, Math.min(100, (x / rect.width) * 100));
+              const val = p2v(pct);
+              if (isMin) curMin = Math.min(val, curMax);
+              else curMax = Math.max(val, curMin);
+              render();
+            }
+            function onUp() {
+              thumb.style.cursor = 'grab';
+              document.removeEventListener('mousemove', onMove);
+              document.removeEventListener('mouseup', onUp);
+              document.removeEventListener('touchmove', onMove);
+              document.removeEventListener('touchend', onUp);
+            }
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+            document.addEventListener('touchmove', onMove, {passive:false});
+            document.addEventListener('touchend', onUp);
+          };
+        }
+        tmin.addEventListener('mousedown', drag(tmin, true));
+        tmin.addEventListener('touchstart', drag(tmin, true), {passive:false});
+        tmax.addEventListener('mousedown', drag(tmax, false));
+        tmax.addEventListener('touchstart', drag(tmax, false), {passive:false});
+        track.addEventListener('mousedown', function(e) {
+          if (e.target === tmin || e.target === tmax) return;
+          const x = e.clientX - track.getBoundingClientRect().left;
+          const pct = (x / track.getBoundingClientRect().width) * 100;
+          const minD = Math.abs(pct - v2p(curMin)), maxD = Math.abs(pct - v2p(curMax));
+          drag(minD <= maxD ? tmin : tmax, minD <= maxD)(e);
+        });
+      })();
+    </script>` : ""}
   `;
 }
+
 
 function findBylineElement(name: string): HTMLElement | null {
   const nameLower = name.toLowerCase();
