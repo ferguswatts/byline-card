@@ -388,7 +388,7 @@ function buildCardHTML(slug: string, j: JournalistData, version: string): string
       ${j.bio ? `
       <div style="padding:8px 16px;border-top:1px solid #f3f4f6">
         <div style="font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Background</div>
-        <div style="font-size:11px;color:#555;line-height:1.5">${j.bio.length > 350 ? j.bio.slice(0, 350) + "…" : j.bio}</div>
+        <div style="font-size:11px;color:#555;line-height:1.5">${j.bio}</div>
       </div>` : ""}
 
       <!-- Footer -->
