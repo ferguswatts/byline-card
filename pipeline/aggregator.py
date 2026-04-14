@@ -59,13 +59,21 @@ def update_journalist_stats(conn: sqlite3.Connection, journalist_id: int) -> dic
     """Recompute and store journalist aggregate stats. Returns the distribution."""
     dist = compute_distribution(conn, journalist_id)
 
-    conn.execute(
-        """UPDATE journalists
-           SET article_count = ?,
-               confidence_tier = ?,
-               last_scored_at = datetime('now')
-           WHERE id = ?""",
-        (dist["article_count"], dist["confidence"], journalist_id),
-    )
+    for _attempt in range(20):
+        try:
+            conn.execute(
+                """UPDATE journalists
+                   SET article_count = ?,
+                       confidence_tier = ?,
+                       last_scored_at = datetime('now')
+                   WHERE id = ?""",
+                (dist["article_count"], dist["confidence"], journalist_id),
+            )
+            break
+        except Exception as e:
+            if "locked" in str(e):
+                import time; time.sleep(0.5 + _attempt * 0.5)
+                continue
+            raise
     conn.commit()
     return dist

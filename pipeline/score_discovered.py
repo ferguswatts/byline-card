@@ -218,8 +218,6 @@ async def fetch_from_archive(session, url: str) -> str | None:
             html,
             include_comments=False,
             include_tables=False,
-            favor_precision=True,
-            output_format="txt",
         )
         if extracted and len(extracted) > 200:
             return extracted
@@ -306,29 +304,22 @@ async def fetch_article_text(session, url: str, outlet: str, herald_cookies: lis
     status_code = 0
     html = None
 
-    # NZ Herald: use Playwright with premium cookies (React SPA needs JS rendering)
-    if "nzherald.co.nz" in url and herald_cookies:
-        result = await fetch_herald_playwright(url, herald_cookies)
-        if result:
-            return result
-        # Fall through to archive.is if Playwright failed
-
-    if "nzherald.co.nz" not in url:
-        async with FETCH_SEM:
-            try:
-                import aiohttp
-                timeout = aiohttp.ClientTimeout(total=30)
-                async with session.get(url, timeout=timeout, headers={
-                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
-                }) as resp:
-                    status_code = resp.status
-                    if resp.status == 200:
-                        html = await resp.text()
-            except asyncio.TimeoutError:
-                return None
-            except Exception as e:
-                log.debug(f"Fetch failed {url}: {e}")
-                return None
+    # All sites including NZ Herald: plain HTTP fetch (Herald paywall is client-side only)
+    async with FETCH_SEM:
+        try:
+            import aiohttp
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with session.get(url, timeout=timeout, headers={
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+            }) as resp:
+                status_code = resp.status
+                if resp.status == 200:
+                    html = await resp.text()
+        except asyncio.TimeoutError:
+            return None
+        except Exception as e:
+            log.debug(f"Fetch failed {url}: {e}")
+            return None
 
     # Try extracting from direct fetch
     text = None
@@ -341,8 +332,6 @@ async def fetch_article_text(session, url: str, outlet: str, herald_cookies: lis
                 html,
                 include_comments=False,
                 include_tables=False,
-                favor_precision=True,
-                output_format="txt",
             )
 
             # Check for paywall indicators even on 200 responses
@@ -435,11 +424,13 @@ async def process_batch(conn, session, rows, lookup_name, total_for_journalist, 
         result = await fetch_article_text(session, url, row["outlet"], herald_cookies=herald_cookies)
         if not result:
             stats["fetch_failed"] += 1
+            log.info(f"  FETCH FAIL: {url}")
             _record_failure(conn, url, row["journalist_id"], row["outlet"], 0, "no_text")
             continue
 
         title, date, text, status_code = result
         stats["fetched"] += 1
+        log.info(f"  FETCHED ({status_code}, {len(text)} chars): {url[:80]}")
 
         if "archive.is" not in url and status_code != 200:
             stats["archive_rescued"] = stats.get("archive_rescued", 0) + 1
@@ -477,8 +468,9 @@ async def process_batch(conn, session, rows, lookup_name, total_for_journalist, 
                 raise
 
         stats["scored"] += 1
+        log.info(f"  SCORED {score_result.score:+.2f} ({score_result.bucket}): {title[:60] or url[:60]}")
 
-        if stats["scored"] % 10 == 0:
+        if stats["scored"] % 5 == 0:
             for _attempt in range(10):
                 try:
                     conn.commit()
@@ -675,7 +667,7 @@ async def main():
                        WHERE d.journalist_id = ?
                        AND a.id IS NULL
                        AND d.url NOT IN (SELECT url FROM fetch_failures WHERE resolved = 0 AND retry_count >= 2)
-                       ORDER BY d.id ASC
+                       ORDER BY d.id DESC
                        LIMIT ?""",
                     (j["id"], this_round)
                 ).fetchall()
